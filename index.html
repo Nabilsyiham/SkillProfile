@@ -68,7 +68,6 @@
                 <li><a href="index.html" class="text-charcoal border-b border-charcoal pb-1 transition-all">Home</a>
                 </li>
                 <li><a href="shop.html" class="hover:text-charcoal transition-colors">Shop</a></li>
-                <li><a href="search.html" class="hover:text-charcoal transition-colors">Search</a></li>
                 <li><a href="user_dashboard.html" class="hover:text-charcoal transition-colors">Profile</a></li>
             </ul>
 
@@ -99,7 +98,6 @@
             <nav class="flex-1 p-6 space-y-6">
                 <a href="index.html" class="block text-lg font-medium text-charcoal">Home</a>
                 <a href="shop.html" class="block text-lg text-pebble hover:text-charcoal transition-colors">Shop</a>
-                <a href="search.html" class="block text-lg text-pebble hover:text-charcoal transition-colors">Search</a>
                 <a href="user_dashboard.html"
                     class="block text-lg text-pebble hover:text-charcoal transition-colors">Profile</a>
                 <a href="login.html" class="block text-lg text-pebble hover:text-charcoal transition-colors">Sign In /
@@ -118,7 +116,7 @@
         <section class="relative h-[650px] md:h-[800px] w-full flex items-center overflow-hidden">
             <img alt="Elegant Fashion Editorial"
                 class="absolute inset-0 w-full h-full object-cover transition-transform duration-10000 hover:scale-105"
-                src="https://images.unsplash.com/photo-1582719188393-bb71ca45dbb9?q=80&w=387&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" />
+                src="https://i.pinimg.com/1200x/4c/a7/f1/4ca7f12a9040a85070d5fa920991aa12.jpg" />
             <div class="absolute inset-0 bg-charcoal/25"></div>
             <div class="relative max-w-[1280px] mx-auto px-6 md:px-12 w-full text-white">
                 <div
@@ -290,144 +288,96 @@
             </div>
         </section>
 
-        <!-- The Found Journal: Editorial Section -->
-        <section class="max-w-[1280px] mx-auto px-6 md:px-12 py-16 md:py-24">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-                <div class="order-2 md:order-1 space-y-6">
-                    <span class="text-xs uppercase tracking-widest text-pebble font-semibold block">The Style
-                        Journal</span>
-                    <h2 class="text-3xl md:text-4xl font-light tracking-tight text-charcoal leading-snug">
-                        The Quiet Power of <br /><span class="font-normal italic">Neutral Dressing</span>
-                    </h2>
-                    <p class="text-base text-pebble font-light leading-relaxed max-w-md">
-                        How a carefully considered palette of bone, ecru, and slate can transform a wardrobe from
-                        seasonal to timeless — and why restraint is the ultimate luxury.
+
+        <!-- Footer -->
+        <footer class="w-full bg-surface border-t border-linen">
+            <div class="max-w-[1280px] mx-auto px-6 md:px-12 py-12 md:py-16 grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="space-y-4">
+                    <div class="font-light text-xl tracking-tight text-charcoal">
+                        Features <span class="font-normal text-pebble">&</span> Found
+                    </div>
+                    <p class="text-xs text-pebble max-w-xs leading-relaxed">
+                        Get an interesting and satisfying shopping experience by using our website.
                     </p>
-                    <a href="shop.html"
-                        class="inline-block border border-charcoal text-charcoal hover:bg-charcoal hover:text-canvas px-8 py-3 text-xs uppercase tracking-wider font-semibold rounded transition-all duration-300">
-                        Read the Journal
-                    </a>
                 </div>
-                <div class="order-1 md:order-2 h-[350px] md:h-[500px] rounded-lg overflow-hidden border border-linen">
-                    <img alt="Fashion Editorial Photography"
-                        class="w-full h-full object-cover hover:scale-102 transition-transform duration-700"
-                        src="https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?w=1200&q=80&fit=crop" />
+
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="flex flex-col gap-2.5">
+                        <h4 class="text-xs font-semibold text-charcoal uppercase tracking-widest mb-1">Explore</h4>
+                        <a class="text-xs text-pebble hover:text-charcoal transition-colors" href="shop.html">Shop
+                            Collection</a>
+                        <a class="text-xs text-pebble hover:text-charcoal transition-colors" href="search.html">Search
+                            Items</a>
+                        <a class="text-xs text-pebble hover:text-charcoal transition-colors" href="login.html">My
+                            Account</a>
+                    </div>
+                    <div class="flex flex-col gap-2.5">
+                        <h4 class="text-xs font-semibold text-charcoal uppercase tracking-widest mb-1">Company</h4>
+                        <a class="text-xs text-pebble hover:text-charcoal transition-colors" href="#">Sourcing Ethos</a>
+                        <a class="text-xs text-pebble hover:text-charcoal transition-colors" href="#">Sustainability</a>
+                        <a class="text-xs text-pebble hover:text-charcoal transition-colors" href="#">Contact Us</a>
+                    </div>
+                </div>
+
+                <div class="flex flex-col md:items-end justify-between gap-6">
+                    <div class="flex gap-4">
+                        <a href="#"
+                            class="w-8 h-8 rounded-full border border-linen flex items-center justify-center text-pebble hover:text-charcoal hover:border-charcoal transition-all"
+                            aria-label="Globe">
+                            <span class="material-symbols-outlined text-sm">public</span>
+                        </a>
+                        <a href="#"
+                            class="w-8 h-8 rounded-full border border-linen flex items-center justify-center text-pebble hover:text-charcoal hover:border-charcoal transition-all"
+                            aria-label="Share">
+                            <span class="material-symbols-outlined text-sm">share</span>
+                        </a>
+                        <a href="#"
+                            class="w-8 h-8 rounded-full border border-linen flex items-center justify-center text-pebble hover:text-charcoal hover:border-charcoal transition-all"
+                            aria-label="Library">
+                            <span class="material-symbols-outlined text-sm">local_library</span>
+                        </a>
+                    </div>
+                    <div class="text-right text-[10px] text-pebble">
+                        © 2026 Features & Found. All rights reserved. <br />
+                        <a href="admin_dashboard.html" class="hover:underline text-sage font-medium">Portal Admin</a>
+                    </div>
                 </div>
             </div>
-        </section>
+        </footer>
 
-        <!-- Newsletter / Community -->
-        <section class="border-t border-linen py-16 md:py-24 bg-surface/50">
-            <div class="max-w-[600px] mx-auto px-6 text-center space-y-6">
-                <h3 class="text-2xl font-light tracking-tight text-charcoal">Join our <span
-                        class="font-normal italic">Inner Circle</span></h3>
-                <p class="text-sm text-pebble leading-relaxed">
-                    Receive early access to new season drops, exclusive member discounts, and curated style inspiration
-                    delivered straight to your inbox.
-                </p>
-                <form class="flex flex-col sm:flex-row gap-3 pt-4"
-                    onsubmit="event.preventDefault(); alert('Thank you for subscribing!');">
-                    <input
-                        class="flex-grow bg-canvas border border-linen rounded px-4 py-3 text-sm focus:outline-none focus:border-charcoal focus:ring-0 transition-colors placeholder:text-pebble/50"
-                        placeholder="Email Address" type="email" required />
-                    <button
-                        class="bg-charcoal text-canvas hover:bg-charcoal/90 px-8 py-3 text-xs uppercase tracking-widest font-semibold rounded shadow transition-all duration-300"
-                        type="submit">Sign Up</button>
-                </form>
-            </div>
-        </section>
-    </main>
+        <script>
+            window.addEventListener('scroll', () => {
+                const header = document.getElementById('mainHeader');
+                if (window.scrollY > 20) {
+                    header.classList.add('shadow-sm', 'bg-canvas/95');
+                    header.classList.remove('bg-canvas/80');
+                } else {
+                    header.classList.remove('shadow-sm', 'bg-canvas/95');
+                    header.classList.add('bg-canvas/80');
+                }
+            });
 
-    <!-- Footer -->
-    <footer class="w-full bg-surface border-t border-linen">
-        <div class="max-w-[1280px] mx-auto px-6 md:px-12 py-12 md:py-16 grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div class="space-y-4">
-                <div class="font-light text-xl tracking-tight text-charcoal">
-                    Features <span class="font-normal text-pebble">&</span> Found
-                </div>
-                <p class="text-xs text-pebble max-w-xs leading-relaxed">
-                    Curating timeless fashion for intentional living. We believe in elevated quality, sustainable
-                    sourcing, and the quiet confidence of a well-considered wardrobe.
-                </p>
-            </div>
+            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+            const closeMobileBtn = document.getElementById('closeMobileBtn');
+            const mobileOverlay = document.getElementById('mobileOverlay');
+            const mobileSidebar = document.getElementById('mobileSidebar');
 
-            <div class="grid grid-cols-2 gap-4">
-                <div class="flex flex-col gap-2.5">
-                    <h4 class="text-xs font-semibold text-charcoal uppercase tracking-widest mb-1">Explore</h4>
-                    <a class="text-xs text-pebble hover:text-charcoal transition-colors" href="shop.html">Shop
-                        Collection</a>
-                    <a class="text-xs text-pebble hover:text-charcoal transition-colors" href="search.html">Search
-                        Items</a>
-                    <a class="text-xs text-pebble hover:text-charcoal transition-colors" href="login.html">My
-                        Account</a>
-                </div>
-                <div class="flex flex-col gap-2.5">
-                    <h4 class="text-xs font-semibold text-charcoal uppercase tracking-widest mb-1">Company</h4>
-                    <a class="text-xs text-pebble hover:text-charcoal transition-colors" href="#">Sourcing Ethos</a>
-                    <a class="text-xs text-pebble hover:text-charcoal transition-colors" href="#">Sustainability</a>
-                    <a class="text-xs text-pebble hover:text-charcoal transition-colors" href="#">Contact Us</a>
-                </div>
-            </div>
-
-            <div class="flex flex-col md:items-end justify-between gap-6">
-                <div class="flex gap-4">
-                    <a href="#"
-                        class="w-8 h-8 rounded-full border border-linen flex items-center justify-center text-pebble hover:text-charcoal hover:border-charcoal transition-all"
-                        aria-label="Globe">
-                        <span class="material-symbols-outlined text-sm">public</span>
-                    </a>
-                    <a href="#"
-                        class="w-8 h-8 rounded-full border border-linen flex items-center justify-center text-pebble hover:text-charcoal hover:border-charcoal transition-all"
-                        aria-label="Share">
-                        <span class="material-symbols-outlined text-sm">share</span>
-                    </a>
-                    <a href="#"
-                        class="w-8 h-8 rounded-full border border-linen flex items-center justify-center text-pebble hover:text-charcoal hover:border-charcoal transition-all"
-                        aria-label="Library">
-                        <span class="material-symbols-outlined text-sm">local_library</span>
-                    </a>
-                </div>
-                <div class="text-right text-[10px] text-pebble">
-                    © 2026 Features & Found. All rights reserved. <br />
-                    <a href="admin_dashboard.html" class="hover:underline text-sage font-medium">Portal Admin</a>
-                </div>
-            </div>
-        </div>
-    </footer>
-
-    <script>
-        window.addEventListener('scroll', () => {
-            const header = document.getElementById('mainHeader');
-            if (window.scrollY > 20) {
-                header.classList.add('shadow-sm', 'bg-canvas/95');
-                header.classList.remove('bg-canvas/80');
-            } else {
-                header.classList.remove('shadow-sm', 'bg-canvas/95');
-                header.classList.add('bg-canvas/80');
+            function toggleMenu(show) {
+                if (show) {
+                    mobileOverlay.classList.remove('hidden');
+                    setTimeout(() => mobileOverlay.classList.add('opacity-100'), 10);
+                    mobileSidebar.classList.remove('-translate-x-full');
+                } else {
+                    mobileOverlay.classList.remove('opacity-100');
+                    setTimeout(() => mobileOverlay.classList.add('hidden'), 300);
+                    mobileSidebar.classList.add('-translate-x-full');
+                }
             }
-        });
 
-        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
-        const closeMobileBtn = document.getElementById('closeMobileBtn');
-        const mobileOverlay = document.getElementById('mobileOverlay');
-        const mobileSidebar = document.getElementById('mobileSidebar');
-
-        function toggleMenu(show) {
-            if (show) {
-                mobileOverlay.classList.remove('hidden');
-                setTimeout(() => mobileOverlay.classList.add('opacity-100'), 10);
-                mobileSidebar.classList.remove('-translate-x-full');
-            } else {
-                mobileOverlay.classList.remove('opacity-100');
-                setTimeout(() => mobileOverlay.classList.add('hidden'), 300);
-                mobileSidebar.classList.add('-translate-x-full');
-            }
-        }
-
-        mobileMenuBtn.addEventListener('click', () => toggleMenu(true));
-        closeMobileBtn.addEventListener('click', () => toggleMenu(false));
-        mobileOverlay.addEventListener('click', () => toggleMenu(false));
-    </script>
+            mobileMenuBtn.addEventListener('click', () => toggleMenu(true));
+            closeMobileBtn.addEventListener('click', () => toggleMenu(false));
+            mobileOverlay.addEventListener('click', () => toggleMenu(false));
+        </script>
 </body>
 
 </html>

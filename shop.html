@@ -61,7 +61,7 @@
             <div class="flex-grow max-w-md mx-4 relative hidden sm:block">
                 <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-pebble text-xl">search</span>
                 <input class="w-full bg-surface/60 py-2 pl-10 pr-4 text-xs rounded-full border border-linen focus:outline-none focus:bg-canvas focus:ring-1 focus:ring-charcoal focus:border-charcoal transition-all placeholder:text-pebble/60" 
-                    placeholder="Search product name or category..." type="text" id="navSearchInput" oninput="runSearch()"/>
+                    placeholder="Search product name, category, or material..." type="text" id="navSearchInput" oninput="runSearch()"/>
             </div>
 
             <!-- Right: Actions -->
@@ -348,7 +348,9 @@
         // --- Search & Filters logic ---
         function runSearch() {
             // Read search inputs (sync desktop and mobile search value)
-            const query = (document.getElementById('navSearchInput').value || document.getElementById('mobileNavSearchInput').value || "").toLowerCase().trim();
+            const desktopInput = document.getElementById('navSearchInput');
+            const mobileInput = document.getElementById('mobileNavSearchInput');
+            const query = ((desktopInput ? desktopInput.value : "") || (mobileInput ? mobileInput.value : "") || "").toLowerCase().trim();
             
             // Read price limit
             const maxPrice = parseFloat(document.getElementById('priceRange').value);
