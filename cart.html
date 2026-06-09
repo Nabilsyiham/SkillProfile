@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Features & Found | Your Shopping Bag</title>
+    <!-- Tailwind CSS with Forms and Container Queries -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <!-- Google Fonts & Material Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "canvas": "#FAF9F5",
+                        "surface": "#F3F2EC",
+                        "surface-high": "#EBEAE3",
+                        "charcoal": "#1E1E1C",
+                        "pebble": "#7B7973",
+                        "linen": "#E4E2D9",
+                        "sage": "#8D9387",
+                        "clay": "#C8C2B8",
+                    },
+                    fontFamily: {
+                        sans: ["Manrope", "sans-serif"],
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="global.css"/>
+</head>
+<body class="bg-canvas text-charcoal font-sans antialiased selection:bg-surface-high selection:text-charcoal">
+
+    <!-- Sticky Header -->
+    <header class="w-full sticky top-0 z-50 backdrop-blur-md bg-canvas/80 border-b border-linen transition-all duration-300" id="mainHeader">
+        <nav class="max-w-[1280px] mx-auto px-6 md:px-12 flex justify-between items-center h-20">
+            <!-- Left: Mobile Menu Trigger / Brand -->
+            <div class="flex items-center gap-4">
+                <button class="md:hidden p-1 text-charcoal hover:text-pebble transition-colors" id="mobileMenuBtn" aria-label="Open menu">
+                    <span class="material-symbols-outlined text-2xl">menu</span>
+                </button>
+                <a href="index.html" class="font-light text-xl md:text-2xl tracking-tight text-charcoal hover:opacity-85 transition-opacity">
+                    Features <span class="font-normal text-pebble">&</span> Found
+                </a>
+            </div>
+
+            <!-- Middle: Nav Links (Desktop) -->
+            <ul class="hidden md:flex gap-8 items-center text-sm font-medium tracking-wide uppercase text-pebble">
+                <li><a href="index.html" class="hover:text-charcoal transition-colors">Home</a></li>
+                <li><a href="shop.html" class="hover:text-charcoal transition-colors">Shop</a></li>
+                <li><a href="search.html" class="hover:text-charcoal transition-colors">Search</a></li>
+                <li><a href="user_dashboard.html" class="hover:text-charcoal transition-colors">Profile</a></li>
+            </ul>
+
+            <!-- Right: Actions -->
+            <div class="flex items-center gap-4">
+                <a href="login.html" class="hidden sm:inline-flex text-sm font-medium uppercase text-pebble hover:text-charcoal transition-colors">Sign In</a>
+                <a href="cart.html" class="relative p-1 text-charcoal hover:text-pebble transition-colors" aria-label="Shopping cart">
+                    <span class="material-symbols-outlined text-2xl">shopping_bag</span>
+                    <span class="absolute -top-1 -right-1 w-4 h-4 bg-charcoal text-canvas text-[9px] font-bold rounded-full flex items-center justify-center animate-bounce" id="cartBadge">3</span>
+                </a>
+            </div>
+        </nav>
+
+        <!-- Mobile Drawer Navigation -->
+        <div class="fixed inset-0 bg-charcoal/20 z-40 hidden transition-opacity duration-300" id="mobileOverlay"></div>
+        <aside class="fixed top-0 left-0 bottom-0 w-72 bg-canvas border-r border-linen z-50 transform -translate-x-full transition-transform duration-300 ease-in-out md:hidden flex flex-col" id="mobileSidebar">
+            <div class="flex justify-between items-center p-6 border-b border-linen">
+                <span class="font-light text-lg tracking-tight">Menu</span>
+                <button class="p-1 hover:text-pebble transition-colors" id="closeMobileBtn">
+                    <span class="material-symbols-outlined text-xl">close</span>
+                </button>
+            </div>
+            <nav class="flex-1 p-6 space-y-6">
+                <a href="index.html" class="block text-lg text-pebble hover:text-charcoal transition-colors">Home</a>
+                <a href="shop.html" class="block text-lg text-pebble hover:text-charcoal transition-colors">Shop</a>
+                <a href="search.html" class="block text-lg text-pebble hover:text-charcoal transition-colors">Search</a>
+                <a href="user_dashboard.html" class="block text-lg text-pebble hover:text-charcoal transition-colors">Profile</a>
+                <a href="login.html" class="block text-lg text-pebble hover:text-charcoal transition-colors">Sign In / Register</a>
+                <a href="admin_dashboard.html" class="block text-sm text-sage hover:text-charcoal transition-colors pt-6 border-t border-linen">Admin Panel</a>
+            </nav>
+            <div class="p-6 border-t border-linen text-xs text-pebble">
+                © 2026 Features & Found.
+            </div>
+        </aside>
+    </header>
+
+    <main class="max-w-[1280px] mx-auto px-6 md:px-12 py-12 md:py-16 flex-grow">
+        <div class="flex items-baseline justify-between mb-8 border-b border-linen pb-4">
+            <h1 class="text-3xl font-light tracking-tight text-charcoal">Your <span class="font-normal italic">Shopping Bag</span></h1>
+            <span class="text-sm font-semibold uppercase text-pebble" id="cartCountHeader">3 Items</span>
+        </div>
+
+        <!-- Empty State Container -->
+        <div id="emptyCartState" class="hidden text-center py-20 space-y-6">
+            <span class="material-symbols-outlined text-6xl text-pebble/30">shopping_bag</span>
+            <h2 class="text-xl font-light text-pebble">Your shopping bag is empty.</h2>
+            <a href="shop.html" class="inline-block bg-charcoal text-canvas hover:bg-charcoal/90 px-8 py-3 rounded text-xs uppercase tracking-widest font-semibold transition-all">Go Shop Catalog</a>
+        </div>
+
+        <!-- Main Cart Grid -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-12 items-start" id="cartGrid">
+            <!-- Left Side: List of Items (Takes 2 cols) -->
+            <div class="lg:col-span-2 divide-y divide-linen">
+                <!-- Cart Item 1 -->
+                <div class="flex gap-6 py-6 items-start cart-item" data-price="145.00">
+                    <div class="w-24 h-32 md:w-32 md:h-40 flex-shrink-0 bg-surface overflow-hidden rounded-lg border border-linen">
+                        <img alt="Linen Shirt" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAUKXZPf2WLSzV19cYNvGnbWDt0aCW4FtVCzkuPsm_xYhzZP_T9GKTpUFfahh3N4vQswKh_iN1UN5lz6Qh9nQF9QoLx2JZ5dL_DnkAOpvvCXTBMv_AXkuv2u9Ma7olpciu00loorDsgSCROp9MdyPBapTlXHcqmz50UM6XBiyJT7s6VFU3GUNrs0aGMCslB-PLjCkkcvUUBf4maiaOW-kM-yXG2DU4MUSnyEUnnsgszq6iwG8zmlfnF5ey6SFG7W2wSuepuJ6K24Cs"/>
+                    </div>
+                    <div class="flex flex-col flex-grow justify-between min-h-[128px] md:min-h-[160px] py-1">
+                        <div class="flex justify-between items-start gap-4">
+                            <div>
+                                <h3 class="text-base md:text-lg font-light text-charcoal">Found: Linen Shirt</h3>
+                                <p class="text-xs text-pebble mt-1 font-medium">Size: M | Color: Bone</p>
+                            </div>
+                            <span class="text-sm font-semibold text-charcoal item-price-display">$145.00</span>
+                        </div>
+                        <div class="flex items-center justify-between mt-auto">
+                            <!-- Quantity Controls -->
+                            <div class="flex items-center border border-linen bg-surface px-3 py-1 rounded">
+                                <button class="hover:text-pebble transition-colors" onclick="updateQty(this, -1)" aria-label="Decrease quantity">
+                                    <span class="material-symbols-outlined text-base font-bold">remove</span>
+                                </button>
+                                <span class="mx-4 font-semibold text-sm item-qty">1</span>
+                                <button class="hover:text-pebble transition-colors" onclick="updateQty(this, 1)" aria-label="Increase quantity">
+                                    <span class="material-symbols-outlined text-base font-bold">add</span>
+                                </button>
+                            </div>
+                            <!-- Remove button -->
+                            <button class="text-pebble hover:text-charcoal transition-colors flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider" onclick="removeCartItem(this)">
+                                <span class="material-symbols-outlined text-base">delete</span>
+                                Remove
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Cart Item 2 -->
+                <div class="flex gap-6 py-6 items-start cart-item" data-price="299.00">
+                    <div class="w-24 h-32 md:w-32 md:h-40 flex-shrink-0 bg-surface overflow-hidden rounded-lg border border-linen">
+                        <img alt="Studio Headphones" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBKTCgpzx3VvaDAiHVjYkL7QB3XBrjMEy_U-l6lij3e9KmLfKhuNJachDlxmWLCTrqWHVcDsK-OzCyUXNHbyOxG_v0G1vsFmA9Rc4b_NMGULITBcx0MpFSsLsuHxojMN5UjebLxd7zOCCVrBdG1xUdjrFi8-qZEI366JZabrqSWi4u0Bd2fnRMf6VU20HTQOLYeuil8ncjgjSByvjN1T8CUL4EtvE9LAua2JMeTr3MWoYTsHQRJ8jLIxP-1ixbgc9eSeQGYy6WW9yE"/>
+                    </div>
+                    <div class="flex flex-col flex-grow justify-between min-h-[128px] md:min-h-[160px] py-1">
+                        <div class="flex justify-between items-start gap-4">
+                            <div>
+                                <h3 class="text-base md:text-lg font-light text-charcoal">Features: Series 1</h3>
+                                <p class="text-xs text-pebble mt-1 font-medium">Finish: Matte Black</p>
+                            </div>
+                            <span class="text-sm font-semibold text-charcoal item-price-display">$299.00</span>
+                        </div>
+                        <div class="flex items-center justify-between mt-auto">
+                            <!-- Quantity Controls -->
+                            <div class="flex items-center border border-linen bg-surface px-3 py-1 rounded">
+                                <button class="hover:text-pebble transition-colors" onclick="updateQty(this, -1)">
+                                    <span class="material-symbols-outlined text-base font-bold">remove</span>
+                                </button>
+                                <span class="mx-4 font-semibold text-sm item-qty">1</span>
+                                <button class="hover:text-pebble transition-colors" onclick="updateQty(this, 1)">
+                                    <span class="material-symbols-outlined text-base font-bold">add</span>
+                                </button>
+                            </div>
+                            <button class="text-pebble hover:text-charcoal transition-colors flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider" onclick="removeCartItem(this)">
+                                <span class="material-symbols-outlined text-base">delete</span>
+                                Remove
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Cart Item 3 -->
+                <div class="flex gap-6 py-6 items-start cart-item" data-price="85.00">
+                    <div class="w-24 h-32 md:w-32 md:h-40 flex-shrink-0 bg-surface overflow-hidden rounded-lg border border-linen">
+                        <img alt="Woolen Scarf" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDw1DJUfdEkLAmUCoeshJOkJ9xAIi3qVyED_Ugcr1rG-oboskrO9dUhnm38EzmaMx7JVIZDCBomJfL9btFwoS6XZhf2sBmlVJRITCQuTSW6vMJP0Zl11uNtx8vzHyeiP7cJhdVkLl0eBDBPg0v9-CEi5S0t2g9Xeh3cf2_Ck2nta-j2ZU-4eN_RIwrChXxLWZXhWh13PEru12N7XdsAxlSZaY4B2BsZ9EsE7X3OE08d5bQHmc8UZm9kyxUifT8rNTltE9xFtwi51-U"/>
+                    </div>
+                    <div class="flex flex-col flex-grow justify-between min-h-[128px] md:min-h-[160px] py-1">
+                        <div class="flex justify-between items-start gap-4">
+                            <div>
+                                <h3 class="text-base md:text-lg font-light text-charcoal">Found: Heavy Knit</h3>
+                                <p class="text-xs text-pebble mt-1 font-medium">Color: Charcoal</p>
+                            </div>
+                            <span class="text-sm font-semibold text-charcoal item-price-display">$85.00</span>
+                        </div>
+                        <div class="flex items-center justify-between mt-auto">
+                            <!-- Quantity Controls -->
+                            <div class="flex items-center border border-linen bg-surface px-3 py-1 rounded">
+                                <button class="hover:text-pebble transition-colors" onclick="updateQty(this, -1)">
+                                    <span class="material-symbols-outlined text-base font-bold">remove</span>
+                                </button>
+                                <span class="mx-4 font-semibold text-sm item-qty">1</span>
+                                <button class="hover:text-pebble transition-colors" onclick="updateQty(this, 1)">
+                                    <span class="material-symbols-outlined text-base font-bold">add</span>
+                                </button>
+                            </div>
+                            <button class="text-pebble hover:text-charcoal transition-colors flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider" onclick="removeCartItem(this)">
+                                <span class="material-symbols-outlined text-base">delete</span>
+                                Remove
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Side: Order Summary Card -->
+            <aside>
+                <div class="bg-surface p-6 md:p-8 rounded-lg border border-linen space-y-6 sticky top-28">
+                    <h2 class="text-lg font-bold uppercase tracking-widest text-charcoal">Order Summary</h2>
+                    
+                    <div class="space-y-4 text-sm font-light">
+                        <div class="flex justify-between">
+                            <span class="text-pebble">Subtotal</span>
+                            <span class="font-semibold text-charcoal" id="subtotalDisplay">$529.00</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-pebble">Shipping</span>
+                            <span class="font-semibold text-sage" id="shippingDisplay">FREE</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-pebble">Estimated Tax</span>
+                            <span class="font-semibold text-charcoal">$0.00</span>
+                        </div>
+                        <div class="border-t border-linen pt-4 flex justify-between text-base font-semibold">
+                            <span class="text-charcoal">Total Amount</span>
+                            <span class="text-charcoal" id="totalDisplay">$529.00</span>
+                        </div>
+                    </div>
+
+                    <!-- Promo code input -->
+                    <div class="pt-4 border-t border-linen">
+                        <label class="text-[10px] font-bold tracking-widest uppercase text-pebble block mb-2">Have a Voucher?</label>
+                        <div class="flex gap-2">
+                            <input type="text" class="flex-grow bg-canvas border border-linen rounded px-3 py-2 text-xs uppercase focus:outline-none focus:border-charcoal focus:ring-0 placeholder:text-pebble/40" placeholder="e.g. FOUNDER20" id="promoInput"/>
+                            <button class="bg-charcoal text-canvas hover:bg-charcoal/90 px-4 py-2 text-xs uppercase tracking-wider font-semibold rounded" onclick="applyPromo()">Apply</button>
+                        </div>
+                    </div>
+
+                    <!-- Checkout Button -->
+                    <button class="w-full bg-charcoal text-canvas hover:bg-charcoal/95 py-4 rounded text-xs uppercase tracking-widest font-semibold transition-all duration-300 transform active:scale-[0.98]" onclick="proceedToCheckout()">
+                        Proceed to Checkout
+                    </button>
+                    
+                    <p class="text-[10px] text-pebble text-center leading-relaxed font-medium">
+                        * Free shipping applies for orders above $250.
+                    </p>
+
+                    <div class="pt-6 border-t border-linen space-y-3.5 text-xs text-pebble">
+                        <div class="flex items-center gap-2.5">
+                            <span class="material-symbols-outlined text-base">verified</span>
+                            <span>Curated Quality Guarantee</span>
+                        </div>
+                        <div class="flex items-center gap-2.5">
+                            <span class="material-symbols-outlined text-base">local_shipping</span>
+                            <span>Secure, Climate-Neutral Delivery</span>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="w-full bg-surface border-t border-linen">
+        <div class="max-w-[1280px] mx-auto px-6 md:px-12 py-12 md:py-16 grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="space-y-4">
+                <div class="font-light text-xl tracking-tight text-charcoal">
+                    Features <span class="font-normal text-pebble">&</span> Found
+                </div>
+                <p class="text-xs text-pebble max-w-xs leading-relaxed">
+                    Curating timeless, handcrafted artifacts for intentional living. We believe in high-quality craftsmanship, sustainable sourcing, and the quiet poetry of daily rituals.
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-2 gap-4">
+                <div class="flex flex-col gap-2.5">
+                    <h4 class="text-xs font-semibold text-charcoal uppercase tracking-widest mb-1">Explore</h4>
+                    <a class="text-xs text-pebble hover:text-charcoal transition-colors" href="shop.html">Shop Catalog</a>
+                    <a class="text-xs text-pebble hover:text-charcoal transition-colors" href="search.html">Search Items</a>
+                    <a class="text-xs text-pebble hover:text-charcoal transition-colors" href="login.html">My Account</a>
+                </div>
+                <div class="flex flex-col gap-2.5">
+                    <h4 class="text-xs font-semibold text-charcoal uppercase tracking-widest mb-1">Company</h4>
+                    <a class="text-xs text-pebble hover:text-charcoal transition-colors" href="#">Sourcing Ethos</a>
+                    <a class="text-xs text-pebble hover:text-charcoal transition-colors" href="#">Sustainability</a>
+                    <a class="text-xs text-pebble hover:text-charcoal transition-colors" href="#">Contact Us</a>
+                </div>
+            </div>
+            
+            <div class="flex flex-col md:items-end justify-between gap-6">
+                <div class="flex gap-4">
+                    <a href="#" class="w-8 h-8 rounded-full border border-linen flex items-center justify-center text-pebble hover:text-charcoal hover:border-charcoal transition-all" aria-label="Globe">
+                        <span class="material-symbols-outlined text-sm">public</span>
+                    </a>
+                    <a href="#" class="w-8 h-8 rounded-full border border-linen flex items-center justify-center text-pebble hover:text-charcoal hover:border-charcoal transition-all" aria-label="Share">
+                        <span class="material-symbols-outlined text-sm">share</span>
+                    </a>
+                    <a href="#" class="w-8 h-8 rounded-full border border-linen flex items-center justify-center text-pebble hover:text-charcoal hover:border-charcoal transition-all" aria-label="Library">
+                        <span class="material-symbols-outlined text-sm">local_library</span>
+                    </a>
+                </div>
+                <div class="text-right text-[10px] text-pebble">
+                    © 2026 Features & Found. All rights reserved. <br/>
+                    <a href="admin_dashboard.html" class="hover:underline text-sage font-medium">Portal Admin</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+        // Header scroll behavior
+        window.addEventListener('scroll', () => {
+            const header = document.getElementById('mainHeader');
+            if (window.scrollY > 20) {
+                header.classList.add('shadow-sm', 'bg-canvas/95');
+                header.classList.remove('bg-canvas/80');
+            } else {
+                header.classList.remove('shadow-sm', 'bg-canvas/95');
+                header.classList.add('bg-canvas/80');
+            }
+        });
+
+        // Interactive Math for Shopping Cart
+        const cartBadge = document.getElementById('cartBadge');
+        const cartCountHeader = document.getElementById('cartCountHeader');
+        const subtotalDisplay = document.getElementById('subtotalDisplay');
+        const shippingDisplay = document.getElementById('shippingDisplay');
+        const totalDisplay = document.getElementById('totalDisplay');
+        const cartGrid = document.getElementById('cartGrid');
+        const emptyState = document.getElementById('emptyCartState');
+        
+        let discountPct = 0; // percentage discount if code applied
+
+        function calculateTotals() {
+            const items = document.querySelectorAll('.cart-item');
+            let subtotal = 0;
+            let totalQty = 0;
+
+            items.forEach(item => {
+                const price = parseFloat(item.getAttribute('data-price'));
+                const qty = parseInt(item.querySelector('.item-qty').innerText);
+                subtotal += price * qty;
+                totalQty += qty;
+            });
+
+            // Update badge & header text
+            cartBadge.innerText = totalQty;
+            cartCountHeader.innerText = `${totalQty} Item${totalQty === 1 ? '' : 's'}`;
+
+            if (totalQty === 0) {
+                cartGrid.classList.add('hidden');
+                emptyState.classList.remove('hidden');
+                cartBadge.classList.add('hidden');
+                return;
+            } else {
+                cartGrid.classList.remove('hidden');
+                emptyState.classList.add('hidden');
+                cartBadge.classList.remove('hidden');
+            }
+
+            // Shipping rules
+            let shippingFee = 0;
+            if (subtotal < 250) {
+                shippingFee = 15;
+                shippingDisplay.innerText = `$15.00`;
+                shippingDisplay.classList.remove('text-sage');
+                shippingDisplay.classList.add('text-charcoal');
+            } else {
+                shippingFee = 0;
+                shippingDisplay.innerText = 'FREE';
+                shippingDisplay.classList.remove('text-charcoal');
+                shippingDisplay.classList.add('text-sage');
+            }
+
+            // Apply discount
+            let discountAmt = subtotal * (discountPct / 100);
+            let finalTotal = subtotal + shippingFee - discountAmt;
+
+            subtotalDisplay.innerText = `$${subtotal.toFixed(2)}`;
+            totalDisplay.innerText = `$${finalTotal.toFixed(2)}`;
+        }
+
+        function updateQty(btnElement, delta) {
+            const qtySpan = btnElement.parentElement.querySelector('.item-qty');
+            let currentQty = parseInt(qtySpan.innerText);
+            let newQty = currentQty + delta;
+            
+            if (newQty >= 1) {
+                qtySpan.innerText = newQty;
+                
+                // Visual feedback
+                const itemContainer = btnElement.closest('.cart-item');
+                const price = parseFloat(itemContainer.getAttribute('data-price'));
+                itemContainer.querySelector('.item-price-display').innerText = `$${(price * newQty).toFixed(2)}`;
+                
+                calculateTotals();
+            }
+        }
+
+        function removeCartItem(btnElement) {
+            const itemContainer = btnElement.closest('.cart-item');
+            
+            // Fade out animation simulation
+            itemContainer.classList.add('opacity-0', 'transition-opacity', 'duration-300');
+            setTimeout(() => {
+                itemContainer.remove();
+                calculateTotals();
+            }, 300);
+        }
+
+        function applyPromo() {
+            const code = document.getElementById('promoInput').value.trim().toUpperCase();
+            if (code === 'FOUNDER20') {
+                discountPct = 20;
+                alert('Voucher Code FOUNDER20 applied! You get 20% discount on order subtotal.');
+                calculateTotals();
+            } else if (code === 'WELCOME10') {
+                discountPct = 10;
+                alert('Voucher Code WELCOME10 applied! You get 10% discount on order subtotal.');
+                calculateTotals();
+            } else {
+                alert('Invalid code. Please try "FOUNDER20" or "WELCOME10".');
+            }
+        }
+
+        function proceedToCheckout() {
+            alert('Proceeding to secure checkout payment gateway mock. Thank you for shopping!');
+            location.href = 'user_dashboard.html';
+        }
+
+        // Mobile Menu Trigger
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const closeMobileBtn = document.getElementById('closeMobileBtn');
+        const mobileOverlay = document.getElementById('mobileOverlay');
+        const mobileSidebar = document.getElementById('mobileSidebar');
+
+        function toggleMenu(show) {
+            if (show) {
+                mobileOverlay.classList.remove('hidden');
+                setTimeout(() => mobileOverlay.classList.add('opacity-100'), 10);
+                mobileSidebar.classList.remove('-translate-x-full');
+            } else {
+                mobileOverlay.classList.remove('opacity-100');
+                setTimeout(() => mobileOverlay.classList.add('hidden'), 300);
+                mobileSidebar.classList.add('-translate-x-full');
+            }
+        }
+
+        mobileMenuBtn.addEventListener('click', () => toggleMenu(true));
+        closeMobileBtn.addEventListener('click', () => toggleMenu(false));
+        mobileOverlay.addEventListener('click', () => toggleMenu(false));
+    </script>
+</body>
+</html>
