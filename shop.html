@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-    <title>Features & Found | The Curated Collection</title>
+    <title>Features & Found | Shop</title>
     <!-- Tailwind CSS with Forms and Container Queries -->
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
     <!-- Google Fonts & Material Icons -->
@@ -44,9 +44,9 @@
     <header
         class="w-full sticky top-0 z-50 backdrop-blur-md bg-canvas/80 border-b border-linen transition-all duration-300"
         id="mainHeader">
-        <nav class="max-w-[1280px] mx-auto px-6 md:px-12 flex justify-between items-center h-20">
+        <nav class="max-w-[1280px] mx-auto px-6 md:px-12 flex justify-between items-center h-20 gap-4">
             <!-- Left: Mobile Menu Trigger / Brand -->
-            <div class="flex items-center gap-4">
+            <div class="flex items-center gap-4 flex-shrink-0">
                 <button class="md:hidden p-1 text-charcoal hover:text-pebble transition-colors" id="mobileMenuBtn"
                     aria-label="Open menu">
                     <span class="material-symbols-outlined text-2xl">menu</span>
@@ -57,18 +57,17 @@
                 </a>
             </div>
 
-            <!-- Middle: Nav Links (Desktop) -->
-            <ul class="hidden md:flex gap-8 items-center text-sm font-medium tracking-wide uppercase text-pebble">
-                <li><a href="index.html" class="hover:text-charcoal transition-colors">Home</a></li>
-                <li><a href="shop.html" class="text-charcoal border-b border-charcoal pb-1 transition-all">Shop</a></li>
-                <li><a href="search.html" class="hover:text-charcoal transition-colors">Search</a></li>
-                <li><a href="user_dashboard.html" class="hover:text-charcoal transition-colors">Profile</a></li>
-            </ul>
+            <!-- Middle: Search Input inside Navbar -->
+            <div class="flex-grow max-w-md mx-4 relative hidden sm:block">
+                <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-pebble text-xl">search</span>
+                <input class="w-full bg-surface/60 py-2 pl-10 pr-4 text-xs rounded-full border border-linen focus:outline-none focus:bg-canvas focus:ring-1 focus:ring-charcoal focus:border-charcoal transition-all placeholder:text-pebble/60" 
+                    placeholder="Search product name or category..." type="text" id="navSearchInput" oninput="runSearch()"/>
+            </div>
 
             <!-- Right: Actions -->
-            <div class="flex items-center gap-4">
+            <div class="flex items-center gap-4 flex-shrink-0">
                 <a href="login.html"
-                    class="hidden sm:inline-flex text-sm font-medium uppercase text-pebble hover:text-charcoal transition-colors">Sign
+                    class="hidden md:inline-flex text-sm font-medium uppercase text-pebble hover:text-charcoal transition-colors">Sign
                     In</a>
                 <a href="cart.html" class="relative p-1 text-charcoal hover:text-pebble transition-colors"
                     aria-label="Shopping cart">
@@ -94,7 +93,6 @@
             <nav class="flex-1 p-6 space-y-6">
                 <a href="index.html" class="block text-lg text-pebble hover:text-charcoal transition-colors">Home</a>
                 <a href="shop.html" class="block text-lg font-medium text-charcoal">Shop</a>
-                <a href="search.html" class="block text-lg text-pebble hover:text-charcoal transition-colors">Search</a>
                 <a href="user_dashboard.html"
                     class="block text-lg text-pebble hover:text-charcoal transition-colors">Profile</a>
                 <a href="login.html" class="block text-lg text-pebble hover:text-charcoal transition-colors">Sign In /
@@ -111,18 +109,26 @@
 
     <main class="max-w-[1280px] mx-auto px-6 md:px-12 py-12 md:py-16">
         <!-- Editorial Header -->
-        <section class="mb-12">
-            <nav class="flex gap-2 text-xs uppercase tracking-wider text-pebble mb-4">
-                <a href="index.html" class="hover:text-charcoal">Home</a>
-                <span>/</span>
-                <span class="text-charcoal font-medium">Shop</span>
-            </nav>
-            <h1 class="text-3xl md:text-5xl font-light tracking-tight text-charcoal mb-4">The Curated <span
-                    class="font-normal italic">Collection</span></h1>
-            <p class="text-sm md:text-base text-pebble max-w-2xl leading-relaxed">
-                A selection of hand-crafted fashion pieces — from elevated knitwear and tailored separates to artisan
-                footwear and fine leather goods. Each item is chosen for its exceptional quality and enduring style.
-            </p>
+        <section class="mb-8 flex flex-col sm:flex-row justify-between items-start sm:items-end gap-6">
+            <div>
+                <nav class="flex gap-2 text-xs uppercase tracking-wider text-pebble mb-4">
+                    <a href="index.html" class="hover:text-charcoal">Home</a>
+                    <span>/</span>
+                    <span class="text-charcoal font-medium">Shop</span>
+                </nav>
+                <h1 class="text-3xl md:text-5xl font-light tracking-tight text-charcoal mb-4">The Curated <span
+                        class="font-normal italic">Collection</span></h1>
+                <p class="text-sm md:text-base text-pebble max-w-xl leading-relaxed">
+                    A selection of hand-crafted fashion pieces chosen for exceptional quality and enduring style.
+                </p>
+            </div>
+            
+            <!-- Mobile Search Bar (only visible on mobile screens below sm) -->
+            <div class="relative w-full sm:hidden border border-linen rounded-lg overflow-hidden mt-2">
+                <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-pebble text-xl">search</span>
+                <input class="w-full bg-surface py-2.5 pl-10 pr-4 text-xs focus:outline-none focus:bg-canvas focus:ring-1 focus:ring-charcoal border-0 placeholder:text-pebble/60" 
+                    placeholder="Search product..." type="text" id="mobileNavSearchInput" oninput="runSearch()"/>
+            </div>
         </section>
 
         <!-- Layout Wrapper -->
@@ -136,7 +142,7 @@
                     <span class="material-symbols-outlined text-sm">tune</span>
                     Filters
                 </button>
-                <div class="text-xs text-pebble font-medium">Showing 6 Products</div>
+                <div class="text-xs text-pebble font-medium" id="mobileProductCount">Showing 7 Products</div>
             </div>
 
             <!-- Desktop Sidebar Filters -->
@@ -145,21 +151,24 @@
                     <!-- Categories -->
                     <div>
                         <h3 class="text-xs font-bold uppercase tracking-widest text-charcoal mb-4">Categories</h3>
-                        <ul class="space-y-2 text-sm text-pebble">
-                            <li><button
-                                    class="w-full text-left font-medium text-charcoal border-l-2 border-charcoal pl-2.5">All
+                        <ul class="space-y-2 text-sm text-pebble" id="desktopCategoryList">
+                            <li><button onclick="filterCategory('All')"
+                                    class="category-btn w-full text-left font-medium text-charcoal border-l-2 border-charcoal pl-2.5 transition-all">All
                                     Products</button></li>
-                            <li><button
-                                    class="w-full text-left hover:text-charcoal pl-2.5 transition-colors">Tops</button>
+                            <li><button onclick="filterCategory('Cardigan')"
+                                    class="category-btn w-full text-left hover:text-charcoal pl-2.5 transition-colors">Cardigan</button>
                             </li>
-                            <li><button
-                                    class="w-full text-left hover:text-charcoal pl-2.5 transition-colors">Shoes</button>
+                            <li><button onclick="filterCategory('Bags')"
+                                    class="category-btn w-full text-left hover:text-charcoal pl-2.5 transition-colors">Bags</button>
                             </li>
-                            <li><button
-                                    class="w-full text-left hover:text-charcoal pl-2.5 transition-colors">Bags</button>
+                            <li><button onclick="filterCategory('Shoes')"
+                                    class="category-btn w-full text-left hover:text-charcoal pl-2.5 transition-colors">Shoes</button>
                             </li>
-                            <li><button
-                                    class="w-full text-left hover:text-charcoal pl-2.5 transition-colors">Accessories</button>
+                            <li><button onclick="filterCategory('Pants')"
+                                    class="category-btn w-full text-left hover:text-charcoal pl-2.5 transition-colors">Pants</button>
+                            </li>
+                            <li><button onclick="filterCategory('Shirt')"
+                                    class="category-btn w-full text-left hover:text-charcoal pl-2.5 transition-colors">Shirt</button>
                             </li>
                         </ul>
                     </div>
@@ -168,25 +177,28 @@
                     <div>
                         <h3 class="text-xs font-bold uppercase tracking-widest text-charcoal mb-4">Materials</h3>
                         <div class="flex flex-wrap gap-2">
-                            <span
-                                class="px-3 py-1 bg-surface border border-linen rounded-full text-xs text-pebble hover:border-charcoal hover:text-charcoal cursor-pointer transition-colors">Cashmere</span>
-                            <span
-                                class="px-3 py-1 bg-surface border border-linen rounded-full text-xs text-pebble hover:border-charcoal hover:text-charcoal cursor-pointer transition-colors">Leather</span>
-                            <span
-                                class="px-3 py-1 bg-surface border border-linen rounded-full text-xs text-pebble hover:border-charcoal hover:text-charcoal cursor-pointer transition-colors">Silk</span>
-                            <span
-                                class="px-3 py-1 bg-surface border border-linen rounded-full text-xs text-pebble hover:border-charcoal hover:text-charcoal cursor-pointer transition-colors">Wool</span>
+                            <span onclick="toggleMaterialFilter('Cashmere', this)"
+                                class="material-chip px-3 py-1 bg-surface border border-linen rounded-full text-xs text-pebble hover:border-charcoal hover:text-charcoal cursor-pointer transition-colors">Cashmere</span>
+                            <span onclick="toggleMaterialFilter('Leather', this)"
+                                class="material-chip px-3 py-1 bg-surface border border-linen rounded-full text-xs text-pebble hover:border-charcoal hover:text-charcoal cursor-pointer transition-colors">Leather</span>
+                            <span onclick="toggleMaterialFilter('Silk', this)"
+                                class="material-chip px-3 py-1 bg-surface border border-linen rounded-full text-xs text-pebble hover:border-charcoal hover:text-charcoal cursor-pointer transition-colors">Silk</span>
+                            <span onclick="toggleMaterialFilter('Denim', this)"
+                                class="material-chip px-3 py-1 bg-surface border border-linen rounded-full text-xs text-pebble hover:border-charcoal hover:text-charcoal cursor-pointer transition-colors">Denim</span>
                         </div>
                     </div>
 
                     <!-- Price Range -->
                     <div class="pt-6 border-t border-linen">
-                        <h3 class="text-xs font-bold uppercase tracking-widest text-charcoal mb-4">Price Range</h3>
+                        <div class="flex justify-between items-center mb-4">
+                            <h3 class="text-xs font-bold uppercase tracking-widest text-charcoal">Max Price</h3>
+                            <span class="text-xs text-pebble" id="resultsCount">7 Products</span>
+                        </div>
                         <input class="w-full h-1 bg-linen rounded-lg appearance-none cursor-pointer accent-charcoal"
-                            type="range" min="50" max="2500" value="1500" id="priceRange" />
+                            type="range" min="100" max="6000" value="6000" id="priceRange" oninput="runSearch()"/>
                         <div class="flex justify-between mt-2 text-xs text-pebble font-medium">
-                            <span>$50</span>
-                            <span id="priceValue">$1500+</span>
+                            <span>Rp.100k</span>
+                            <span id="priceValue">Rp.6000k</span>
                         </div>
                     </div>
                 </div>
@@ -194,160 +206,15 @@
 
             <!-- Product Grid -->
             <div class="flex-grow">
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                    <!-- Product Card 1 -->
-                    <div
-                        class="group cursor-pointer bg-canvas p-3 rounded-lg border border-linen hover:shadow-md transition-all duration-300 relative">
-                        <div class="aspect-[4/5] bg-surface rounded overflow-hidden mb-4 relative"
-                            onclick="location.href='detail.html'">
-                            <img alt="Cashmere Turtleneck"
-                                class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                                src="https://images.unsplash.com/photo-1576566588028-4147f3842f27?w=600&q=80&fit=crop" />
-                        </div>
-                        <button
-                            class="absolute top-6 right-6 w-8 h-8 rounded-full bg-canvas/80 backdrop-blur border border-linen flex items-center justify-center text-charcoal hover:bg-charcoal hover:text-canvas transition-colors shadow-sm"
-                            onclick="addToBag('Cashmere Ribbed Turtleneck')" aria-label="Add to cart">
-                            <span class="material-symbols-outlined text-sm font-bold">add_shopping_cart</span>
-                        </button>
-                        <div onclick="location.href='detail.html'">
-                            <p class="text-[10px] tracking-widest uppercase text-pebble font-semibold mb-1">Knitwear</p>
-                            <h4 class="text-sm font-medium text-charcoal group-hover:text-pebble transition-colors">
-                                Cashmere Ribbed Turtleneck</h4>
-                            <p class="text-sm font-semibold text-charcoal mt-1.5">$285.00</p>
-                        </div>
-                    </div>
-
-                    <!-- Product Card 2 -->
-                    <div
-                        class="group cursor-pointer bg-canvas p-3 rounded-lg border border-linen hover:shadow-md transition-all duration-300 relative">
-                        <div class="aspect-[4/5] bg-surface rounded overflow-hidden mb-4 relative"
-                            onclick="location.href='detail.html'">
-                            <img alt="Leather Shoulder Bag"
-                                class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                                src="https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=600&q=80&fit=crop" />
-                        </div>
-                        <button
-                            class="absolute top-6 right-6 w-8 h-8 rounded-full bg-canvas/80 backdrop-blur border border-linen flex items-center justify-center text-charcoal hover:bg-charcoal hover:text-canvas transition-colors shadow-sm"
-                            onclick="addToBag('Structured Leather Shoulder Bag')" aria-label="Add to cart">
-                            <span class="material-symbols-outlined text-sm font-bold">add_shopping_cart</span>
-                        </button>
-                        <div onclick="location.href='detail.html'">
-                            <p class="text-[10px] tracking-widest uppercase text-pebble font-semibold mb-1">Bags</p>
-                            <h4 class="text-sm font-medium text-charcoal group-hover:text-pebble transition-colors">
-                                Structured Leather
-                                Shoulder Bag</h4>
-                            <p class="text-sm font-semibold text-charcoal mt-1.5">$320.00</p>
-                        </div>
-                    </div>
-
-                    <!-- Product Card 3 -->
-                    <div
-                        class="group cursor-pointer bg-canvas p-3 rounded-lg border border-linen hover:shadow-md transition-all duration-300 relative">
-                        <div class="aspect-[4/5] bg-surface rounded overflow-hidden mb-4 relative"
-                            onclick="location.href='detail.html'">
-                            <img alt="Milan Ankle Boot"
-                                class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                                src="https://images.unsplash.com/photo-1543163521-1bf539c55dd2?w=600&q=80&fit=crop" />
-                        </div>
-                        <button
-                            class="absolute top-6 right-6 w-8 h-8 rounded-full bg-canvas/80 backdrop-blur border border-linen flex items-center justify-center text-charcoal hover:bg-charcoal hover:text-canvas transition-colors shadow-sm"
-                            onclick="addToBag('Milan Leather Ankle Boot')" aria-label="Add to cart">
-                            <span class="material-symbols-outlined text-sm font-bold">add_shopping_cart</span>
-                        </button>
-                        <div onclick="location.href='detail.html'">
-                            <p class="text-[10px] tracking-widest uppercase text-pebble font-semibold mb-1">Shoes
-                            </p>
-                            <h4 class="text-sm font-medium text-charcoal group-hover:text-pebble transition-colors">
-                                Milan Leather Ankle Boot</h4>
-                            <p class="text-sm font-semibold text-charcoal mt-1.5">$390.00</p>
-                        </div>
-                    </div>
-
-                    <!-- Product Card 4 -->
-                    <div
-                        class="group cursor-pointer bg-canvas p-3 rounded-lg border border-linen hover:shadow-md transition-all duration-300 relative">
-                        <div class="aspect-[4/5] bg-surface rounded overflow-hidden mb-4 relative"
-                            onclick="location.href='detail.html'">
-                            <img alt="Wide-Leg Trousers"
-                                class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                                src="https://images.unsplash.com/photo-1506629082955-511b1aa562c8?w=600&q=80&fit=crop" />
-                        </div>
-                        <button
-                            class="absolute top-6 right-6 w-8 h-8 rounded-full bg-canvas/80 backdrop-blur border border-linen flex items-center justify-center text-charcoal hover:bg-charcoal hover:text-canvas transition-colors shadow-sm"
-                            onclick="addToBag('Wide-Leg Silk Trousers')" aria-label="Add to cart">
-                            <span class="material-symbols-outlined text-sm font-bold">add_shopping_cart</span>
-                        </button>
-                        <div onclick="location.href='detail.html'">
-                            <p class="text-[10px] tracking-widest uppercase text-pebble font-semibold mb-1">Bottoms</p>
-                            <h4 class="text-sm font-medium text-charcoal group-hover:text-pebble transition-colors">
-                                Wide-Leg Silk Trousers</h4>
-                            <p class="text-sm font-semibold text-charcoal mt-1.5">$195.00</p>
-                        </div>
-                    </div>
-
-                    <!-- Product Card 5 -->
-                    <div
-                        class="group cursor-pointer bg-canvas p-3 rounded-lg border border-linen hover:shadow-md transition-all duration-300 relative">
-                        <div class="aspect-[4/5] bg-surface rounded overflow-hidden mb-4 relative"
-                            onclick="location.href='detail.html'">
-                            <img alt="Italian Leather Tote"
-                                class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                                src="https://images.unsplash.com/photo-1590874103328-eac38a683ce7?w=600&q=80&fit=crop" />
-                        </div>
-                        <button
-                            class="absolute top-6 right-6 w-8 h-8 rounded-full bg-canvas/80 backdrop-blur border border-linen flex items-center justify-center text-charcoal hover:bg-charcoal hover:text-canvas transition-colors shadow-sm"
-                            onclick="addToBag('Italian Leather Tote')" aria-label="Add to cart">
-                            <span class="material-symbols-outlined text-sm font-bold">add_shopping_cart</span>
-                        </button>
-                        <div onclick="location.href='detail.html'">
-                            <p class="text-[10px] tracking-widest uppercase text-pebble font-semibold mb-1">Bags</p>
-                            <h4 class="text-sm font-medium text-charcoal group-hover:text-pebble transition-colors">
-                                Italian Leather Tote</h4>
-                            <p class="text-sm font-semibold text-charcoal mt-1.5">$420.00</p>
-                        </div>
-                    </div>
-
-                    <!-- Product Card 6 -->
-                    <div
-                        class="group cursor-pointer bg-canvas p-3 rounded-lg border border-linen hover:shadow-md transition-all duration-300 relative">
-                        <div class="aspect-[4/5] bg-surface rounded overflow-hidden mb-4 relative"
-                            onclick="location.href='detail.html'">
-                            <img alt="Chelsea Ankle Boot"
-                                class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                                src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=600&q=80&fit=crop" />
-                        </div>
-                        <button
-                            class="absolute top-6 right-6 w-8 h-8 rounded-full bg-canvas/80 backdrop-blur border border-linen flex items-center justify-center text-charcoal hover:bg-charcoal hover:text-canvas transition-colors shadow-sm"
-                            onclick="addToBag('Chelsea Ankle Boot')" aria-label="Add to cart">
-                            <span class="material-symbols-outlined text-sm font-bold">add_shopping_cart</span>
-                        </button>
-                        <div onclick="location.href='detail.html'">
-                            <p class="text-[10px] tracking-widest uppercase text-pebble font-semibold mb-1">Shoes</p>
-                            <h4 class="text-sm font-medium text-charcoal group-hover:text-pebble transition-colors">
-                                Chelsea Ankle Boot</h4>
-                            <p class="text-sm font-semibold text-charcoal mt-1.5">$280.00</p>
-                        </div>
-                    </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" id="productGrid">
+                    <!-- Renders dynamically from JS -->
                 </div>
 
-                <!-- Pagination -->
-                <div class="mt-16 flex justify-center items-center gap-2">
-                    <button
-                        class="w-10 h-10 flex items-center justify-center border border-linen text-charcoal hover:border-charcoal rounded transition-colors"
-                        aria-label="Previous page">
-                        <span class="material-symbols-outlined">chevron_left</span>
-                    </button>
-                    <button
-                        class="w-10 h-10 flex items-center justify-center bg-charcoal text-canvas font-semibold rounded">1</button>
-                    <button
-                        class="w-10 h-10 flex items-center justify-center border border-linen text-pebble hover:text-charcoal hover:border-charcoal rounded transition-colors">2</button>
-                    <button
-                        class="w-10 h-10 flex items-center justify-center border border-linen text-pebble hover:text-charcoal hover:border-charcoal rounded transition-colors">3</button>
-                    <button
-                        class="w-10 h-10 flex items-center justify-center border border-linen text-charcoal hover:border-charcoal rounded transition-colors"
-                        aria-label="Next page">
-                        <span class="material-symbols-outlined">chevron_right</span>
-                    </button>
+                <!-- Zero Results State -->
+                <div id="noResultsState" class="hidden text-center py-20 space-y-4">
+                    <span class="material-symbols-outlined text-5xl text-pebble/30">search_off</span>
+                    <h3 class="text-lg font-light text-pebble">No matching products found.</h3>
+                    <p class="text-xs text-pebble/70">Try using different keywords, tags, or adjusting filters.</p>
                 </div>
             </div>
         </div>
@@ -368,36 +235,37 @@
             <!-- Categories -->
             <div>
                 <h3 class="text-xs font-bold uppercase tracking-widest text-charcoal mb-4">Categories</h3>
-                <ul class="space-y-3 text-sm text-pebble">
-                    <li><button class="w-full text-left font-medium text-charcoal">All Products</button></li>
-                    <li><button class="w-full text-left hover:text-charcoal transition-colors">Tops</button></li>
-                    <li><button class="w-full text-left hover:text-charcoal transition-colors">Shoes</button></li>
-                    <li><button class="w-full text-left hover:text-charcoal transition-colors">Bags</button></li>
-                    <li><button class="w-full text-left hover:text-charcoal transition-colors">Accessories</button></li>
+                <ul class="space-y-3 text-sm text-pebble" id="mobileCategoryList">
+                    <li><button onclick="filterCategory('All')" class="mobile-cat-btn w-full text-left font-medium text-charcoal">All Products</button></li>
+                    <li><button onclick="filterCategory('Cardigan')" class="mobile-cat-btn w-full text-left hover:text-charcoal">Cardigan</button></li>
+                    <li><button onclick="filterCategory('Bags')" class="mobile-cat-btn w-full text-left hover:text-charcoal">Bags</button></li>
+                    <li><button onclick="filterCategory('Shoes')" class="mobile-cat-btn w-full text-left hover:text-charcoal">Shoes</button></li>
+                    <li><button onclick="filterCategory('Pants')" class="mobile-cat-btn w-full text-left hover:text-charcoal">Pants</button></li>
+                    <li><button onclick="filterCategory('Shirt')" class="mobile-cat-btn w-full text-left hover:text-charcoal">Shirt</button></li>
                 </ul>
             </div>
             <!-- Materials -->
             <div>
                 <h3 class="text-xs font-bold uppercase tracking-widest text-charcoal mb-4">Materials</h3>
                 <div class="flex flex-wrap gap-2">
-                    <span
-                        class="px-3 py-1.5 bg-surface border border-linen rounded-full text-xs text-pebble hover:border-charcoal hover:text-charcoal cursor-pointer transition-colors">Cashmere</span>
-                    <span
-                        class="px-3 py-1.5 bg-surface border border-linen rounded-full text-xs text-pebble hover:border-charcoal hover:text-charcoal cursor-pointer transition-colors">Leather</span>
-                    <span
-                        class="px-3 py-1.5 bg-surface border border-linen rounded-full text-xs text-pebble hover:border-charcoal hover:text-charcoal cursor-pointer transition-colors">Silk</span>
-                    <span
-                        class="px-3 py-1.5 bg-surface border border-linen rounded-full text-xs text-pebble hover:border-charcoal hover:text-charcoal cursor-pointer transition-colors">Wool</span>
+                    <span onclick="toggleMaterialFilter('Cashmere', this)"
+                        class="material-chip px-3 py-1.5 bg-surface border border-linen rounded-full text-xs text-pebble hover:border-charcoal hover:text-charcoal cursor-pointer transition-colors">Cashmere</span>
+                    <span onclick="toggleMaterialFilter('Leather', this)"
+                        class="material-chip px-3 py-1.5 bg-surface border border-linen rounded-full text-xs text-pebble hover:border-charcoal hover:text-charcoal cursor-pointer transition-colors">Leather</span>
+                    <span onclick="toggleMaterialFilter('Silk', this)"
+                        class="material-chip px-3 py-1.5 bg-surface border border-linen rounded-full text-xs text-pebble hover:border-charcoal hover:text-charcoal cursor-pointer transition-colors">Silk</span>
+                    <span onclick="toggleMaterialFilter('Denim', this)"
+                        class="material-chip px-3 py-1.5 bg-surface border border-linen rounded-full text-xs text-pebble hover:border-charcoal hover:text-charcoal cursor-pointer transition-colors">Denim</span>
                 </div>
             </div>
             <!-- Price Range -->
             <div>
                 <h3 class="text-xs font-bold uppercase tracking-widest text-charcoal mb-4">Price Range</h3>
                 <input class="w-full h-1 bg-linen rounded-lg appearance-none cursor-pointer accent-charcoal"
-                    type="range" min="50" max="2500" value="1500" id="mobilePriceRange" />
+                    type="range" min="100" max="6000" value="6000" id="mobilePriceRange" oninput="syncMobilePrice(this.value)" />
                 <div class="flex justify-between mt-2 text-xs text-pebble font-medium">
-                    <span>$50</span>
-                    <span id="mobilePriceValue">$1500+</span>
+                    <span>Rp.100k</span>
+                    <span id="mobilePriceValue">Rp.6000k</span>
                 </div>
             </div>
         </div>
@@ -424,12 +292,8 @@
             <div class="grid grid-cols-2 gap-4">
                 <div class="flex flex-col gap-2.5">
                     <h4 class="text-xs font-semibold text-charcoal uppercase tracking-widest mb-1">Explore</h4>
-                    <a class="text-xs text-pebble hover:text-charcoal transition-colors" href="shop.html">Shop
-                        Catalog</a>
-                    <a class="text-xs text-pebble hover:text-charcoal transition-colors" href="search.html">Search
-                        Items</a>
-                    <a class="text-xs text-pebble hover:text-charcoal transition-colors" href="login.html">My
-                        Account</a>
+                    <a class="text-xs text-pebble hover:text-charcoal transition-colors" href="shop.html">Shop Catalog</a>
+                    <a class="text-xs text-pebble hover:text-charcoal transition-colors" href="login.html">My Account</a>
                 </div>
                 <div class="flex flex-col gap-2.5">
                     <h4 class="text-xs font-semibold text-charcoal uppercase tracking-widest mb-1">Company</h4>
@@ -467,7 +331,136 @@
 
     <!-- Scripts -->
     <script>
-        // Header shadow on scroll
+        // --- Product Database ---
+        const dbProducts = [
+            { id: 1, name: "Cashmere Ribbed Cardigan", category: "Cardigan", material: "Cashmere", price: 285.00, img: "https://images.unsplash.com/photo-1670080589800-6416c8ce8a14?w=500&auto=format&fit=crop&q=60" },
+            { id: 2, name: "Structured Leather Shoulder Bag", category: "Bags", material: "Leather", price: 2320.00, img: "https://images.unsplash.com/photo-1614179689702-355944cd0918?w=500&auto=format&fit=crop&q=60" },
+            { id: 3, name: "Milan Leather Jordan Shoes", category: "Shoes", material: "Leather", price: 5390.00, img: "https://images.unsplash.com/photo-1512374382149-233c42b6a83b?w=500&auto=format&fit=crop&q=60" },
+            { id: 4, name: "Denim Long Trousers", category: "Pants", material: "Denim", price: 395.00, img: "https://images.unsplash.com/photo-1718252540511-e958742e4165?w=500&auto=format&fit=crop&q=60" },
+            { id: 5, name: "Leather Backpack", category: "Bags", material: "Leather", price: 2200.00, img: "https://images.unsplash.com/photo-1622560480654-d96214fdc887?w=500&auto=format&fit=crop&q=60" },
+            { id: 6, name: "Chelsea Ankle Boots", category: "Shoes", material: "Leather", price: 2280.00, img: "https://images.unsplash.com/photo-1605733513549-de9b150bd70d?w=500&auto=format&fit=crop&q=60" },
+            { id: 7, name: "Chelsea Shirt Denim", category: "Shirt", material: "Denim", price: 280.00, img: "https://images.unsplash.com/photo-1740711152088-88a009e877bb?w=500&auto=format&fit=crop&q=60" }
+        ];
+
+        let selectedCategory = "All";
+        let activeMaterials = [];
+
+        // --- Search & Filters logic ---
+        function runSearch() {
+            // Read search inputs (sync desktop and mobile search value)
+            const query = (document.getElementById('navSearchInput').value || document.getElementById('mobileNavSearchInput').value || "").toLowerCase().trim();
+            
+            // Read price limit
+            const maxPrice = parseFloat(document.getElementById('priceRange').value);
+            document.getElementById('priceValue').innerText = `Rp.${maxPrice}k`;
+            document.getElementById('mobilePriceValue').innerText = `Rp.${maxPrice}k`;
+            document.getElementById('mobilePriceRange').value = maxPrice;
+
+            // Filter logic
+            const results = dbProducts.filter(p => {
+                const matchesQuery = p.name.toLowerCase().includes(query) || p.category.toLowerCase().includes(query) || p.material.toLowerCase().includes(query);
+                const matchesCategory = (selectedCategory === "All" || p.category === selectedCategory);
+                const matchesMaterial = (activeMaterials.length === 0 || activeMaterials.includes(p.material));
+                const matchesPrice = p.price <= maxPrice;
+
+                return matchesQuery && matchesCategory && matchesMaterial && matchesPrice;
+            });
+
+            // Update product counts
+            const countText = `Showing ${results.length} Product${results.length === 1 ? '' : 's'}`;
+            document.getElementById('resultsCount').innerText = `${results.length} Products`;
+            document.getElementById('mobileProductCount').innerText = countText;
+
+            // Render output
+            const grid = document.getElementById('productGrid');
+            const zeroState = document.getElementById('noResultsState');
+
+            if (results.length === 0) {
+                grid.innerHTML = '';
+                zeroState.classList.remove('hidden');
+                return;
+            } else {
+                zeroState.classList.add('hidden');
+            }
+
+            grid.innerHTML = results.map(p => `
+                <div class="group cursor-pointer bg-canvas p-3 rounded-lg border border-linen hover:shadow-md transition-all duration-300 relative">
+                    <div class="aspect-[4/5] bg-surface rounded overflow-hidden mb-4 relative" onclick="location.href='detail.html'">
+                        <img alt="${p.name}" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" src="${p.img}"/>
+                    </div>
+                    <button class="absolute top-6 right-6 w-8 h-8 rounded-full bg-canvas/80 backdrop-blur border border-linen flex items-center justify-center text-charcoal hover:bg-charcoal hover:text-canvas transition-colors shadow-sm" onclick="addToBag('${p.name}')" aria-label="Add to cart">
+                        <span class="material-symbols-outlined text-sm font-bold">add_shopping_cart</span>
+                    </button>
+                    <div onclick="location.href='detail.html'">
+                        <p class="text-[10px] tracking-widest uppercase text-pebble font-semibold mb-1">${p.category}</p>
+                        <h4 class="text-sm font-medium text-charcoal group-hover:text-pebble transition-colors">${p.name}</h4>
+                        <p class="text-sm font-semibold text-charcoal mt-1.5">Rp.${p.price.toFixed(2)}</p>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Filter by Category
+        function filterCategory(category) {
+            selectedCategory = category;
+            
+            // Highlight active categories on desktop
+            const desktopBtns = document.querySelectorAll('#desktopCategoryList .category-btn');
+            desktopBtns.forEach(btn => {
+                if (btn.innerText.trim() === category || (category === 'All' && btn.innerText.includes('All'))) {
+                    btn.className = "category-btn w-full text-left font-medium text-charcoal border-l-2 border-charcoal pl-2.5 transition-all";
+                } else {
+                    btn.className = "category-btn w-full text-left hover:text-charcoal pl-2.5 transition-colors text-pebble";
+                }
+            });
+
+            // Highlight active categories on mobile sidebar
+            const mobileBtns = document.querySelectorAll('#mobileCategoryList .mobile-cat-btn');
+            mobileBtns.forEach(btn => {
+                if (btn.innerText.trim() === category || (category === 'All' && btn.innerText.includes('All'))) {
+                    btn.className = "mobile-cat-btn w-full text-left font-semibold text-charcoal";
+                } else {
+                    btn.className = "mobile-cat-btn w-full text-left hover:text-charcoal text-pebble";
+                }
+            });
+
+            runSearch();
+        }
+
+        // Toggle Material selection
+        function toggleMaterialFilter(material, element) {
+            const index = activeMaterials.indexOf(material);
+            if (index > -1) {
+                activeMaterials.splice(index, 1);
+                // Reset styling
+                element.className = "material-chip px-3 py-1 bg-surface border border-linen rounded-full text-xs text-pebble hover:border-charcoal hover:text-charcoal cursor-pointer transition-colors";
+            } else {
+                activeMaterials.push(material);
+                // Active styling
+                element.className = "material-chip px-3 py-1 bg-charcoal text-canvas border border-charcoal rounded-full text-xs cursor-pointer transition-colors";
+            }
+            
+            // Update other element matches (e.g. mobile vs desktop sync)
+            const allChips = document.querySelectorAll('.material-chip');
+            allChips.forEach(chip => {
+                if (chip.innerText.trim() === material) {
+                    if (activeMaterials.includes(material)) {
+                        chip.className = chip.className.replace('bg-surface text-pebble border-linen', 'bg-charcoal text-canvas border-charcoal');
+                    } else {
+                        chip.className = chip.className.replace('bg-charcoal text-canvas border-charcoal', 'bg-surface text-pebble border-linen');
+                    }
+                }
+            });
+
+            runSearch();
+        }
+
+        function syncMobilePrice(val) {
+            document.getElementById('priceRange').value = val;
+            runSearch();
+        }
+
+        // --- Header shadow on scroll ---
         window.addEventListener('scroll', () => {
             const header = document.getElementById('mainHeader');
             if (window.scrollY > 20) {
@@ -479,36 +472,18 @@
             }
         });
 
-        // Price range text updater
-        const priceRangeInput = document.getElementById('priceRange');
-        const priceValueSpan = document.getElementById('priceValue');
-        if (priceRangeInput && priceValueSpan) {
-            priceRangeInput.addEventListener('input', (e) => {
-                priceValueSpan.innerText = `$${e.target.value}+`;
-            });
-        }
-
-        const mobilePriceRange = document.getElementById('mobilePriceRange');
-        const mobilePriceValue = document.getElementById('mobilePriceValue');
-        if (mobilePriceRange && mobilePriceValue) {
-            mobilePriceRange.addEventListener('input', (e) => {
-                mobilePriceValue.innerText = `$${e.target.value}+`;
-            });
-        }
-
-        // Add to Bag simulated interaction
+        // --- Add to Bag simulation ---
         let cartCount = 3;
         const cartBadge = document.getElementById('cartBadge');
         function addToBag(itemName) {
             cartCount++;
             cartBadge.innerText = cartCount;
-            // Visual bounce effect on badge
             cartBadge.classList.add('scale-125');
             setTimeout(() => cartBadge.classList.remove('scale-125'), 200);
             alert(`"${itemName}" has been added to your cart.`);
         }
 
-        // Mobile Menu Sidebar
+        // --- Mobile Menu Drawer ---
         const mobileMenuBtn = document.getElementById('mobileMenuBtn');
         const closeMobileBtn = document.getElementById('closeMobileBtn');
         const mobileOverlay = document.getElementById('mobileOverlay');
@@ -530,7 +505,7 @@
         closeMobileBtn.addEventListener('click', () => toggleMenu(false));
         mobileOverlay.addEventListener('click', () => toggleMenu(false));
 
-        // Mobile Filter Sidebar
+        // --- Mobile Filter Drawer ---
         const mobileFilterBtn = document.getElementById('mobileFilterBtn');
         const closeFilterBtn = document.getElementById('closeFilterBtn');
         const filterOverlay = document.getElementById('filterOverlay');
@@ -553,6 +528,9 @@
         if (closeFilterBtn) closeFilterBtn.addEventListener('click', () => toggleFilters(false));
         if (filterOverlay) filterOverlay.addEventListener('click', () => toggleFilters(false));
         if (applyFiltersBtn) applyFiltersBtn.addEventListener('click', () => toggleFilters(false));
+
+        // --- Initialize ---
+        runSearch();
     </script>
 </body>
 
