@@ -1,15 +1,18 @@
 <!DOCTYPE html>
 <html lang="en" class="light">
+
 <head>
-    <meta charset="utf-8"/>
-    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
     <title>Features & Found | Structured Wool Overcoat</title>
     <!-- Tailwind CSS with Forms and Container Queries -->
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
     <!-- Google Fonts & Material Icons -->
-    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
-    
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        rel="stylesheet" />
+
     <script id="tailwind-config">
         tailwind.config = {
             darkMode: "class",
@@ -32,19 +35,24 @@
             }
         }
     </script>
-    <link rel="stylesheet" href="global.css"/>
+    <link rel="stylesheet" href="global.css" />
 </head>
+
 <body class="bg-canvas text-charcoal font-sans antialiased selection:bg-surface-high selection:text-charcoal">
 
     <!-- Sticky Header -->
-    <header class="w-full sticky top-0 z-50 backdrop-blur-md bg-canvas/80 border-b border-linen transition-all duration-300" id="mainHeader">
+    <header
+        class="w-full sticky top-0 z-50 backdrop-blur-md bg-canvas/80 border-b border-linen transition-all duration-300"
+        id="mainHeader">
         <nav class="max-w-[1280px] mx-auto px-6 md:px-12 flex justify-between items-center h-20">
             <!-- Left: Mobile Menu Trigger / Brand -->
             <div class="flex items-center gap-4">
-                <button class="md:hidden p-1 text-charcoal hover:text-pebble transition-colors" id="mobileMenuBtn" aria-label="Open menu">
+                <button class="md:hidden p-1 text-charcoal hover:text-pebble transition-colors" id="mobileMenuBtn"
+                    aria-label="Open menu">
                     <span class="material-symbols-outlined text-2xl">menu</span>
                 </button>
-                <a href="index.html" class="font-light text-xl md:text-2xl tracking-tight text-charcoal hover:opacity-85 transition-opacity">
+                <a href="index.html"
+                    class="font-light text-xl md:text-2xl tracking-tight text-charcoal hover:opacity-85 transition-opacity">
                     Features <span class="font-normal text-pebble">&</span> Found
                 </a>
             </div>
@@ -58,17 +66,24 @@
 
             <!-- Right: Actions -->
             <div class="flex items-center gap-4">
-                <a href="login.html" class="hidden sm:inline-flex text-sm font-medium uppercase text-pebble hover:text-charcoal transition-colors">Sign In</a>
-                <a href="cart.html" class="relative p-1 text-charcoal hover:text-pebble transition-colors" aria-label="Shopping cart">
+                <a href="login.html"
+                    class="hidden sm:inline-flex text-sm font-medium uppercase text-pebble hover:text-charcoal transition-colors">Sign
+                    In</a>
+                <a href="cart.html" class="relative p-1 text-charcoal hover:text-pebble transition-colors"
+                    aria-label="Shopping cart">
                     <span class="material-symbols-outlined text-2xl">shopping_bag</span>
-                    <span class="absolute -top-1 -right-1 w-4 h-4 bg-charcoal text-canvas text-[9px] font-bold rounded-full flex items-center justify-center" id="cartBadge">3</span>
+                    <span
+                        class="absolute -top-1 -right-1 w-4 h-4 bg-charcoal text-canvas text-[9px] font-bold rounded-full flex items-center justify-center"
+                        id="cartBadge">3</span>
                 </a>
             </div>
         </nav>
 
         <!-- Mobile Drawer Navigation -->
         <div class="fixed inset-0 bg-charcoal/20 z-40 hidden transition-opacity duration-300" id="mobileOverlay"></div>
-        <aside class="fixed top-0 left-0 bottom-0 w-72 bg-canvas border-r border-linen z-50 transform -translate-x-full transition-transform duration-300 ease-in-out md:hidden flex flex-col" id="mobileSidebar">
+        <aside
+            class="fixed top-0 left-0 bottom-0 w-72 bg-canvas border-r border-linen z-50 transform -translate-x-full transition-transform duration-300 ease-in-out md:hidden flex flex-col"
+            id="mobileSidebar">
             <div class="flex justify-between items-center p-6 border-b border-linen">
                 <span class="font-light text-lg tracking-tight">Menu</span>
                 <button class="p-1 hover:text-pebble transition-colors" id="closeMobileBtn">
@@ -78,9 +93,13 @@
             <nav class="flex-1 p-6 space-y-6">
                 <a href="index.html" class="block text-lg text-pebble hover:text-charcoal transition-colors">Home</a>
                 <a href="shop.html" class="block text-lg text-pebble hover:text-charcoal transition-colors">Shop</a>
-                <a href="user_dashboard.html" class="block text-lg text-pebble hover:text-charcoal transition-colors">Profile</a>
-                <a href="login.html" class="block text-lg text-pebble hover:text-charcoal transition-colors">Sign In / Register</a>
-                <a href="admin_dashboard.html" class="block text-sm text-sage hover:text-charcoal transition-colors pt-6 border-t border-linen">Admin Panel</a>
+                <a href="user_dashboard.html"
+                    class="block text-lg text-pebble hover:text-charcoal transition-colors">Profile</a>
+                <a href="login.html" class="block text-lg text-pebble hover:text-charcoal transition-colors">Sign In /
+                    Register</a>
+                <a href="admin_dashboard.html"
+                    class="block text-sm text-sage hover:text-charcoal transition-colors pt-6 border-t border-linen">Admin
+                    Panel</a>
             </nav>
             <div class="p-6 border-t border-linen text-xs text-pebble">
                 © 2026 Features & Found.
@@ -95,46 +114,40 @@
             <span>/</span>
             <a href="shop.html" class="hover:text-charcoal">Shop</a>
             <span>/</span>
-            <span class="text-charcoal font-medium">Overcoat</span>
+            <span class="text-charcoal font-medium" id="breadcrumbName">Cardigan</span>
         </nav>
 
         <!-- Product Grid -->
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
-            
+
             <!-- Left Side: Interactive Gallery -->
             <div class="space-y-4">
                 <!-- Large Image Container -->
                 <div class="aspect-[4/5] bg-surface rounded-lg overflow-hidden border border-linen relative">
-                    <img id="mainProductImg" alt="Structured Wool Overcoat" class="w-full h-full object-cover transition-opacity duration-300" src="https://images.unsplash.com/photo-1548126032-079a0fb0099d?w=800&q=80&fit=crop"/>
-                    <span class="absolute top-4 left-4 bg-charcoal text-canvas text-[10px] font-bold tracking-widest px-3 py-1 rounded">NEW ARRIVAL</span>
+                    <img id="mainProductImg" alt="Structured Wool Overcoat"
+                        class="w-full h-full object-cover transition-opacity duration-300"
+                        src="https://images.unsplash.com/photo-1670080589800-6416c8ce8a14?w=500&auto=format&fit=crop&q=60" />
+                    <span
+                        class="absolute top-4 left-4 bg-charcoal text-canvas text-[10px] font-bold tracking-widest px-3 py-1 rounded">NEW
+                        ARRIVAL</span>
                 </div>
-                <!-- Thumbnails Grid -->
-                <div class="grid grid-cols-3 gap-4">
-                    <button class="aspect-[4/5] bg-surface rounded-lg overflow-hidden border-2 border-charcoal transition-all p-0.5 thumbnail-btn" onclick="swapImage(0, this)">
-                        <img alt="Thumbnail 1" class="w-full h-full object-cover" src="https://images.unsplash.com/photo-1548126032-079a0fb0099d?w=400&q=80&fit=crop"/>
-                    </button>
-                    <button class="aspect-[4/5] bg-surface rounded-lg overflow-hidden border border-linen opacity-70 hover:opacity-100 transition-all p-0.5 thumbnail-btn" onclick="swapImage(1, this)">
-                        <img alt="Thumbnail 2" class="w-full h-full object-cover" src="https://images.unsplash.com/photo-1539109136881-3be0616acf4b?w=400&q=80&fit=crop"/>
-                    </button>
-                    <button class="aspect-[4/5] bg-surface rounded-lg overflow-hidden border border-linen opacity-70 hover:opacity-100 transition-all p-0.5 thumbnail-btn" onclick="swapImage(2, this)">
-                        <img alt="Thumbnail 3" class="w-full h-full object-cover" src="https://images.unsplash.com/photo-1469334031218-e382a71b716b?w=400&q=80&fit=crop"/>
-                    </button>
-                </div>
+
             </div>
 
             <!-- Right Side: Details & Actions -->
             <div class="space-y-8">
                 <!-- Header Info -->
                 <div class="space-y-3">
-                    <p class="text-xs uppercase tracking-widest text-pebble font-semibold">Fashion &amp; Tailoring</p>
-                    <h2 class="text-3xl md:text-4xl font-light tracking-tight text-charcoal">Structured Wool Overcoat</h2>
-                    <p class="text-2xl font-semibold text-charcoal">$495.00</p>
+                    <p class="text-xs uppercase tracking-widest text-pebble font-semibold" id="productCategory">Fashion &amp; Tailoring</p>
+                    <h2 class="text-3xl md:text-4xl font-light tracking-tight text-charcoal" id="productTitle">Cardigan</h2>
+                    <p class="text-2xl font-semibold text-charcoal" id="productPrice">Rp.285.00</p>
                 </div>
 
                 <!-- Description -->
                 <div class="border-t border-linen pt-6 space-y-4">
                     <p class="text-sm md:text-base text-pebble font-light leading-relaxed">
-                        Crafted from premium Italian virgin wool, this structured overcoat offers a tailored silhouette that bridges the gap between classic tailoring and contemporary minimalism. Featuring a hidden button placket, standard notch lapel, and a silk-blend inner lining for maximum tactile comfort.
+                        Cardigan with thick and soft material, can also be combined with plain white pants and is more
+                        simple and elegant, can also be worn in winter.
                     </p>
                 </div>
 
@@ -142,15 +155,22 @@
                 <div class="space-y-6 pt-2">
                     <!-- Color Selector -->
                     <div>
-                        <span class="text-xs font-semibold uppercase tracking-widest text-charcoal block mb-3">Color: <span class="font-normal text-pebble italic" id="colorText">Charcoal</span></span>
+                        <span class="text-xs font-semibold uppercase tracking-widest text-charcoal block mb-3">Color:
+                            <span class="font-normal text-pebble italic" id="colorText">Charcoal</span></span>
                         <div class="flex gap-3">
-                            <button class="w-8 h-8 rounded-full border border-linen p-0.5 focus:outline-none transition-all border-charcoal ring-2 ring-charcoal/20" onclick="selectColor('Charcoal', this)">
+                            <button
+                                class="w-8 h-8 rounded-full border border-linen p-0.5 focus:outline-none transition-all border-charcoal ring-2 ring-charcoal/20"
+                                onclick="selectColor('Charcoal', this)">
                                 <span class="block w-full h-full rounded-full bg-[#373A40]"></span>
                             </button>
-                            <button class="w-8 h-8 rounded-full border border-linen p-0.5 focus:outline-none transition-all hover:scale-105" onclick="selectColor('Warm Earth', this)">
+                            <button
+                                class="w-8 h-8 rounded-full border border-linen p-0.5 focus:outline-none transition-all hover:scale-105"
+                                onclick="selectColor('Warm Earth', this)">
                                 <span class="block w-full h-full rounded-full bg-[#7E6356]"></span>
                             </button>
-                            <button class="w-8 h-8 rounded-full border border-linen p-0.5 focus:outline-none transition-all hover:scale-105" onclick="selectColor('Bone White', this)">
+                            <button
+                                class="w-8 h-8 rounded-full border border-linen p-0.5 focus:outline-none transition-all hover:scale-105"
+                                onclick="selectColor('Bone White', this)">
                                 <span class="block w-full h-full rounded-full bg-[#FAF9F5] border border-linen"></span>
                             </button>
                         </div>
@@ -160,29 +180,42 @@
                     <div>
                         <div class="flex justify-between items-center mb-3">
                             <span class="text-xs font-semibold uppercase tracking-widest text-charcoal">Size</span>
-                            <button class="text-xs text-pebble underline tracking-wider uppercase hover:text-charcoal" onclick="alert('Size Guide: Standard European Fit')">Size Guide</button>
+                            <button class="text-xs text-pebble underline tracking-wider uppercase hover:text-charcoal"
+                                onclick="alert('Size Guide: Standard European Fit')">Size Guide</button>
                         </div>
                         <div class="grid grid-cols-4 gap-3">
-                            <button class="py-3.5 border border-linen text-sm text-pebble hover:border-charcoal hover:text-charcoal rounded transition-all size-btn" onclick="selectSize('XS', this)">XS</button>
-                            <button class="py-3.5 border-2 border-charcoal text-sm text-charcoal font-semibold rounded transition-all size-btn" onclick="selectSize('S', this)">S</button>
-                            <button class="py-3.5 border border-linen text-sm text-pebble hover:border-charcoal hover:text-charcoal rounded transition-all size-btn" onclick="selectSize('M', this)">M</button>
-                            <button class="py-3.5 border border-linen text-sm text-pebble hover:border-charcoal hover:text-charcoal rounded transition-all size-btn" onclick="selectSize('L', this)">L</button>
+                            <button
+                                class="py-3.5 border border-linen text-sm text-pebble hover:border-charcoal hover:text-charcoal rounded transition-all size-btn"
+                                onclick="selectSize('XS', this)">XS</button>
+                            <button
+                                class="py-3.5 border-2 border-charcoal text-sm text-charcoal font-semibold rounded transition-all size-btn"
+                                onclick="selectSize('S', this)">S</button>
+                            <button
+                                class="py-3.5 border border-linen text-sm text-pebble hover:border-charcoal hover:text-charcoal rounded transition-all size-btn"
+                                onclick="selectSize('M', this)">M</button>
+                            <button
+                                class="py-3.5 border border-linen text-sm text-pebble hover:border-charcoal hover:text-charcoal rounded transition-all size-btn"
+                                onclick="selectSize('L', this)">L</button>
                         </div>
                     </div>
                 </div>
 
                 <!-- Add to Bag / Primary Actions -->
                 <div class="space-y-4 pt-4">
-                    <button class="w-full bg-charcoal text-canvas hover:bg-charcoal/95 py-5 rounded text-xs uppercase tracking-widest font-semibold transition-all duration-300 transform active:scale-[0.98] shadow-md" onclick="addToCart()">
+                    <button
+                        class="w-full bg-charcoal text-canvas hover:bg-charcoal/95 py-5 rounded text-xs uppercase tracking-widest font-semibold transition-all duration-300 transform active:scale-[0.98] shadow-md"
+                        onclick="addToCart()">
                         Add to Shopping Bag
                     </button>
-                    
-                    <div class="flex items-center justify-center gap-8 text-xs font-semibold uppercase tracking-wider text-pebble pt-2">
+
+                    <div
+                        class="flex items-center justify-center gap-8 text-xs font-semibold uppercase tracking-wider text-pebble pt-2">
                         <button class="flex items-center gap-2 hover:text-charcoal transition-colors">
                             <span class="material-symbols-outlined text-lg">favorite</span>
                             Add to Wishlist
                         </button>
-                        <button class="flex items-center gap-2 hover:text-charcoal transition-colors" onclick="navigator.clipboard.writeText(window.location.href); alert('Product link copied to clipboard!');">
+                        <button class="flex items-center gap-2 hover:text-charcoal transition-colors"
+                            onclick="navigator.clipboard.writeText(window.location.href); alert('Product link copied to clipboard!');">
                             <span class="material-symbols-outlined text-lg">share</span>
                             Share Product
                         </button>
@@ -216,16 +249,20 @@
                     Features <span class="font-normal text-pebble">&</span> Found
                 </div>
                 <p class="text-xs text-pebble max-w-xs leading-relaxed">
-                    Curating timeless, handcrafted artifacts for intentional living. We believe in high-quality craftsmanship, sustainable sourcing, and the quiet poetry of daily rituals.
+                    Curating timeless, handcrafted artifacts for intentional living. We believe in high-quality
+                    craftsmanship, sustainable sourcing, and the quiet poetry of daily rituals.
                 </p>
             </div>
-            
+
             <div class="grid grid-cols-2 gap-4">
                 <div class="flex flex-col gap-2.5">
                     <h4 class="text-xs font-semibold text-charcoal uppercase tracking-widest mb-1">Explore</h4>
-                    <a class="text-xs text-pebble hover:text-charcoal transition-colors" href="shop.html">Shop Catalog</a>
-                    <a class="text-xs text-pebble hover:text-charcoal transition-colors" href="search.html">Search Items</a>
-                    <a class="text-xs text-pebble hover:text-charcoal transition-colors" href="login.html">My Account</a>
+                    <a class="text-xs text-pebble hover:text-charcoal transition-colors" href="shop.html">Shop
+                        Catalog</a>
+                    <a class="text-xs text-pebble hover:text-charcoal transition-colors" href="search.html">Search
+                        Items</a>
+                    <a class="text-xs text-pebble hover:text-charcoal transition-colors" href="login.html">My
+                        Account</a>
                 </div>
                 <div class="flex flex-col gap-2.5">
                     <h4 class="text-xs font-semibold text-charcoal uppercase tracking-widest mb-1">Company</h4>
@@ -234,21 +271,27 @@
                     <a class="text-xs text-pebble hover:text-charcoal transition-colors" href="#">Contact Us</a>
                 </div>
             </div>
-            
+
             <div class="flex flex-col md:items-end justify-between gap-6">
                 <div class="flex gap-4">
-                    <a href="#" class="w-8 h-8 rounded-full border border-linen flex items-center justify-center text-pebble hover:text-charcoal hover:border-charcoal transition-all" aria-label="Globe">
+                    <a href="#"
+                        class="w-8 h-8 rounded-full border border-linen flex items-center justify-center text-pebble hover:text-charcoal hover:border-charcoal transition-all"
+                        aria-label="Globe">
                         <span class="material-symbols-outlined text-sm">public</span>
                     </a>
-                    <a href="#" class="w-8 h-8 rounded-full border border-linen flex items-center justify-center text-pebble hover:text-charcoal hover:border-charcoal transition-all" aria-label="Share">
+                    <a href="#"
+                        class="w-8 h-8 rounded-full border border-linen flex items-center justify-center text-pebble hover:text-charcoal hover:border-charcoal transition-all"
+                        aria-label="Share">
                         <span class="material-symbols-outlined text-sm">share</span>
                     </a>
-                    <a href="#" class="w-8 h-8 rounded-full border border-linen flex items-center justify-center text-pebble hover:text-charcoal hover:border-charcoal transition-all" aria-label="Library">
+                    <a href="#"
+                        class="w-8 h-8 rounded-full border border-linen flex items-center justify-center text-pebble hover:text-charcoal hover:border-charcoal transition-all"
+                        aria-label="Library">
                         <span class="material-symbols-outlined text-sm">local_library</span>
                     </a>
                 </div>
                 <div class="text-right text-[10px] text-pebble">
-                    © 2026 Features & Found. All rights reserved. <br/>
+                    © 2026 Features & Found. All rights reserved. <br />
                     <a href="admin_dashboard.html" class="hover:underline text-sage font-medium">Portal Admin</a>
                 </div>
             </div>
@@ -257,6 +300,46 @@
 
     <!-- Scripts -->
     <script>
+        // --- Product Database ---
+        const dbProducts = [
+            { id: 1, name: "Cashmere Ribbed Cardigan", category: "Cardigan", material: "Cashmere", price: 285.000, img: "https://images.unsplash.com/photo-1670080589800-6416c8ce8a14?w=500&auto=format&fit=crop&q=60", desc: "Cardigan with thick and soft material, can also be combined with plain white pants and is more simple and elegant, can also be worn in winter." },
+            { id: 2, name: "Structured Leather Shoulder Bag", category: "Bags", material: "Leather", price: 2320.000, img: "https://images.unsplash.com/photo-1614179689702-355944cd0918?w=500&auto=format&fit=crop&q=60", desc: "Premium structured leather shoulder bag with an elegant minimal design. Features a spacious interior and adjustable strap." },
+            { id: 3, name: "Milan Leather Jordan Shoes", category: "Shoes", material: "Leather", price: 5390.000, img: "https://images.unsplash.com/photo-1512374382149-233c42b6a83b?w=500&auto=format&fit=crop&q=60", desc: "Classic Milan leather shoes with a comfortable sole and timeless aesthetic. Perfect for both formal and casual settings." },
+            { id: 4, name: "Denim Long Trousers", category: "Pants", material: "Denim", price: 395.000, img: "https://images.unsplash.com/photo-1718252540511-e958742e4165?w=500&auto=format&fit=crop&q=60", desc: "High-quality denim trousers with a modern relaxed fit. Sturdy, comfortable, and designed to age beautifully." },
+            { id: 5, name: "Leather Backpack", category: "Bags", material: "Leather", price: 2200.000, img: "https://images.unsplash.com/photo-1622560480654-d96214fdc887?w=500&auto=format&fit=crop&q=60", desc: "A sleek and durable leather backpack perfect for daily commute or travel. Includes padded compartments for your essentials." },
+            { id: 6, name: "Chelsea Ankle Boots", category: "Shoes", material: "Leather", price: 2280.000, img: "https://images.unsplash.com/photo-1605733513549-de9b150bd70d?w=500&auto=format&fit=crop&q=60", desc: "Sophisticated Chelsea ankle boots crafted from premium leather. Features elastic side panels and a comfortable block heel." },
+            { id: 7, name: "Chelsea Shirt Denim", category: "Shirt", material: "Denim", price: 280.000, img: "https://images.unsplash.com/photo-1740711152088-88a009e877bb?w=500&auto=format&fit=crop&q=60", desc: "A versatile denim shirt with a tailored fit. Breathable cotton blend ensures all-day comfort and a sharp silhouette." },
+            { id: 8, name: "The Brown louis Vuitton", category: "Bags", material: "Leather", price: 1500.000, img: "https://i.pinimg.com/1200x/34/b7/c0/34b7c03d20fbdd628e141c6834bacd6a.jpg", desc: "An exquisite piece crafted from premium leather, showcasing an iconic timeless design and superior craftsmanship." },
+            { id: 9, name: "Flower Applique Cap Sleeve", category: "Knit Top", material: "Knit", price: 320.000, img: "https://i.pinimg.com/1200x/2d/b6/2a/2db62aa07bb2e682d07f95b53c0aa6b8.jpg", desc: "A delicate cap sleeve knit top featuring intricate flower appliques for a touch of refined femininity." },
+            { id: 10, name: "Dior Diorissimo Vintage Flower", category: "Bags", material: "Canvas", price: 2100.000, img: "https://i.pinimg.com/1200x/75/95/9a/75959a02a721662ec269f6b4df46892a.jpg", desc: "A rare vintage find boasting a charming floral print on durable canvas with signature hardware accents." },
+            { id: 11, name: "Tank Top Polkadot", category: "Tank Top", material: "Cotton", price: 285.000, img: "https://i.pinimg.com/736x/6b/19/dd/6b19dd66a91b9091ecac651262f62a81.jpg", desc: "A playful yet chic polkadot tank top, crafted from lightweight cotton for effortless summer styling." },
+            { id: 12, name: "Black Short Pants", category: "Short Pants", material: "Linen", price: 195.000, img: "https://i.pinimg.com/736x/ff/0c/50/ff0c502438dd06c2bae7c12439395178.jpg", desc: "Essential black short pants featuring a breathable linen blend, designed with a versatile high waist." },
+            { id: 13, name: "Dark Brown Short-sleeved Shirt", category: "Shirt", material: "Cotton", price: 420.000, img: "https://i.pinimg.com/1200x/14/50/c4/1450c4370485587662dbd32dd5997173.jpg", desc: "A classic dark brown short-sleeved shirt offering a relaxed fit and incredibly soft, sustainable cotton fabric." },
+            { id: 14, name: "Star Print Parachute Pants", category: "Pants", material: "Nylon", price: 380.000, img: "https://i.pinimg.com/736x/02/c4/7d/02c47d09612bcd4814a4ab178edad7a1.jpg", desc: "Trendy parachute pants adorned with subtle star prints, combining lightweight utility with modern streetwear edge." }
+        ];
+
+        // Load Product Data
+        document.addEventListener('DOMContentLoaded', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const productId = urlParams.get('id');
+            if (productId) {
+                const product = dbProducts.find(p => p.id == productId);
+                if (product) {
+                    document.getElementById('breadcrumbName').innerText = product.name;
+                    document.getElementById('productCategory').innerText = product.category;
+                    document.getElementById('productTitle').innerText = product.name;
+                    document.getElementById('productPrice').innerText = "Rp." + product.price.toFixed(3);
+                    document.getElementById('mainProductImg').src = product.img;
+                    document.getElementById('mainProductImg').alt = product.name;
+                    
+                    const descEl = document.querySelector('.border-t.border-linen.pt-6.space-y-4 p');
+                    if(descEl) descEl.innerText = product.desc;
+                    
+                    document.title = "Features & Found | " + product.name;
+                }
+            }
+        });
+
         // Header scroll behavior
         window.addEventListener('scroll', () => {
             const header = document.getElementById('mainHeader');
@@ -275,7 +358,7 @@
             "https://images.unsplash.com/photo-1539109136881-3be0616acf4b?w=800&q=80&fit=crop",
             "https://images.unsplash.com/photo-1469334031218-e382a71b716b?w=800&q=80&fit=crop"
         ];
-        
+
         const mainImg = document.getElementById('mainProductImg');
         const thumbnails = document.querySelectorAll('.thumbnail-btn');
 
@@ -354,4 +437,5 @@
         mobileOverlay.addEventListener('click', () => toggleMenu(false));
     </script>
 </body>
+
 </html>

@@ -59,9 +59,12 @@
 
             <!-- Middle: Search Input inside Navbar -->
             <div class="flex-grow max-w-md mx-4 relative hidden sm:block">
-                <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-pebble text-xl">search</span>
-                <input class="w-full bg-surface/60 py-2 pl-10 pr-4 text-xs rounded-full border border-linen focus:outline-none focus:bg-canvas focus:ring-1 focus:ring-charcoal focus:border-charcoal transition-all placeholder:text-pebble/60" 
-                    placeholder="Search product name, category, or material..." type="text" id="navSearchInput" oninput="runSearch()"/>
+                <span
+                    class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-pebble text-xl">search</span>
+                <input
+                    class="w-full bg-surface/60 py-2 pl-10 pr-4 text-xs rounded-full border border-linen focus:outline-none focus:bg-canvas focus:ring-1 focus:ring-charcoal focus:border-charcoal transition-all placeholder:text-pebble/60"
+                    placeholder="Search product name, category, or material..." type="text" id="navSearchInput"
+                    oninput="runSearch()" />
             </div>
 
             <!-- Right: Actions -->
@@ -122,12 +125,14 @@
                     A selection of hand-crafted fashion pieces chosen for exceptional quality and enduring style.
                 </p>
             </div>
-            
+
             <!-- Mobile Search Bar (only visible on mobile screens below sm) -->
             <div class="relative w-full sm:hidden border border-linen rounded-lg overflow-hidden mt-2">
-                <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-pebble text-xl">search</span>
-                <input class="w-full bg-surface py-2.5 pl-10 pr-4 text-xs focus:outline-none focus:bg-canvas focus:ring-1 focus:ring-charcoal border-0 placeholder:text-pebble/60" 
-                    placeholder="Search product..." type="text" id="mobileNavSearchInput" oninput="runSearch()"/>
+                <span
+                    class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-pebble text-xl">search</span>
+                <input
+                    class="w-full bg-surface py-2.5 pl-10 pr-4 text-xs focus:outline-none focus:bg-canvas focus:ring-1 focus:ring-charcoal border-0 placeholder:text-pebble/60"
+                    placeholder="Search product..." type="text" id="mobileNavSearchInput" oninput="runSearch()" />
             </div>
         </section>
 
@@ -195,7 +200,7 @@
                             <span class="text-xs text-pebble" id="resultsCount">7 Products</span>
                         </div>
                         <input class="w-full h-1 bg-linen rounded-lg appearance-none cursor-pointer accent-charcoal"
-                            type="range" min="100" max="6000" value="6000" id="priceRange" oninput="runSearch()"/>
+                            type="range" min="100" max="6000" value="6000" id="priceRange" oninput="runSearch()" />
                         <div class="flex justify-between mt-2 text-xs text-pebble font-medium">
                             <span>Rp.100k</span>
                             <span id="priceValue">Rp.6000k</span>
@@ -236,12 +241,18 @@
             <div>
                 <h3 class="text-xs font-bold uppercase tracking-widest text-charcoal mb-4">Categories</h3>
                 <ul class="space-y-3 text-sm text-pebble" id="mobileCategoryList">
-                    <li><button onclick="filterCategory('All')" class="mobile-cat-btn w-full text-left font-medium text-charcoal">All Products</button></li>
-                    <li><button onclick="filterCategory('Cardigan')" class="mobile-cat-btn w-full text-left hover:text-charcoal">Cardigan</button></li>
-                    <li><button onclick="filterCategory('Bags')" class="mobile-cat-btn w-full text-left hover:text-charcoal">Bags</button></li>
-                    <li><button onclick="filterCategory('Shoes')" class="mobile-cat-btn w-full text-left hover:text-charcoal">Shoes</button></li>
-                    <li><button onclick="filterCategory('Pants')" class="mobile-cat-btn w-full text-left hover:text-charcoal">Pants</button></li>
-                    <li><button onclick="filterCategory('Shirt')" class="mobile-cat-btn w-full text-left hover:text-charcoal">Shirt</button></li>
+                    <li><button onclick="filterCategory('All')"
+                            class="mobile-cat-btn w-full text-left font-medium text-charcoal">All Products</button></li>
+                    <li><button onclick="filterCategory('Cardigan')"
+                            class="mobile-cat-btn w-full text-left hover:text-charcoal">Cardigan</button></li>
+                    <li><button onclick="filterCategory('Bags')"
+                            class="mobile-cat-btn w-full text-left hover:text-charcoal">Bags</button></li>
+                    <li><button onclick="filterCategory('Shoes')"
+                            class="mobile-cat-btn w-full text-left hover:text-charcoal">Shoes</button></li>
+                    <li><button onclick="filterCategory('Pants')"
+                            class="mobile-cat-btn w-full text-left hover:text-charcoal">Pants</button></li>
+                    <li><button onclick="filterCategory('Shirt')"
+                            class="mobile-cat-btn w-full text-left hover:text-charcoal">Shirt</button></li>
                 </ul>
             </div>
             <!-- Materials -->
@@ -262,7 +273,8 @@
             <div>
                 <h3 class="text-xs font-bold uppercase tracking-widest text-charcoal mb-4">Price Range</h3>
                 <input class="w-full h-1 bg-linen rounded-lg appearance-none cursor-pointer accent-charcoal"
-                    type="range" min="100" max="6000" value="6000" id="mobilePriceRange" oninput="syncMobilePrice(this.value)" />
+                    type="range" min="100" max="6000" value="6000" id="mobilePriceRange"
+                    oninput="syncMobilePrice(this.value)" />
                 <div class="flex justify-between mt-2 text-xs text-pebble font-medium">
                     <span>Rp.100k</span>
                     <span id="mobilePriceValue">Rp.6000k</span>
@@ -292,8 +304,10 @@
             <div class="grid grid-cols-2 gap-4">
                 <div class="flex flex-col gap-2.5">
                     <h4 class="text-xs font-semibold text-charcoal uppercase tracking-widest mb-1">Explore</h4>
-                    <a class="text-xs text-pebble hover:text-charcoal transition-colors" href="shop.html">Shop Catalog</a>
-                    <a class="text-xs text-pebble hover:text-charcoal transition-colors" href="login.html">My Account</a>
+                    <a class="text-xs text-pebble hover:text-charcoal transition-colors" href="shop.html">Shop
+                        Catalog</a>
+                    <a class="text-xs text-pebble hover:text-charcoal transition-colors" href="login.html">My
+                        Account</a>
                 </div>
                 <div class="flex flex-col gap-2.5">
                     <h4 class="text-xs font-semibold text-charcoal uppercase tracking-widest mb-1">Company</h4>
@@ -333,13 +347,13 @@
     <script>
         // --- Product Database ---
         const dbProducts = [
-            { id: 1, name: "Cashmere Ribbed Cardigan", category: "Cardigan", material: "Cashmere", price: 285.00, img: "https://images.unsplash.com/photo-1670080589800-6416c8ce8a14?w=500&auto=format&fit=crop&q=60" },
-            { id: 2, name: "Structured Leather Shoulder Bag", category: "Bags", material: "Leather", price: 2320.00, img: "https://images.unsplash.com/photo-1614179689702-355944cd0918?w=500&auto=format&fit=crop&q=60" },
-            { id: 3, name: "Milan Leather Jordan Shoes", category: "Shoes", material: "Leather", price: 5390.00, img: "https://images.unsplash.com/photo-1512374382149-233c42b6a83b?w=500&auto=format&fit=crop&q=60" },
-            { id: 4, name: "Denim Long Trousers", category: "Pants", material: "Denim", price: 395.00, img: "https://images.unsplash.com/photo-1718252540511-e958742e4165?w=500&auto=format&fit=crop&q=60" },
-            { id: 5, name: "Leather Backpack", category: "Bags", material: "Leather", price: 2200.00, img: "https://images.unsplash.com/photo-1622560480654-d96214fdc887?w=500&auto=format&fit=crop&q=60" },
-            { id: 6, name: "Chelsea Ankle Boots", category: "Shoes", material: "Leather", price: 2280.00, img: "https://images.unsplash.com/photo-1605733513549-de9b150bd70d?w=500&auto=format&fit=crop&q=60" },
-            { id: 7, name: "Chelsea Shirt Denim", category: "Shirt", material: "Denim", price: 280.00, img: "https://images.unsplash.com/photo-1740711152088-88a009e877bb?w=500&auto=format&fit=crop&q=60" }
+            { id: 1, name: "Cashmere Ribbed Cardigan", category: "Cardigan", material: "Cashmere", price: 285.000, img: "https://images.unsplash.com/photo-1670080589800-6416c8ce8a14?w=500&auto=format&fit=crop&q=60" },
+            { id: 2, name: "Structured Leather Shoulder Bag", category: "Bags", material: "Leather", price: 2320.000, img: "https://images.unsplash.com/photo-1614179689702-355944cd0918?w=500&auto=format&fit=crop&q=60" },
+            { id: 3, name: "Milan Leather Jordan Shoes", category: "Shoes", material: "Leather", price: 5390.000, img: "https://images.unsplash.com/photo-1512374382149-233c42b6a83b?w=500&auto=format&fit=crop&q=60" },
+            { id: 4, name: "Denim Long Trousers", category: "Pants", material: "Denim", price: 395.000, img: "https://images.unsplash.com/photo-1718252540511-e958742e4165?w=500&auto=format&fit=crop&q=60" },
+            { id: 5, name: "Leather Backpack", category: "Bags", material: "Leather", price: 2200.000, img: "https://images.unsplash.com/photo-1622560480654-d96214fdc887?w=500&auto=format&fit=crop&q=60" },
+            { id: 6, name: "Chelsea Ankle Boots", category: "Shoes", material: "Leather", price: 2280.000, img: "https://images.unsplash.com/photo-1605733513549-de9b150bd70d?w=500&auto=format&fit=crop&q=60" },
+            { id: 7, name: "Chelsea Shirt Denim", category: "Shirt", material: "Denim", price: 280.000, img: "https://images.unsplash.com/photo-1740711152088-88a009e877bb?w=500&auto=format&fit=crop&q=60" }
         ];
 
         let selectedCategory = "All";
@@ -351,7 +365,7 @@
             const desktopInput = document.getElementById('navSearchInput');
             const mobileInput = document.getElementById('mobileNavSearchInput');
             const query = ((desktopInput ? desktopInput.value : "") || (mobileInput ? mobileInput.value : "") || "").toLowerCase().trim();
-            
+
             // Read price limit
             const maxPrice = parseFloat(document.getElementById('priceRange').value);
             document.getElementById('priceValue').innerText = `Rp.${maxPrice}k`;
@@ -387,13 +401,13 @@
 
             grid.innerHTML = results.map(p => `
                 <div class="group cursor-pointer bg-canvas p-3 rounded-lg border border-linen hover:shadow-md transition-all duration-300 relative">
-                    <div class="aspect-[4/5] bg-surface rounded overflow-hidden mb-4 relative" onclick="location.href='detail.html'">
+                    <div class="aspect-[4/5] bg-surface rounded overflow-hidden mb-4 relative" onclick="location.href='detail.html?id=${p.id}'">
                         <img alt="${p.name}" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" src="${p.img}"/>
                     </div>
                     <button class="absolute top-6 right-6 w-8 h-8 rounded-full bg-canvas/80 backdrop-blur border border-linen flex items-center justify-center text-charcoal hover:bg-charcoal hover:text-canvas transition-colors shadow-sm" onclick="addToBag('${p.name}')" aria-label="Add to cart">
                         <span class="material-symbols-outlined text-sm font-bold">add_shopping_cart</span>
                     </button>
-                    <div onclick="location.href='detail.html'">
+                    <div onclick="location.href='detail.html?id=${p.id}'">
                         <p class="text-[10px] tracking-widest uppercase text-pebble font-semibold mb-1">${p.category}</p>
                         <h4 class="text-sm font-medium text-charcoal group-hover:text-pebble transition-colors">${p.name}</h4>
                         <p class="text-sm font-semibold text-charcoal mt-1.5">Rp.${p.price.toFixed(2)}</p>
@@ -405,7 +419,7 @@
         // Filter by Category
         function filterCategory(category) {
             selectedCategory = category;
-            
+
             // Highlight active categories on desktop
             const desktopBtns = document.querySelectorAll('#desktopCategoryList .category-btn');
             desktopBtns.forEach(btn => {
@@ -441,7 +455,7 @@
                 // Active styling
                 element.className = "material-chip px-3 py-1 bg-charcoal text-canvas border border-charcoal rounded-full text-xs cursor-pointer transition-colors";
             }
-            
+
             // Update other element matches (e.g. mobile vs desktop sync)
             const allChips = document.querySelectorAll('.material-chip');
             allChips.forEach(chip => {
