@@ -126,7 +126,7 @@
                 <div class="aspect-[4/5] bg-surface rounded-lg overflow-hidden border border-linen relative">
                     <img id="mainProductImg" alt="Structured Wool Overcoat"
                         class="w-full h-full object-cover transition-opacity duration-300"
-                        src="https://images.unsplash.com/photo-1670080589800-6416c8ce8a14?w=500&auto=format&fit=crop&q=60" />
+                        src="https://i.pinimg.com/1200x/8d/08/28/8d0828d51cfc26c57e0cb10974ebb04c.jpg" />
                     <span
                         class="absolute top-4 left-4 bg-charcoal text-canvas text-[10px] font-bold tracking-widest px-3 py-1 rounded">NEW
                         ARRIVAL</span>
@@ -138,8 +138,10 @@
             <div class="space-y-8">
                 <!-- Header Info -->
                 <div class="space-y-3">
-                    <p class="text-xs uppercase tracking-widest text-pebble font-semibold" id="productCategory">Fashion &amp; Tailoring</p>
-                    <h2 class="text-3xl md:text-4xl font-light tracking-tight text-charcoal" id="productTitle">Cardigan</h2>
+                    <p class="text-xs uppercase tracking-widest text-pebble font-semibold" id="productCategory">Fashion
+                        &amp; Tailoring</p>
+                    <h2 class="text-3xl md:text-4xl font-light tracking-tight text-charcoal" id="productTitle">Cardigan
+                    </h2>
                     <p class="text-2xl font-semibold text-charcoal" id="productPrice">Rp.285.00</p>
                 </div>
 
@@ -177,13 +179,13 @@
                     </div>
 
                     <!-- Size Selector -->
-                    <div>
+                    <div id="sizeSelectorContainer">
                         <div class="flex justify-between items-center mb-3">
                             <span class="text-xs font-semibold uppercase tracking-widest text-charcoal">Size</span>
                             <button class="text-xs text-pebble underline tracking-wider uppercase hover:text-charcoal"
                                 onclick="alert('Size Guide: Standard European Fit')">Size Guide</button>
                         </div>
-                        <div class="grid grid-cols-4 gap-3">
+                        <div class="grid grid-cols-4 gap-3" id="sizeOptionsGrid">
                             <button
                                 class="py-3.5 border border-linen text-sm text-pebble hover:border-charcoal hover:text-charcoal rounded transition-all size-btn"
                                 onclick="selectSize('XS', this)">XS</button>
@@ -226,15 +228,15 @@
                 <div class="border-t border-linen pt-6 space-y-4 text-sm text-pebble">
                     <div class="flex justify-between border-b border-linen/50 pb-2">
                         <span class="font-medium text-charcoal">Materials</span>
-                        <span>100% Organic Virgin Wool</span>
+                        <span id="specMaterials">100% Organic Virgin Wool</span>
                     </div>
                     <div class="flex justify-between border-b border-linen/50 pb-2">
                         <span class="font-medium text-charcoal">Origin</span>
-                        <span>Sustainably hand-finished in Milan, Italy</span>
+                        <span id="specOrigin">Sustainably hand-finished in Milan, Italy</span>
                     </div>
                     <div class="flex justify-between pb-2">
                         <span class="font-medium text-charcoal">Care Instructions</span>
-                        <span>Dry Clean Only</span>
+                        <span id="specCare">Dry Clean Only</span>
                     </div>
                 </div>
             </div>
@@ -302,20 +304,27 @@
     <script>
         // --- Product Database ---
         const dbProducts = [
-            { id: 1, name: "Cashmere Ribbed Cardigan", category: "Cardigan", material: "Cashmere", price: 285.000, img: "https://images.unsplash.com/photo-1670080589800-6416c8ce8a14?w=500&auto=format&fit=crop&q=60", desc: "Cardigan with thick and soft material, can also be combined with plain white pants and is more simple and elegant, can also be worn in winter." },
-            { id: 2, name: "Structured Leather Shoulder Bag", category: "Bags", material: "Leather", price: 2320.000, img: "https://images.unsplash.com/photo-1614179689702-355944cd0918?w=500&auto=format&fit=crop&q=60", desc: "Premium structured leather shoulder bag with an elegant minimal design. Features a spacious interior and adjustable strap." },
-            { id: 3, name: "Milan Leather Jordan Shoes", category: "Shoes", material: "Leather", price: 5390.000, img: "https://images.unsplash.com/photo-1512374382149-233c42b6a83b?w=500&auto=format&fit=crop&q=60", desc: "Classic Milan leather shoes with a comfortable sole and timeless aesthetic. Perfect for both formal and casual settings." },
-            { id: 4, name: "Denim Long Trousers", category: "Pants", material: "Denim", price: 395.000, img: "https://images.unsplash.com/photo-1718252540511-e958742e4165?w=500&auto=format&fit=crop&q=60", desc: "High-quality denim trousers with a modern relaxed fit. Sturdy, comfortable, and designed to age beautifully." },
-            { id: 5, name: "Leather Backpack", category: "Bags", material: "Leather", price: 2200.000, img: "https://images.unsplash.com/photo-1622560480654-d96214fdc887?w=500&auto=format&fit=crop&q=60", desc: "A sleek and durable leather backpack perfect for daily commute or travel. Includes padded compartments for your essentials." },
-            { id: 6, name: "Chelsea Ankle Boots", category: "Shoes", material: "Leather", price: 2280.000, img: "https://images.unsplash.com/photo-1605733513549-de9b150bd70d?w=500&auto=format&fit=crop&q=60", desc: "Sophisticated Chelsea ankle boots crafted from premium leather. Features elastic side panels and a comfortable block heel." },
-            { id: 7, name: "Chelsea Shirt Denim", category: "Shirt", material: "Denim", price: 280.000, img: "https://images.unsplash.com/photo-1740711152088-88a009e877bb?w=500&auto=format&fit=crop&q=60", desc: "A versatile denim shirt with a tailored fit. Breathable cotton blend ensures all-day comfort and a sharp silhouette." },
-            { id: 8, name: "The Brown louis Vuitton", category: "Bags", material: "Leather", price: 1500.000, img: "https://i.pinimg.com/1200x/34/b7/c0/34b7c03d20fbdd628e141c6834bacd6a.jpg", desc: "An exquisite piece crafted from premium leather, showcasing an iconic timeless design and superior craftsmanship." },
-            { id: 9, name: "Flower Applique Cap Sleeve", category: "Knit Top", material: "Knit", price: 320.000, img: "https://i.pinimg.com/1200x/2d/b6/2a/2db62aa07bb2e682d07f95b53c0aa6b8.jpg", desc: "A delicate cap sleeve knit top featuring intricate flower appliques for a touch of refined femininity." },
-            { id: 10, name: "Dior Diorissimo Vintage Flower", category: "Bags", material: "Canvas", price: 2100.000, img: "https://i.pinimg.com/1200x/75/95/9a/75959a02a721662ec269f6b4df46892a.jpg", desc: "A rare vintage find boasting a charming floral print on durable canvas with signature hardware accents." },
-            { id: 11, name: "Tank Top Polkadot", category: "Tank Top", material: "Cotton", price: 285.000, img: "https://i.pinimg.com/736x/6b/19/dd/6b19dd66a91b9091ecac651262f62a81.jpg", desc: "A playful yet chic polkadot tank top, crafted from lightweight cotton for effortless summer styling." },
-            { id: 12, name: "Black Short Pants", category: "Short Pants", material: "Linen", price: 195.000, img: "https://i.pinimg.com/736x/ff/0c/50/ff0c502438dd06c2bae7c12439395178.jpg", desc: "Essential black short pants featuring a breathable linen blend, designed with a versatile high waist." },
-            { id: 13, name: "Dark Brown Short-sleeved Shirt", category: "Shirt", material: "Cotton", price: 420.000, img: "https://i.pinimg.com/1200x/14/50/c4/1450c4370485587662dbd32dd5997173.jpg", desc: "A classic dark brown short-sleeved shirt offering a relaxed fit and incredibly soft, sustainable cotton fabric." },
-            { id: 14, name: "Star Print Parachute Pants", category: "Pants", material: "Nylon", price: 380.000, img: "https://i.pinimg.com/736x/02/c4/7d/02c47d09612bcd4814a4ab178edad7a1.jpg", desc: "Trendy parachute pants adorned with subtle star prints, combining lightweight utility with modern streetwear edge." }
+            { id: 1, name: "Cashmere Ribbed Cardigan", category: "Cardigan", material: "Cashmere", price: 1500000, img: "https://i.pinimg.com/1200x/8d/08/28/8d0828d51cfc26c57e0cb10974ebb04c.jpg", desc: "Cardigan with thick and soft material, can also be combined with plain white pants and is more simple and elegant, can also be worn in winter.", materials: "100% Pure Cashmere", origin: "Handcrafted in Scotland, UK", care: "Dry Clean Only" },
+            { id: 2, name: "Coach Ribbon Shoulder Bag", category: "Bags", material: "Leather", price: 51200000, img: "https://i.pinimg.com/736x/76/a0/ff/76a0ffa9055eff73cafdec1f87478b40.jpg", desc: "Premium structured leather shoulder bag with an elegant minimal design. Features a spacious interior and adjustable strap.", materials: "Full-Grain Pebbled Leather", origin: "Crafted in New York, USA", care: "Wipe with Damp Cloth" },
+            { id: 3, name: "Milan Leather Jordan Shoes", category: "Shoes", material: "Leather", price: 53900000, img: "https://i.pinimg.com/736x/9c/b9/10/9cb910dc405be286b9b09f1de23056e4.jpg", desc: "Classic Milan leather shoes with a comfortable sole and timeless aesthetic. Perfect for both formal and casual settings.", materials: "Premium Nappa Leather Upper, Rubber Sole", origin: "Made in Milan, Italy", care: "Polish Regularly, Avoid Water" },
+            { id: 4, name: "Denim Long Trousers", category: "Pants", material: "Denim", price: 950000, img: "https://images.unsplash.com/photo-1718252540511-e958742e4165?w=500&auto=format&fit=crop&q=60", desc: "High-quality denim trousers with a modern relaxed fit. Sturdy, comfortable, and designed to age beautifully.", materials: "98% Cotton, 2% Elastane Denim", origin: "Woven in Okayama, Japan", care: "Machine Wash Cold, Hang Dry" },
+            { id: 5, name: "Leather Backpack", category: "Bags", material: "Leather", price: 22000000, img: "https://i.pinimg.com/736x/52/f2/b0/52f2b090b2b3245e201b84bae187d2a6.jpg", desc: "A sleek and durable leather backpack perfect for daily commute or travel. Includes padded compartments for your essentials.", materials: "Vegetable-Tanned Full Grain Leather", origin: "Handmade in Florence, Italy", care: "Condition Monthly, Avoid Rain" },
+            { id: 6, name: "Chelsea Ankle Boots", category: "Shoes", material: "Leather", price: 22800000, img: "https://i.pinimg.com/736x/a3/8f/b5/a38fb5b1fe8ec8432fc978e7dfedb150.jpg", desc: "Sophisticated Chelsea ankle boots crafted from premium leather. Features elastic side panels and a comfortable block heel.", materials: "Smooth Calf Leather, Leather Sole", origin: "Made in Porto, Portugal", care: "Polish with Leather Cream" },
+            { id: 7, name: "Chelsea Shirt Denim", category: "Shirt", material: "Denim", price: 2800000, img: "https://i.pinimg.com/1200x/2d/ee/9d/2dee9d8c644da4093caa117e97cbf150.jpg", desc: "A versatile denim shirt with a tailored fit. Breathable cotton blend ensures all-day comfort and a sharp silhouette.", materials: "100% Organic Cotton Denim", origin: "Produced in Istanbul, Turkey", care: "Machine Wash Cold, Tumble Dry Low" },
+            { id: 8, name: "The Brown louis Vuitton", category: "Bags", material: "Leather", price: 35000000, img: "https://i.pinimg.com/1200x/34/b7/c0/34b7c03d20fbdd628e141c6834bacd6a.jpg", desc: "An exquisite piece crafted from premium leather, showcasing an iconic timeless design and superior craftsmanship.", materials: "LV Monogram Canvas, Cowhide Trim", origin: "Crafted in Paris, France", care: "Store in Dust Bag, Avoid Humidity" },
+            { id: 9, name: "Flower Applique Cap Sleeve", category: "Shirt", material: "Cotton", price: 2500000, img: "https://i.pinimg.com/1200x/2d/b6/2a/2db62aa07bb2e682d07f95b53c0aa6b8.jpg", desc: "A delicate cap sleeve knit top featuring intricate flower appliques for a touch of refined femininity.", materials: "100% Egyptian Cotton", origin: "Handcrafted in Seoul, South Korea", care: "Hand Wash Gentle, Lay Flat to Dry" },
+            { id: 10, name: "Dior Diorissimo Vintage Flower", category: "Bags", material: "Canvas", price: 42000000, img: "https://i.pinimg.com/1200x/75/95/9a/75959a02a721662ec269f6b4df46892a.jpg", desc: "A rare vintage find boasting a charming floral print on durable canvas with signature hardware accents.", materials: "Coated Canvas, Gold-Tone Hardware", origin: "Atelier-Made in Paris, France", care: "Professional Clean Only" },
+            { id: 11, name: "Tank Top Polkadot", category: "Shirt", material: "Cotton", price: 580000, img: "https://i.pinimg.com/736x/6b/19/dd/6b19dd66a91b9091ecac651262f62a81.jpg", desc: "A playful yet chic polkadot tank top, crafted from lightweight cotton for effortless summer styling.", materials: "95% Cotton, 5% Spandex", origin: "Ethically Made in Bali, Indonesia", care: "Machine Wash Cold, Do Not Bleach" },
+            { id: 12, name: "Black Short Pants", category: "Pants", material: "Cotton", price: 195000, img: "https://i.pinimg.com/736x/ff/0c/50/ff0c502438dd06c2bae7c12439395178.jpg", desc: "Essential black short pants featuring a breathable linen blend, designed with a versatile high waist.", materials: "55% Linen, 45% Cotton", origin: "Woven in Suzhou, China", care: "Machine Wash 30°C, Hang Dry" },
+            { id: 13, name: "Dark Brown Short-sleeved Shirt", category: "Shirt", material: "Cotton", price: 420000, img: "https://i.pinimg.com/1200x/14/50/c4/1450c4370485587662dbd32dd5997173.jpg", desc: "A classic dark brown short-sleeved shirt offering a relaxed fit and incredibly soft, sustainable cotton fabric.", materials: "100% GOTS-Certified Organic Cotton", origin: "Produced in Kyoto, Japan", care: "Machine Wash Cold, Do Not Iron" },
+            { id: 14, name: "Star Print Parachute Pants", category: "Pants", material: "Parachute", price: 380000, img: "https://i.pinimg.com/736x/02/c4/7d/02c47d09612bcd4814a4ab178edad7a1.jpg", desc: "Trendy parachute pants adorned with subtle star prints, combining lightweight utility with modern streetwear edge.", materials: "100% Ripstop Nylon", origin: "Designed in Los Angeles, USA", care: "Machine Wash Gentle, Air Dry" },
+            { id: 15, name: "Classic Trench Coat", category: "Coat", material: "Leather", price: 18500000, img: "https://i.pinimg.com/1200x/81/b9/58/81b9585d45134a38934277e4cca77496.jpg", desc: "A timeless classic trench coat suitable for any formal or casual occasion.", materials: "100% Lambskin Leather", origin: "Tailored in London, UK", care: "Dry Clean Only, Store Upright" },
+            { id: 16, name: "Minimalist Tote Bag", category: "Bags", material: "Leather", price: 21200000, img: "https://i.pinimg.com/1200x/75/7c/a7/757ca7b73b9e3e8bafe7c813a098441c.jpg", desc: "Simple and elegant canvas tote bag for your everyday essentials.", materials: "Top-Grain Saffiano Leather", origin: "Handstitched in Milan, Italy", care: "Wipe Clean, Condition Regularly" },
+            { id: 17, name: "Flatshoes Ribbon", category: "Shoes", material: "Leather", price: 4500000, img: "https://i.pinimg.com/736x/29/26/aa/2926aaa8c9acfbf2703176239e99f87c.jpg", desc: "Comfortable white canvas sneakers that pair perfectly with any outfit.", materials: "Patent Leather Upper, Satin Ribbon", origin: "Crafted in Bologna, Italy", care: "Wipe with Soft Cloth, Avoid Water" },
+            { id: 18, name: "Linen Wide Leg Pants", category: "Pants", material: "Linen", price: 3200000, img: "https://i.pinimg.com/1200x/83/f6/ad/83f6ada86ceabaeedfff2cacb6034e81.jpg", desc: "Breathable linen wide leg pants, perfect for warm weather and relaxed styling.", materials: "100% European Stonewashed Linen", origin: "Produced in Ghent, Belgium", care: "Hand Wash Cold, Hang Dry" },
+            { id: 19, name: "Oversized Knit Sweater", category: "Sweater", material: "Knit", price: 4100000, img: "https://i.pinimg.com/1200x/cd/bc/9f/cdbc9f6bfeb97e3e665c3981e6ae728f.jpg", desc: "Cozy oversized knit sweater for ultimate comfort during colder seasons.", materials: "70% Merino Wool, 30% Alpaca", origin: "Hand-knitted in Copenhagen, Denmark", care: "Hand Wash Gentle, Dry Flat" },
+            { id: 20, name: "Vintage Leather Belt", category: "Shirt", material: "Cotton", price: 1800000, img: "https://i.pinimg.com/1200x/8f/45/04/8f45047b552790bbe2316ae0040e30d5.jpg", desc: "Authentic vintage leather belt to add character to your denim or trousers.", materials: "100% Supima Cotton, Knit Weave", origin: "Crafted in Bandung, Indonesia", care: "Machine Wash Cold, Do Not Bleach" },
+            { id: 21, name: "Elegant Silk One Set", category: "Shirt", material: "Silk", price: 500000, img: "https://i.pinimg.com/736x/5d/ef/9c/5def9c4cee1d9edbc4d75251d77aad48.jpg", desc: "A luxurious silk one set that drapes beautifully. Perfect for evening wear or elegant daytime occasions.", materials: "100% Mulberry Silk, 19 Momme", origin: "Woven in Hangzhou, China", care: "Hand Wash Cold or Dry Clean" }
         ];
 
         // Load Product Data
@@ -328,14 +337,33 @@
                     document.getElementById('breadcrumbName').innerText = product.name;
                     document.getElementById('productCategory').innerText = product.category;
                     document.getElementById('productTitle').innerText = product.name;
-                    document.getElementById('productPrice').innerText = "Rp." + product.price.toFixed(3);
+                    document.getElementById('productPrice').innerText = "Rp." + product.price.toLocaleString('id-ID');
                     document.getElementById('mainProductImg').src = product.img;
                     document.getElementById('mainProductImg').alt = product.name;
-                    
+
                     const descEl = document.querySelector('.border-t.border-linen.pt-6.space-y-4 p');
-                    if(descEl) descEl.innerText = product.desc;
-                    
+                    if (descEl) descEl.innerText = product.desc;
+
+                    // Update specs dynamically
+                    if (product.materials) document.getElementById('specMaterials').innerText = product.materials;
+                    if (product.origin) document.getElementById('specOrigin').innerText = product.origin;
+                    if (product.care) document.getElementById('specCare').innerText = product.care;
+
                     document.title = "Features & Found | " + product.name;
+
+                    const sizeContainer = document.getElementById('sizeSelectorContainer');
+                    const sizeGrid = document.getElementById('sizeOptionsGrid');
+
+                    if (product.category === 'Bags') {
+                        sizeContainer.style.display = 'none';
+                    } else if (product.category === 'Shoes') {
+                        sizeGrid.innerHTML = `
+                            <button class="py-3.5 border border-linen text-sm text-pebble hover:border-charcoal hover:text-charcoal rounded transition-all size-btn" onclick="selectSize('39', this)">39</button>
+                            <button class="py-3.5 border-2 border-charcoal text-sm text-charcoal font-semibold rounded transition-all size-btn" onclick="selectSize('40', this)">40</button>
+                            <button class="py-3.5 border border-linen text-sm text-pebble hover:border-charcoal hover:text-charcoal rounded transition-all size-btn" onclick="selectSize('41', this)">41</button>
+                            <button class="py-3.5 border border-linen text-sm text-pebble hover:border-charcoal hover:text-charcoal rounded transition-all size-btn" onclick="selectSize('42', this)">42</button>
+                        `;
+                    }
                 }
             }
         });

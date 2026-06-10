@@ -199,11 +199,12 @@
                             <h3 class="text-xs font-bold uppercase tracking-widest text-charcoal">Max Price</h3>
                             <span class="text-xs text-pebble" id="resultsCount">7 Products</span>
                         </div>
-                        <input class="w-full h-1 bg-linen rounded-lg appearance-none cursor-pointer accent-charcoal"
-                            type="range" min="100" max="6000" value="6000" id="priceRange" oninput="runSearch()" />
-                        <div class="flex justify-between mt-2 text-xs text-pebble font-medium">
+                            <label class="text-[10px] font-bold tracking-widest uppercase text-pebble block mb-3">Price Limit</label>
+                            <input class="w-full accent-charcoal"
+                            type="range" min="100000" max="60000000" value="60000000" id="priceRange" oninput="runSearch()" />
+                            <div class="flex justify-between text-[10px] text-pebble mt-2 font-medium">
                             <span>Rp.100k</span>
-                            <span id="priceValue">Rp.6000k</span>
+                            <span id="priceValue">Rp.60.000.000</span>
                         </div>
                     </div>
                 </div>
@@ -344,18 +345,8 @@
     </footer>
 
     <!-- Scripts -->
+    <script src="products.js"></script>
     <script>
-        // --- Product Database ---
-        const dbProducts = [
-            { id: 1, name: "Cashmere Ribbed Cardigan", category: "Cardigan", material: "Cashmere", price: 285.000, img: "https://images.unsplash.com/photo-1670080589800-6416c8ce8a14?w=500&auto=format&fit=crop&q=60" },
-            { id: 2, name: "Structured Leather Shoulder Bag", category: "Bags", material: "Leather", price: 2320.000, img: "https://images.unsplash.com/photo-1614179689702-355944cd0918?w=500&auto=format&fit=crop&q=60" },
-            { id: 3, name: "Milan Leather Jordan Shoes", category: "Shoes", material: "Leather", price: 5390.000, img: "https://images.unsplash.com/photo-1512374382149-233c42b6a83b?w=500&auto=format&fit=crop&q=60" },
-            { id: 4, name: "Denim Long Trousers", category: "Pants", material: "Denim", price: 395.000, img: "https://images.unsplash.com/photo-1718252540511-e958742e4165?w=500&auto=format&fit=crop&q=60" },
-            { id: 5, name: "Leather Backpack", category: "Bags", material: "Leather", price: 2200.000, img: "https://images.unsplash.com/photo-1622560480654-d96214fdc887?w=500&auto=format&fit=crop&q=60" },
-            { id: 6, name: "Chelsea Ankle Boots", category: "Shoes", material: "Leather", price: 2280.000, img: "https://images.unsplash.com/photo-1605733513549-de9b150bd70d?w=500&auto=format&fit=crop&q=60" },
-            { id: 7, name: "Chelsea Shirt Denim", category: "Shirt", material: "Denim", price: 280.000, img: "https://images.unsplash.com/photo-1740711152088-88a009e877bb?w=500&auto=format&fit=crop&q=60" }
-        ];
-
         let selectedCategory = "All";
         let activeMaterials = [];
 
@@ -368,7 +359,7 @@
 
             // Read price limit
             const maxPrice = parseFloat(document.getElementById('priceRange').value);
-            document.getElementById('priceValue').innerText = `Rp.${maxPrice}k`;
+            document.getElementById('priceValue').innerText = `Rp.${maxPrice.toLocaleString('id-ID')}`;
             document.getElementById('mobilePriceValue').innerText = `Rp.${maxPrice}k`;
             document.getElementById('mobilePriceRange').value = maxPrice;
 
@@ -410,7 +401,7 @@
                     <div onclick="location.href='detail.html?id=${p.id}'">
                         <p class="text-[10px] tracking-widest uppercase text-pebble font-semibold mb-1">${p.category}</p>
                         <h4 class="text-sm font-medium text-charcoal group-hover:text-pebble transition-colors">${p.name}</h4>
-                        <p class="text-sm font-semibold text-charcoal mt-1.5">Rp.${p.price.toFixed(2)}</p>
+                        <p class="text-sm font-semibold text-charcoal mt-1.5">Rp.${p.price.toLocaleString('id-ID')}</p>
                     </div>
                 </div>
             `).join('');
