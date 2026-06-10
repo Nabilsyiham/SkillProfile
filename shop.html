@@ -345,7 +345,9 @@
     </footer>
 
     <!-- Scripts -->
-    <script src="products.js"></script>
+    <script>
+        let dbProducts = [];
+    </script>
     <script>
         let selectedCategory = "All";
         let activeMaterials = [];
@@ -536,8 +538,19 @@
         if (filterOverlay) filterOverlay.addEventListener('click', () => toggleFilters(false));
         if (applyFiltersBtn) applyFiltersBtn.addEventListener('click', () => toggleFilters(false));
 
-        // --- Initialize ---
-        runSearch();
+        // --- Initialize: fetch products from API ---
+        async function loadProducts() {
+            try {
+                const response = await fetch('http://localhost:8000/api/products');
+                if (response.ok) {
+                    dbProducts = await response.json();
+                }
+            } catch (e) {
+                console.warn('API unavailable, products will not load', e);
+            }
+            runSearch();
+        }
+        loadProducts();
     </script>
 </body>
 
