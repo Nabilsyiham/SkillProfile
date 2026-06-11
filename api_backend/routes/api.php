@@ -13,6 +13,7 @@ use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\ChatController;
 use App\Http\Controllers\VariantController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\AddressController;
 
 // Public routes
 Route::post('/register', [AuthController::class, 'register']);
@@ -54,6 +55,13 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::put('/cart/{id}', [CartController::class, 'update']);
     Route::delete('/cart/{id}', [CartController::class, 'destroy']);
     Route::delete('/cart', [CartController::class, 'clear']);
+
+    // Address routes
+    Route::get('/addresses', [AddressController::class, 'index']);
+    Route::post('/addresses', [AddressController::class, 'store']);
+    Route::put('/addresses/{id}', [AddressController::class, 'update']);
+    Route::delete('/addresses/{id}', [AddressController::class, 'destroy']);
+    Route::put('/addresses/{id}/default', [AddressController::class, 'setDefault']);
 });
 
 // Admin routes
@@ -63,6 +71,7 @@ Route::prefix('admin')->middleware(['auth:sanctum'])->group(function () {
     Route::put('/products/{productId}/variants', [VariantController::class, 'sync']);
     Route::get('/orders', [AdminOrderController::class, 'index']);
     Route::put('/orders/{id}/status', [AdminOrderController::class, 'updateStatus']);
+    Route::get('/orders/pending-count', [AdminOrderController::class, 'pendingCount']);
 
     // Chat routes
     Route::get('/chats', [ChatController::class, 'adminChats']);

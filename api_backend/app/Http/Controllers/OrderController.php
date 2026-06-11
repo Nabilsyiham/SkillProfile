@@ -12,15 +12,19 @@ class OrderController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'address' => 'required|string',
+            'address_id' => 'required|exists:addresses,id',
             'phone' => 'required|string',
-            'payment_method' => 'required|string',
+            'payment_method' => 'required|string|in:cod,transfer,ewallet',
             'items' => 'required|array|min:1',
             'items.*.product_id' => 'required|exists:products,id',
             'items.*.quantity' => 'required|integer|min:1',
             'items.*.color' => 'required|string',
             'items.*.size' => 'required|string',
         ]);
+
+        $address = \App\Models\Address::where('user_id', $request->user()->id)
+            ->where('id', $request->address_id)
+            ->firstOrFail();
 
         $totalPrice = 0;
         $items = [];
@@ -38,11 +42,15 @@ class OrderController extends Controller
             ];
         }
 
-        $order = DB::transaction(function () use ($request, $totalPrice, $items) {
+        $shippingFee = $totalPrice < 250000 ? 15000 : 0;
+        $totalPrice += $shippingFee;
+
+        $order = DB::transaction(function () use ($request, $totalPrice, $items, $address) {
             $order = Order::create([
                 'user_id' => $request->user()->id,
+                'address_id' => $request->address_id,
                 'total_price' => $totalPrice,
-                'address' => $request->address,
+                'address' => $address->address . ', ' . $address->city . ', ' . $address->province,
                 'phone' => $request->phone,
                 'payment_method' => $request->payment_method,
                 'status' => 'pending',
@@ -65,7 +73,10 @@ class OrderController extends Controller
             return $order;
         });
 
-        return response()->json($order->load('items.product'), 201);
+        return response()->json([
+            'message' => 'Order placed successfully',
+            'order' => $order->load('items.product'),
+        ], 201);
     }
 
     public function index(Request $request)
