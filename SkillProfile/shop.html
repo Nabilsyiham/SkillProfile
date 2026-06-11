@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Features & Found | Shop</title>
+    <!-- Tailwind CSS with Forms and Container Queries -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <!-- Google Fonts & Material Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        rel="stylesheet" />
+
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "canvas": "#FAF9F5",
+                        "surface": "#F3F2EC",
+                        "surface-high": "#EBEAE3",
+                        "charcoal": "#1E1E1C",
+                        "pebble": "#7B7973",
+                        "linen": "#E4E2D9",
+                        "sage": "#8D9387",
+                        "clay": "#C8C2B8",
+                    },
+                    fontFamily: {
+                        sans: ["Manrope", "sans-serif"],
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="global.css" />
+    <script src="auth.js"></script>
+</head>
+
+<body class="bg-canvas text-charcoal font-sans antialiased selection:bg-surface-high selection:text-charcoal">
+
+    <!-- Sticky Header -->
+    <header
+        class="w-full sticky top-0 z-50 backdrop-blur-md bg-canvas/80 border-b border-linen transition-all duration-300"
+        id="mainHeader">
+        <nav class="max-w-[1280px] mx-auto px-6 md:px-12 flex justify-between items-center h-20 gap-4">
+            <!-- Left: Mobile Menu Trigger / Brand -->
+            <div class="flex items-center gap-4 flex-shrink-0">
+                <button class="md:hidden p-1 text-charcoal hover:text-pebble transition-colors" id="mobileMenuBtn"
+                    aria-label="Open menu">
+                    <span class="material-symbols-outlined text-2xl">menu</span>
+                </button>
+                <a href="index.html"
+                    class="font-light text-xl md:text-2xl tracking-tight text-charcoal hover:opacity-85 transition-opacity">
+                    Features <span class="font-normal text-pebble">&</span> Found
+                </a>
+            </div>
+
+            <!-- Middle: Search Input inside Navbar -->
+            <div class="flex-grow max-w-md mx-4 relative hidden sm:block">
+                <span
+                    class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-pebble text-xl">search</span>
+                <input
+                    class="w-full bg-surface/60 py-2 pl-10 pr-4 text-xs rounded-full border border-linen focus:outline-none focus:bg-canvas focus:ring-1 focus:ring-charcoal focus:border-charcoal transition-all placeholder:text-pebble/60"
+                    placeholder="Search product name, category, or material..." type="text" id="navSearchInput"
+                    oninput="runSearch()" />
+            </div>
+
+            <!-- Right: Actions -->
+            <div class="flex items-center gap-4 flex-shrink-0">
+                <a href="login.html"
+                    class="hidden md:inline-flex text-sm font-medium uppercase text-pebble hover:text-charcoal transition-colors">Sign
+                    In</a>
+                <a href="cart.html" class="relative p-1 text-charcoal hover:text-pebble transition-colors"
+                    aria-label="Shopping cart">
+                    <span class="material-symbols-outlined text-2xl">shopping_bag</span>
+                    <span
+                        class="absolute -top-1 -right-1 w-4 h-4 bg-charcoal text-canvas text-[9px] font-bold rounded-full flex items-center justify-center hidden"
+                        id="cartBadge">0</span>
+                </a>
+            </div>
+        </nav>
+
+        <!-- Mobile Drawer Navigation -->
+        <div class="fixed inset-0 bg-charcoal/20 z-40 hidden transition-opacity duration-300" id="mobileOverlay"></div>
+        <aside
+            class="fixed top-0 left-0 bottom-0 w-72 bg-canvas border-r border-linen z-50 transform -translate-x-full transition-transform duration-300 ease-in-out md:hidden flex flex-col"
+            id="mobileSidebar">
+            <div class="flex justify-between items-center p-6 border-b border-linen">
+                <span class="font-light text-lg tracking-tight">Menu</span>
+                <button class="p-1 hover:text-pebble transition-colors" id="closeMobileBtn">
+                    <span class="material-symbols-outlined text-xl">close</span>
+                </button>
+            </div>
+            <nav class="flex-1 p-6 space-y-6">
+                <a href="index.html" class="block text-lg text-pebble hover:text-charcoal transition-colors">Home</a>
+                <a href="shop.html" class="block text-lg font-medium text-charcoal">Shop</a>
+                <a href="login.html" class="block text-lg text-pebble hover:text-charcoal transition-colors">Sign In /
+                    Register</a>
+                <a href="admin_dashboard.html"
+                    class="block text-sm text-sage hover:text-charcoal transition-colors pt-6 border-t border-linen">Admin
+                    Panel</a>
+            </nav>
+            <div class="p-6 border-t border-linen text-xs text-pebble">
+                © 2026 Features & Found.
+            </div>
+        </aside>
+    </header>
+
+    <main class="max-w-[1280px] mx-auto px-6 md:px-12 py-12 md:py-16">
+        <!-- Editorial Header -->
+        <section class="mb-8 flex flex-col sm:flex-row justify-between items-start sm:items-end gap-6">
+            <div>
+                <nav class="flex gap-2 text-xs uppercase tracking-wider text-pebble mb-4">
+                    <a href="index.html" class="hover:text-charcoal">Home</a>
+                    <span>/</span>
+                    <span class="text-charcoal font-medium">Shop</span>
+                </nav>
+                <h1 class="text-3xl md:text-5xl font-light tracking-tight text-charcoal mb-4">The Curated <span
+                        class="font-normal italic">Collection</span></h1>
+                <p class="text-sm md:text-base text-pebble max-w-xl leading-relaxed">
+                    A selection of hand-crafted fashion pieces chosen for exceptional quality and enduring style.
+                </p>
+            </div>
+
+            <!-- Mobile Search Bar (only visible on mobile screens below sm) -->
+            <div class="relative w-full sm:hidden border border-linen rounded-lg overflow-hidden mt-2">
+                <span
+                    class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-pebble text-xl">search</span>
+                <input
+                    class="w-full bg-surface py-2.5 pl-10 pr-4 text-xs focus:outline-none focus:bg-canvas focus:ring-1 focus:ring-charcoal border-0 placeholder:text-pebble/60"
+                    placeholder="Search product..." type="text" id="mobileNavSearchInput" oninput="runSearch()" />
+            </div>
+        </section>
+
+        <!-- Layout Wrapper -->
+        <div class="flex flex-col md:flex-row gap-8">
+
+            <!-- Mobile Filter Sticky Bar -->
+            <div class="md:hidden flex items-center justify-between border-y border-linen py-3">
+                <button
+                    class="flex items-center gap-2 border border-linen px-4 py-2 rounded text-xs font-semibold uppercase tracking-wider bg-canvas active:bg-surface"
+                    id="mobileFilterBtn">
+                    <span class="material-symbols-outlined text-sm">tune</span>
+                    Filters
+                </button>
+                <div class="text-xs text-pebble font-medium" id="mobileProductCount">Showing 7 Products</div>
+            </div>
+
+            <!-- Desktop Sidebar Filters -->
+            <aside class="hidden md:block w-60 flex-shrink-0">
+                <div class="sticky top-28 space-y-8">
+                    <!-- Categories -->
+                    <div>
+                        <h3 class="text-xs font-bold uppercase tracking-widest text-charcoal mb-4">Categories</h3>
+                        <ul class="space-y-2 text-sm text-pebble" id="desktopCategoryList">
+                            <li><button onclick="filterCategory('All')"
+                                    class="category-btn w-full text-left font-medium text-charcoal border-l-2 border-charcoal pl-2.5 transition-all">All
+                                    Products</button></li>
+                            <li><button onclick="filterCategory('Cardigan')"
+                                    class="category-btn w-full text-left hover:text-charcoal pl-2.5 transition-colors">Cardigan</button>
+                            </li>
+                            <li><button onclick="filterCategory('Bags')"
+                                    class="category-btn w-full text-left hover:text-charcoal pl-2.5 transition-colors">Bags</button>
+                            </li>
+                            <li><button onclick="filterCategory('Shoes')"
+                                    class="category-btn w-full text-left hover:text-charcoal pl-2.5 transition-colors">Shoes</button>
+                            </li>
+                            <li><button onclick="filterCategory('Pants')"
+                                    class="category-btn w-full text-left hover:text-charcoal pl-2.5 transition-colors">Pants</button>
+                            </li>
+                            <li><button onclick="filterCategory('Shirt')"
+                                    class="category-btn w-full text-left hover:text-charcoal pl-2.5 transition-colors">Shirt</button>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Materials -->
+                    <div>
+                        <h3 class="text-xs font-bold uppercase tracking-widest text-charcoal mb-4">Materials</h3>
+                        <div class="flex flex-wrap gap-2">
+                            <span onclick="toggleMaterialFilter('Cashmere', this)"
+                                class="material-chip px-3 py-1 bg-surface border border-linen rounded-full text-xs text-pebble hover:border-charcoal hover:text-charcoal cursor-pointer transition-colors">Cashmere</span>
+                            <span onclick="toggleMaterialFilter('Leather', this)"
+                                class="material-chip px-3 py-1 bg-surface border border-linen rounded-full text-xs text-pebble hover:border-charcoal hover:text-charcoal cursor-pointer transition-colors">Leather</span>
+                            <span onclick="toggleMaterialFilter('Silk', this)"
+                                class="material-chip px-3 py-1 bg-surface border border-linen rounded-full text-xs text-pebble hover:border-charcoal hover:text-charcoal cursor-pointer transition-colors">Silk</span>
+                            <span onclick="toggleMaterialFilter('Denim', this)"
+                                class="material-chip px-3 py-1 bg-surface border border-linen rounded-full text-xs text-pebble hover:border-charcoal hover:text-charcoal cursor-pointer transition-colors">Denim</span>
+                        </div>
+                    </div>
+
+                    <!-- Price Range -->
+                    <div class="pt-6 border-t border-linen">
+                        <div class="flex justify-between items-center mb-4">
+                            <h3 class="text-xs font-bold uppercase tracking-widest text-charcoal">Max Price</h3>
+                            <span class="text-xs text-pebble" id="resultsCount">7 Products</span>
+                        </div>
+                            <label class="text-[10px] font-bold tracking-widest uppercase text-pebble block mb-3">Price Limit</label>
+                            <input class="w-full accent-charcoal"
+                            type="range" min="100000" max="60000000" value="60000000" id="priceRange" oninput="runSearch()" />
+                            <div class="flex justify-between text-[10px] text-pebble mt-2 font-medium">
+                            <span>Rp.100k</span>
+                            <span id="priceValue">Rp.60.000.000</span>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- Product Grid -->
+            <div class="flex-grow">
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" id="productGrid">
+                    <!-- Renders dynamically from JS -->
+                </div>
+
+                <!-- Zero Results State -->
+                <div id="noResultsState" class="hidden text-center py-20 space-y-4">
+                    <span class="material-symbols-outlined text-5xl text-pebble/30">search_off</span>
+                    <h3 class="text-lg font-light text-pebble">No matching products found.</h3>
+                    <p class="text-xs text-pebble/70">Try using different keywords, tags, or adjusting filters.</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Mobile Filter Overlay & Side Drawer -->
+    <div class="fixed inset-0 bg-charcoal/20 z-40 hidden transition-opacity duration-300" id="filterOverlay"></div>
+    <aside
+        class="fixed top-0 right-0 bottom-0 w-80 bg-canvas border-l border-linen z-50 transform translate-x-full transition-transform duration-300 ease-in-out flex flex-col"
+        id="filterSidebar">
+        <div class="flex justify-between items-center p-6 border-b border-linen">
+            <span class="font-semibold text-charcoal uppercase tracking-widest text-xs">Filter Products</span>
+            <button class="p-1 hover:text-pebble transition-colors" id="closeFilterBtn">
+                <span class="material-symbols-outlined text-xl">close</span>
+            </button>
+        </div>
+        <div class="flex-1 p-6 space-y-8 overflow-y-auto">
+            <!-- Categories -->
+            <div>
+                <h3 class="text-xs font-bold uppercase tracking-widest text-charcoal mb-4">Categories</h3>
+                <ul class="space-y-3 text-sm text-pebble" id="mobileCategoryList">
+                    <li><button onclick="filterCategory('All')"
+                            class="mobile-cat-btn w-full text-left font-medium text-charcoal">All Products</button></li>
+                    <li><button onclick="filterCategory('Cardigan')"
+                            class="mobile-cat-btn w-full text-left hover:text-charcoal">Cardigan</button></li>
+                    <li><button onclick="filterCategory('Bags')"
+                            class="mobile-cat-btn w-full text-left hover:text-charcoal">Bags</button></li>
+                    <li><button onclick="filterCategory('Shoes')"
+                            class="mobile-cat-btn w-full text-left hover:text-charcoal">Shoes</button></li>
+                    <li><button onclick="filterCategory('Pants')"
+                            class="mobile-cat-btn w-full text-left hover:text-charcoal">Pants</button></li>
+                    <li><button onclick="filterCategory('Shirt')"
+                            class="mobile-cat-btn w-full text-left hover:text-charcoal">Shirt</button></li>
+                </ul>
+            </div>
+            <!-- Materials -->
+            <div>
+                <h3 class="text-xs font-bold uppercase tracking-widest text-charcoal mb-4">Materials</h3>
+                <div class="flex flex-wrap gap-2">
+                    <span onclick="toggleMaterialFilter('Cashmere', this)"
+                        class="material-chip px-3 py-1.5 bg-surface border border-linen rounded-full text-xs text-pebble hover:border-charcoal hover:text-charcoal cursor-pointer transition-colors">Cashmere</span>
+                    <span onclick="toggleMaterialFilter('Leather', this)"
+                        class="material-chip px-3 py-1.5 bg-surface border border-linen rounded-full text-xs text-pebble hover:border-charcoal hover:text-charcoal cursor-pointer transition-colors">Leather</span>
+                    <span onclick="toggleMaterialFilter('Silk', this)"
+                        class="material-chip px-3 py-1.5 bg-surface border border-linen rounded-full text-xs text-pebble hover:border-charcoal hover:text-charcoal cursor-pointer transition-colors">Silk</span>
+                    <span onclick="toggleMaterialFilter('Denim', this)"
+                        class="material-chip px-3 py-1.5 bg-surface border border-linen rounded-full text-xs text-pebble hover:border-charcoal hover:text-charcoal cursor-pointer transition-colors">Denim</span>
+                </div>
+            </div>
+            <!-- Price Range -->
+            <div>
+                <h3 class="text-xs font-bold uppercase tracking-widest text-charcoal mb-4">Price Range</h3>
+                <input class="w-full h-1 bg-linen rounded-lg appearance-none cursor-pointer accent-charcoal"
+                    type="range" min="100" max="6000" value="6000" id="mobilePriceRange"
+                    oninput="syncMobilePrice(this.value)" />
+                <div class="flex justify-between mt-2 text-xs text-pebble font-medium">
+                    <span>Rp.100k</span>
+                    <span id="mobilePriceValue">Rp.6000k</span>
+                </div>
+            </div>
+        </div>
+        <div class="p-6 border-t border-linen">
+            <button
+                class="w-full bg-charcoal text-canvas hover:bg-charcoal/90 py-3 rounded text-xs uppercase tracking-widest font-semibold transition-all duration-300"
+                id="applyFiltersBtn">Apply Filters</button>
+        </div>
+    </aside>
+
+    <!-- Footer -->
+    <footer class="w-full bg-surface border-t border-linen">
+        <div class="max-w-[1280px] mx-auto px-6 md:px-12 py-12 md:py-16 grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="space-y-4">
+                <div class="font-light text-xl tracking-tight text-charcoal">
+                    Features <span class="font-normal text-pebble">&</span> Found
+                </div>
+                <p class="text-xs text-pebble max-w-xs leading-relaxed">
+                    Curating timeless fashion for intentional living. We believe in elevated quality,
+                    sustainable sourcing, and the quiet confidence of a well-considered wardrobe.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-2 gap-4">
+                <div class="flex flex-col gap-2.5">
+                    <h4 class="text-xs font-semibold text-charcoal uppercase tracking-widest mb-1">Explore</h4>
+                    <a class="text-xs text-pebble hover:text-charcoal transition-colors" href="shop.html">Shop
+                        Catalog</a>
+                    <a class="text-xs text-pebble hover:text-charcoal transition-colors" href="login.html">My
+                        Account</a>
+                </div>
+                <div class="flex flex-col gap-2.5">
+                    <h4 class="text-xs font-semibold text-charcoal uppercase tracking-widest mb-1">Company</h4>
+                    <a class="text-xs text-pebble hover:text-charcoal transition-colors" href="#">Sourcing Ethos</a>
+                    <a class="text-xs text-pebble hover:text-charcoal transition-colors" href="#">Sustainability</a>
+                    <a class="text-xs text-pebble hover:text-charcoal transition-colors" href="#">Contact Us</a>
+                </div>
+            </div>
+
+            <div class="flex flex-col md:items-end justify-between gap-6">
+                <div class="flex gap-4">
+                    <a href="#"
+                        class="w-8 h-8 rounded-full border border-linen flex items-center justify-center text-pebble hover:text-charcoal hover:border-charcoal transition-all"
+                        aria-label="Globe">
+                        <span class="material-symbols-outlined text-sm">public</span>
+                    </a>
+                    <a href="#"
+                        class="w-8 h-8 rounded-full border border-linen flex items-center justify-center text-pebble hover:text-charcoal hover:border-charcoal transition-all"
+                        aria-label="Share">
+                        <span class="material-symbols-outlined text-sm">share</span>
+                    </a>
+                    <a href="#"
+                        class="w-8 h-8 rounded-full border border-linen flex items-center justify-center text-pebble hover:text-charcoal hover:border-charcoal transition-all"
+                        aria-label="Library">
+                        <span class="material-symbols-outlined text-sm">local_library</span>
+                    </a>
+                </div>
+                <div class="text-right text-[10px] text-pebble">
+                    © 2026 Features & Found. All rights reserved. <br />
+                    <a href="admin_dashboard.html" class="hover:underline text-sage font-medium">Portal Admin</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+        let dbProducts = [];
+    </script>
+    <script>
+        let selectedCategory = "All";
+        let activeMaterials = [];
+
+        // --- Search & Filters logic ---
+        function runSearch() {
+            // Read search inputs (sync desktop and mobile search value)
+            const desktopInput = document.getElementById('navSearchInput');
+            const mobileInput = document.getElementById('mobileNavSearchInput');
+            const query = ((desktopInput ? desktopInput.value : "") || (mobileInput ? mobileInput.value : "") || "").toLowerCase().trim();
+
+            // Read price limit
+            const maxPrice = parseFloat(document.getElementById('priceRange').value);
+            document.getElementById('priceValue').innerText = `Rp.${maxPrice.toLocaleString('id-ID')}`;
+            document.getElementById('mobilePriceValue').innerText = `Rp.${maxPrice}k`;
+            document.getElementById('mobilePriceRange').value = maxPrice;
+
+            // Filter logic
+            const results = dbProducts.filter(p => {
+                const matchesQuery = p.name.toLowerCase().includes(query) || p.category.toLowerCase().includes(query) || p.material.toLowerCase().includes(query);
+                const matchesCategory = (selectedCategory === "All" || p.category === selectedCategory);
+                const matchesMaterial = (activeMaterials.length === 0 || activeMaterials.includes(p.material));
+                const matchesPrice = p.price <= maxPrice;
+
+                return matchesQuery && matchesCategory && matchesMaterial && matchesPrice;
+            });
+
+            // Update product counts
+            const countText = `Showing ${results.length} Product${results.length === 1 ? '' : 's'}`;
+            document.getElementById('resultsCount').innerText = `${results.length} Products`;
+            document.getElementById('mobileProductCount').innerText = countText;
+
+            // Render output
+            const grid = document.getElementById('productGrid');
+            const zeroState = document.getElementById('noResultsState');
+
+            if (results.length === 0) {
+                grid.innerHTML = '';
+                zeroState.classList.remove('hidden');
+                return;
+            } else {
+                zeroState.classList.add('hidden');
+            }
+
+            grid.innerHTML = results.map(p => `
+                <div class="group cursor-pointer bg-canvas p-3 rounded-lg border border-linen hover:shadow-md transition-all duration-300 relative">
+                    <div class="aspect-[4/5] bg-surface rounded overflow-hidden mb-4 relative" onclick="location.href='detail.html?id=${p.id}'">
+                        <img alt="${p.name}" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" src="${p.img}"/>
+                    </div>
+                    <button class="absolute top-6 right-6 w-8 h-8 rounded-full bg-canvas/80 backdrop-blur border border-linen flex items-center justify-center text-charcoal hover:bg-charcoal hover:text-canvas transition-colors shadow-sm" onclick="addToBag(${p.id})" aria-label="Add to cart">
+                        <span class="material-symbols-outlined text-sm font-bold">add_shopping_cart</span>
+                    </button>
+                    <div onclick="location.href='detail.html?id=${p.id}'">
+                        <p class="text-[10px] tracking-widest uppercase text-pebble font-semibold mb-1">${p.category}</p>
+                        <h4 class="text-sm font-medium text-charcoal group-hover:text-pebble transition-colors">${p.name}</h4>
+                        <p class="text-sm font-semibold text-charcoal mt-1.5">Rp.${p.price.toLocaleString('id-ID')}</p>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Filter by Category
+        function filterCategory(category) {
+            selectedCategory = category;
+
+            // Highlight active categories on desktop
+            const desktopBtns = document.querySelectorAll('#desktopCategoryList .category-btn');
+            desktopBtns.forEach(btn => {
+                if (btn.innerText.trim() === category || (category === 'All' && btn.innerText.includes('All'))) {
+                    btn.className = "category-btn w-full text-left font-medium text-charcoal border-l-2 border-charcoal pl-2.5 transition-all";
+                } else {
+                    btn.className = "category-btn w-full text-left hover:text-charcoal pl-2.5 transition-colors text-pebble";
+                }
+            });
+
+            // Highlight active categories on mobile sidebar
+            const mobileBtns = document.querySelectorAll('#mobileCategoryList .mobile-cat-btn');
+            mobileBtns.forEach(btn => {
+                if (btn.innerText.trim() === category || (category === 'All' && btn.innerText.includes('All'))) {
+                    btn.className = "mobile-cat-btn w-full text-left font-semibold text-charcoal";
+                } else {
+                    btn.className = "mobile-cat-btn w-full text-left hover:text-charcoal text-pebble";
+                }
+            });
+
+            runSearch();
+        }
+
+        // Toggle Material selection
+        function toggleMaterialFilter(material, element) {
+            const index = activeMaterials.indexOf(material);
+            if (index > -1) {
+                activeMaterials.splice(index, 1);
+                // Reset styling
+                element.className = "material-chip px-3 py-1 bg-surface border border-linen rounded-full text-xs text-pebble hover:border-charcoal hover:text-charcoal cursor-pointer transition-colors";
+            } else {
+                activeMaterials.push(material);
+                // Active styling
+                element.className = "material-chip px-3 py-1 bg-charcoal text-canvas border border-charcoal rounded-full text-xs cursor-pointer transition-colors";
+            }
+
+            // Update other element matches (e.g. mobile vs desktop sync)
+            const allChips = document.querySelectorAll('.material-chip');
+            allChips.forEach(chip => {
+                if (chip.innerText.trim() === material) {
+                    if (activeMaterials.includes(material)) {
+                        chip.className = chip.className.replace('bg-surface text-pebble border-linen', 'bg-charcoal text-canvas border-charcoal');
+                    } else {
+                        chip.className = chip.className.replace('bg-charcoal text-canvas border-charcoal', 'bg-surface text-pebble border-linen');
+                    }
+                }
+            });
+
+            runSearch();
+        }
+
+        function syncMobilePrice(val) {
+            document.getElementById('priceRange').value = val;
+            runSearch();
+        }
+
+        // --- Header shadow on scroll ---
+        window.addEventListener('scroll', () => {
+            const header = document.getElementById('mainHeader');
+            if (window.scrollY > 20) {
+                header.classList.add('shadow-sm', 'bg-canvas/95');
+                header.classList.remove('bg-canvas/80');
+            } else {
+                header.classList.remove('shadow-sm', 'bg-canvas/95');
+                header.classList.add('bg-canvas/80');
+            }
+        });
+
+        // --- Add to Bag via API ---
+        function addToBag(productId) {
+            if (!isLoggedIn()) {
+                alert('Please sign in first.');
+                location.href = 'login.html';
+                return;
+            }
+            openVariantModal(productId);
+        }
+
+        function openVariantModal(productId) {
+            const modal = document.getElementById('variantModal');
+            modal.dataset.productId = productId;
+            modal.dataset.selectedColor = 'Charcoal';
+            modal.dataset.selectedSize = 'S';
+            renderModalUI();
+            modal.classList.remove('hidden');
+        }
+
+        function closeVariantModal() {
+            document.getElementById('variantModal').classList.add('hidden');
+        }
+
+        function selectModalColor(color, el) {
+            document.getElementById('variantModal').dataset.selectedColor = color;
+            el.parentElement.querySelectorAll('.variant-color-btn').forEach(b => {
+                b.classList.remove('ring-2', 'ring-offset-1');
+                b.classList.add('opacity-50');
+            });
+            el.classList.add('ring-2', 'ring-offset-1');
+            el.classList.remove('opacity-50');
+        }
+
+        function selectModalSize(size, el) {
+            document.getElementById('variantModal').dataset.selectedSize = size;
+            el.parentElement.querySelectorAll('.variant-size-btn').forEach(b => {
+                b.classList.remove('border-charcoal', 'text-charcoal', 'font-semibold');
+                b.classList.add('border-linen', 'text-pebble');
+            });
+            el.classList.remove('border-linen', 'text-pebble');
+            el.classList.add('border-charcoal', 'text-charcoal', 'font-semibold');
+        }
+
+        function renderModalUI() {
+            const modal = document.getElementById('variantModal');
+            const color = modal.dataset.selectedColor;
+            const size = modal.dataset.selectedSize;
+            modal.querySelectorAll('.variant-color-btn').forEach(b => {
+                if (b.dataset.color === color) {
+                    b.classList.add('ring-2', 'ring-offset-1');
+                    b.classList.remove('opacity-50');
+                } else {
+                    b.classList.remove('ring-2', 'ring-offset-1');
+                    b.classList.add('opacity-50');
+                }
+            });
+            modal.querySelectorAll('.variant-size-btn').forEach(b => {
+                if (b.dataset.size === size) {
+                    b.classList.remove('border-linen', 'text-pebble');
+                    b.classList.add('border-charcoal', 'text-charcoal', 'font-semibold');
+                } else {
+                    b.classList.remove('border-charcoal', 'text-charcoal', 'font-semibold');
+                    b.classList.add('border-linen', 'text-pebble');
+                }
+            });
+        }
+
+        async function confirmAddToCart() {
+            const modal = document.getElementById('variantModal');
+            const productId = parseInt(modal.dataset.productId);
+            const color = modal.dataset.selectedColor;
+            const size = modal.dataset.selectedSize;
+            try {
+                await addToCartApi(productId, color, size, 1);
+                alert('Product added to cart!');
+                updateCartBadge();
+                closeVariantModal();
+            } catch (e) {
+                alert('Failed to add: ' + e.message);
+            }
+        }
+
+        // --- Mobile Menu Drawer ---
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const closeMobileBtn = document.getElementById('closeMobileBtn');
+        const mobileOverlay = document.getElementById('mobileOverlay');
+        const mobileSidebar = document.getElementById('mobileSidebar');
+
+        function toggleMenu(show) {
+            if (show) {
+                mobileOverlay.classList.remove('hidden');
+                setTimeout(() => mobileOverlay.classList.add('opacity-100'), 10);
+                mobileSidebar.classList.remove('-translate-x-full');
+            } else {
+                mobileOverlay.classList.remove('opacity-100');
+                setTimeout(() => mobileOverlay.classList.add('hidden'), 300);
+                mobileSidebar.classList.add('-translate-x-full');
+            }
+        }
+
+        mobileMenuBtn.addEventListener('click', () => toggleMenu(true));
+        closeMobileBtn.addEventListener('click', () => toggleMenu(false));
+        mobileOverlay.addEventListener('click', () => toggleMenu(false));
+
+        // --- Mobile Filter Drawer ---
+        const mobileFilterBtn = document.getElementById('mobileFilterBtn');
+        const closeFilterBtn = document.getElementById('closeFilterBtn');
+        const filterOverlay = document.getElementById('filterOverlay');
+        const filterSidebar = document.getElementById('filterSidebar');
+        const applyFiltersBtn = document.getElementById('applyFiltersBtn');
+
+        function toggleFilters(show) {
+            if (show) {
+                filterOverlay.classList.remove('hidden');
+                setTimeout(() => filterOverlay.classList.add('opacity-100'), 10);
+                filterSidebar.classList.remove('translate-x-full');
+            } else {
+                filterOverlay.classList.remove('opacity-100');
+                setTimeout(() => filterOverlay.classList.add('hidden'), 300);
+                filterSidebar.classList.add('translate-x-full');
+            }
+        }
+
+        if (mobileFilterBtn) mobileFilterBtn.addEventListener('click', () => toggleFilters(true));
+        if (closeFilterBtn) closeFilterBtn.addEventListener('click', () => toggleFilters(false));
+        if (filterOverlay) filterOverlay.addEventListener('click', () => toggleFilters(false));
+        if (applyFiltersBtn) applyFiltersBtn.addEventListener('click', () => toggleFilters(false));
+
+        // --- Initialize: fetch products from API ---
+        async function loadProducts() {
+            try {
+                const response = await fetch('http://localhost:8000/api/products');
+                if (response.ok) {
+                    dbProducts = await response.json();
+                }
+            } catch (e) {
+                console.warn('API unavailable, products will not load', e);
+            }
+            runSearch();
+        }
+        loadProducts();
+    </script>
+
+    <!-- Variant Selection Modal -->
+    <div id="variantModal" class="fixed inset-0 z-50 hidden">
+        <div class="absolute inset-0 bg-black/40" onclick="closeVariantModal()"></div>
+        <div class="absolute bottom-0 left-0 right-0 bg-white rounded-t-2xl p-6 max-w-lg mx-auto shadow-lg">
+            <div class="flex justify-between items-center mb-5">
+                <h3 class="text-lg font-semibold text-charcoal">Pilih Varian</h3>
+                <button onclick="closeVariantModal()" class="text-pebble hover:text-charcoal text-2xl leading-none">&times;</button>
+            </div>
+            <div class="mb-5">
+                <p class="text-sm text-pebble mb-2">Warna</p>
+                <div class="flex gap-3">
+                    <button class="variant-color-btn w-9 h-9 rounded-full bg-[#36454F] ring-2 ring-offset-1 cursor-pointer" data-color="Charcoal" onclick="selectModalColor('Charcoal', this)"></button>
+                    <button class="variant-color-btn w-9 h-9 rounded-full bg-[#8B4513] opacity-50 cursor-pointer" data-color="Warm Earth" onclick="selectModalColor('Warm Earth', this)"></button>
+                    <button class="variant-color-btn w-9 h-9 rounded-full bg-[#F5F5DC] opacity-50 cursor-pointer" data-color="Bone White" onclick="selectModalColor('Bone White', this)"></button>
+                </div>
+            </div>
+            <div class="mb-6">
+                <p class="text-sm text-pebble mb-2">Ukuran</p>
+                <div class="flex gap-2">
+                    <button class="variant-size-btn py-2 px-4 border border-linen text-pebble rounded text-sm" data-size="XS" onclick="selectModalSize('XS', this)">XS</button>
+                    <button class="variant-size-btn py-2 px-4 border border-charcoal text-charcoal font-semibold rounded text-sm" data-size="S" onclick="selectModalSize('S', this)">S</button>
+                    <button class="variant-size-btn py-2 px-4 border border-linen text-pebble rounded text-sm" data-size="M" onclick="selectModalSize('M', this)">M</button>
+                    <button class="variant-size-btn py-2 px-4 border border-linen text-pebble rounded text-sm" data-size="L" onclick="selectModalSize('L', this)">L</button>
+                </div>
+            </div>
+            <button onclick="confirmAddToCart()" class="w-full bg-charcoal text-white py-3 rounded-lg font-semibold hover:bg-charcoal/90 transition">Tambahkan ke Keranjang</button>
+        </div>
+    </div>
+</body>
+
+</html>

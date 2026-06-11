@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Features & Found | Your Shopping Bag</title>
+    <!-- Tailwind CSS with Forms and Container Queries -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <!-- Google Fonts & Material Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "canvas": "#FAF9F5",
+                        "surface": "#F3F2EC",
+                        "surface-high": "#EBEAE3",
+                        "charcoal": "#1E1E1C",
+                        "pebble": "#7B7973",
+                        "linen": "#E4E2D9",
+                        "sage": "#8D9387",
+                        "clay": "#C8C2B8",
+                    },
+                    fontFamily: {
+                        sans: ["Manrope", "sans-serif"],
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="global.css"/>
+    <script src="auth.js"></script>
+</head>
+<body class="bg-canvas text-charcoal font-sans antialiased selection:bg-surface-high selection:text-charcoal">
+
+    <!-- Sticky Header -->
+    <header class="w-full sticky top-0 z-50 backdrop-blur-md bg-canvas/80 border-b border-linen transition-all duration-300" id="mainHeader">
+        <nav class="max-w-[1280px] mx-auto px-6 md:px-12 flex justify-between items-center h-20">
+            <!-- Left: Mobile Menu Trigger / Brand -->
+            <div class="flex items-center gap-4">
+                <button class="md:hidden p-1 text-charcoal hover:text-pebble transition-colors" id="mobileMenuBtn" aria-label="Open menu">
+                    <span class="material-symbols-outlined text-2xl">menu</span>
+                </button>
+                <a href="index.html" class="font-light text-xl md:text-2xl tracking-tight text-charcoal hover:opacity-85 transition-opacity">
+                    Features <span class="font-normal text-pebble">&</span> Found
+                </a>
+            </div>
+
+            <!-- Middle: Nav Links (Desktop) -->
+            <ul class="hidden md:flex gap-8 items-center text-sm font-medium tracking-wide uppercase text-pebble">
+                <li><a href="index.html" class="hover:text-charcoal transition-colors">Home</a></li>
+                <li><a href="shop.html" class="hover:text-charcoal transition-colors">Shop</a></li>
+            </ul>
+
+            <!-- Right: Actions -->
+            <div class="flex items-center gap-4">
+                <a href="login.html" class="hidden sm:inline-flex text-sm font-medium uppercase text-pebble hover:text-charcoal transition-colors">Sign In</a>
+                <a href="cart.html" class="relative p-1 text-charcoal hover:text-pebble transition-colors" aria-label="Shopping cart">
+                    <span class="material-symbols-outlined text-2xl">shopping_bag</span>
+                    <span class="absolute -top-1 -right-1 w-4 h-4 bg-charcoal text-canvas text-[9px] font-bold rounded-full flex items-center justify-center animate-bounce hidden" id="cartBadge">0</span>
+                </a>
+            </div>
+        </nav>
+
+        <!-- Mobile Drawer Navigation -->
+        <div class="fixed inset-0 bg-charcoal/20 z-40 hidden transition-opacity duration-300" id="mobileOverlay"></div>
+        <aside class="fixed top-0 left-0 bottom-0 w-72 bg-canvas border-r border-linen z-50 transform -translate-x-full transition-transform duration-300 ease-in-out md:hidden flex flex-col" id="mobileSidebar">
+            <div class="flex justify-between items-center p-6 border-b border-linen">
+                <span class="font-light text-lg tracking-tight">Menu</span>
+                <button class="p-1 hover:text-pebble transition-colors" id="closeMobileBtn">
+                    <span class="material-symbols-outlined text-xl">close</span>
+                </button>
+            </div>
+            <nav class="flex-1 p-6 space-y-6">
+                <a href="index.html" class="block text-lg text-pebble hover:text-charcoal transition-colors">Home</a>
+                <a href="shop.html" class="block text-lg text-pebble hover:text-charcoal transition-colors">Shop</a>
+                <a href="login.html" class="block text-lg text-pebble hover:text-charcoal transition-colors">Sign In / Register</a>
+                <a href="admin_dashboard.html" class="block text-sm text-sage hover:text-charcoal transition-colors pt-6 border-t border-linen">Admin Panel</a>
+            </nav>
+            <div class="p-6 border-t border-linen text-xs text-pebble">
+                © 2026 Features & Found.
+            </div>
+        </aside>
+    </header>
+
+    <main class="max-w-[1280px] mx-auto px-6 md:px-12 py-12 md:py-16 flex-grow">
+        <div class="flex items-baseline justify-between mb-8 border-b border-linen pb-4">
+            <h1 class="text-3xl font-light tracking-tight text-charcoal">Your <span class="font-normal italic">Shopping Bag</span></h1>
+            <span class="text-sm font-semibold uppercase text-pebble" id="cartCountHeader">0 Items</span>
+        </div>
+
+        <!-- Empty State Container — shown by default -->
+        <div id="emptyCartState" class="text-center py-24 space-y-6">
+            <span class="material-symbols-outlined text-7xl text-linen">shopping_bag</span>
+            <h2 class="text-2xl font-light text-pebble">Your shopping bag is empty.</h2>
+            <p class="text-sm text-pebble/60 font-light">Looks like you haven't added anything yet.</p>
+            <a href="shop.html" class="inline-block bg-charcoal text-canvas hover:bg-charcoal/90 px-10 py-3.5 rounded text-xs uppercase tracking-widest font-semibold transition-all">Browse the Catalog</a>
+        </div>
+
+        <!-- Main Cart Grid — hidden by default, shown when items exist -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-12 items-start hidden" id="cartGrid">
+            <!-- Left Side: List of Items (Takes 2 cols) -->
+            <div class="lg:col-span-2 divide-y divide-linen" id="cartItemsList">
+                <!-- Cart items will be rendered here dynamically -->
+            </div>
+
+            <!-- Right Side: Order Summary Card -->
+            <aside>
+                <div class="bg-surface p-6 md:p-8 rounded-lg border border-linen space-y-6 sticky top-28">
+                    <h2 class="text-lg font-bold uppercase tracking-widest text-charcoal">Order Summary</h2>
+                    
+                    <div class="space-y-4 text-sm font-light">
+                        <div class="flex justify-between">
+                            <span class="text-pebble">Subtotal</span>
+                            <span class="font-semibold text-charcoal" id="subtotalDisplay">$0.00</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-pebble">Shipping</span>
+                            <span class="font-semibold text-sage" id="shippingDisplay">FREE</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-pebble">Estimated Tax</span>
+                            <span class="font-semibold text-charcoal">$0.00</span>
+                        </div>
+                        <div class="border-t border-linen pt-4 flex justify-between text-base font-semibold">
+                            <span class="text-charcoal">Total Amount</span>
+                            <span class="text-charcoal" id="totalDisplay">$0.00</span>
+                        </div>
+                    </div>
+
+                    <!-- Promo code input -->
+                    <div class="pt-4 border-t border-linen">
+                        <label class="text-[10px] font-bold tracking-widest uppercase text-pebble block mb-2">Have a Voucher?</label>
+                        <div class="flex gap-2">
+                            <input type="text" class="flex-grow bg-canvas border border-linen rounded px-3 py-2 text-xs uppercase focus:outline-none focus:border-charcoal focus:ring-0 placeholder:text-pebble/40" placeholder="e.g. FOUNDER20" id="promoInput"/>
+                            <button class="bg-charcoal text-canvas hover:bg-charcoal/90 px-4 py-2 text-xs uppercase tracking-wider font-semibold rounded" onclick="applyPromo()">Apply</button>
+                        </div>
+                    </div>
+
+                    <!-- Checkout Button -->
+                    <button class="w-full bg-charcoal text-canvas hover:bg-charcoal/95 py-4 rounded text-xs uppercase tracking-widest font-semibold transition-all duration-300 transform active:scale-[0.98]" onclick="proceedToCheckout()">
+                        Proceed to Checkout
+                    </button>
+                    
+                    <p class="text-[10px] text-pebble text-center leading-relaxed font-medium">
+                        * Free shipping applies for orders above $250.
+                    </p>
+
+                    <div class="pt-6 border-t border-linen space-y-3.5 text-xs text-pebble">
+                        <div class="flex items-center gap-2.5">
+                            <span class="material-symbols-outlined text-base">verified</span>
+                            <span>Curated Quality Guarantee</span>
+                        </div>
+                        <div class="flex items-center gap-2.5">
+                            <span class="material-symbols-outlined text-base">local_shipping</span>
+                            <span>Secure, Climate-Neutral Delivery</span>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="w-full bg-surface border-t border-linen">
+        <div class="max-w-[1280px] mx-auto px-6 md:px-12 py-12 md:py-16 grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="space-y-4">
+                <div class="font-light text-xl tracking-tight text-charcoal">
+                    Features <span class="font-normal text-pebble">&</span> Found
+                </div>
+                <p class="text-xs text-pebble max-w-xs leading-relaxed">
+                    Curating timeless, handcrafted artifacts for intentional living. We believe in high-quality craftsmanship, sustainable sourcing, and the quiet poetry of daily rituals.
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-2 gap-4">
+                <div class="flex flex-col gap-2.5">
+                    <h4 class="text-xs font-semibold text-charcoal uppercase tracking-widest mb-1">Explore</h4>
+                    <a class="text-xs text-pebble hover:text-charcoal transition-colors" href="shop.html">Shop Catalog</a>
+                    <a class="text-xs text-pebble hover:text-charcoal transition-colors" href="search.html">Search Items</a>
+                    <a class="text-xs text-pebble hover:text-charcoal transition-colors" href="login.html">My Account</a>
+                </div>
+                <div class="flex flex-col gap-2.5">
+                    <h4 class="text-xs font-semibold text-charcoal uppercase tracking-widest mb-1">Company</h4>
+                    <a class="text-xs text-pebble hover:text-charcoal transition-colors" href="#">Sourcing Ethos</a>
+                    <a class="text-xs text-pebble hover:text-charcoal transition-colors" href="#">Sustainability</a>
+                    <a class="text-xs text-pebble hover:text-charcoal transition-colors" href="#">Contact Us</a>
+                </div>
+            </div>
+            
+            <div class="flex flex-col md:items-end justify-between gap-6">
+                <div class="flex gap-4">
+                    <a href="#" class="w-8 h-8 rounded-full border border-linen flex items-center justify-center text-pebble hover:text-charcoal hover:border-charcoal transition-all" aria-label="Globe">
+                        <span class="material-symbols-outlined text-sm">public</span>
+                    </a>
+                    <a href="#" class="w-8 h-8 rounded-full border border-linen flex items-center justify-center text-pebble hover:text-charcoal hover:border-charcoal transition-all" aria-label="Share">
+                        <span class="material-symbols-outlined text-sm">share</span>
+                    </a>
+                    <a href="#" class="w-8 h-8 rounded-full border border-linen flex items-center justify-center text-pebble hover:text-charcoal hover:border-charcoal transition-all" aria-label="Library">
+                        <span class="material-symbols-outlined text-sm">local_library</span>
+                    </a>
+                </div>
+                <div class="text-right text-[10px] text-pebble">
+                    © 2026 Features & Found. All rights reserved. <br/>
+                    <a href="admin_dashboard.html" class="hover:underline text-sage font-medium">Portal Admin</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+        // Header scroll behavior
+        window.addEventListener('scroll', () => {
+            const header = document.getElementById('mainHeader');
+            if (window.scrollY > 20) {
+                header.classList.add('shadow-sm', 'bg-canvas/95');
+                header.classList.remove('bg-canvas/80');
+            } else {
+                header.classList.remove('shadow-sm', 'bg-canvas/95');
+                header.classList.add('bg-canvas/80');
+            }
+        });
+
+        const cartBadge = document.getElementById('cartBadge');
+        const cartCountHeader = document.getElementById('cartCountHeader');
+        const subtotalDisplay = document.getElementById('subtotalDisplay');
+        const shippingDisplay = document.getElementById('shippingDisplay');
+        const totalDisplay = document.getElementById('totalDisplay');
+        const cartGrid = document.getElementById('cartGrid');
+        const emptyState = document.getElementById('emptyCartState');
+        const cartItemsList = document.getElementById('cartItemsList');
+
+        let discountPct = 0;
+        let cartData = [];
+
+        async function loadCart() {
+            if (!isLoggedIn()) {
+                cartGrid.classList.add('hidden');
+                emptyState.classList.remove('hidden');
+                emptyState.innerHTML = `
+                    <span class="material-symbols-outlined text-7xl text-linen">shopping_bag</span>
+                    <h2 class="text-2xl font-light text-pebble">Login to view your cart</h2>
+                    <p class="text-sm text-pebble/60 font-light">Please sign in to see your shopping bag.</p>
+                    <a href="login.html" class="inline-block bg-charcoal text-canvas hover:bg-charcoal/90 px-10 py-3.5 rounded text-xs uppercase tracking-widest font-semibold transition-all">Sign In</a>
+                `;
+                cartBadge.classList.add('hidden');
+                return;
+            }
+
+            try {
+                cartData = await getCart();
+                for (const item of cartData) {
+                    try {
+                        const result = await apiRequest('/products/' + item.product_id + '/variants');
+                        const variants = result.variants || [];
+                        const v = variants.find(v => v.color === item.color && v.size === item.size);
+                        item.stock = v ? v.stock : null;
+                    } catch (_) {
+                        item.stock = null;
+                    }
+                }
+                renderCart();
+            } catch (e) {
+                console.error('Failed to load cart:', e);
+            }
+        }
+
+        function renderCart() {
+            cartItemsList.innerHTML = '';
+            let subtotal = 0;
+            let totalQty = 0;
+
+            cartData.forEach(item => {
+                const product = item.product || {};
+                const price = parseFloat(product.price) || 0;
+                const qty = item.quantity;
+                const itemTotal = price * qty;
+                subtotal += itemTotal;
+                totalQty += qty;
+
+                const div = document.createElement('div');
+                div.className = 'cart-item flex gap-6 py-6 border-b border-linen';
+                div.setAttribute('data-price', price);
+                div.setAttribute('data-cart-id', item.id);
+                div.innerHTML = `
+                    <div class="w-24 h-32 bg-surface rounded overflow-hidden flex-shrink-0">
+                        <img src="${product.img || ''}" alt="${product.name || ''}" class="w-full h-full object-cover" onerror="this.style.display='none'">
+                    </div>
+                    <div class="flex-grow flex flex-col justify-between">
+                        <div>
+                            <h3 class="text-sm font-semibold text-charcoal">${product.name || 'Product'}</h3>
+                            <p class="text-xs text-pebble mt-1">${item.color || ''} / ${item.size || ''}</p>
+                            <p class="text-xs mt-1 ${item.stock != null && item.stock <= 3 ? 'text-red-500 font-semibold' : 'text-sage'}" id="stock-${item.id}">${item.stock != null ? 'Stok: ' + item.stock : ''}</p>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center gap-3 border border-linen rounded">
+                                <button class="px-3 py-1 text-pebble hover:text-charcoal" onclick="changeQty(${item.id}, -1)">-</button>
+                                <span class="text-sm font-medium item-qty">${qty}</span>
+                                <button class="px-3 py-1 text-pebble hover:text-charcoal" onclick="changeQty(${item.id}, 1)">+</button>
+                            </div>
+                            <div class="flex items-center gap-4">
+                                <span class="text-sm font-semibold item-price-display">Rp ${itemTotal.toLocaleString('id-ID')}</span>
+                                <button class="text-pebble hover:text-red-500 transition-colors" onclick="removeItem(${item.id})">
+                                    <span class="material-symbols-outlined text-lg">delete</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                cartItemsList.appendChild(div);
+            });
+
+            cartBadge.innerText = totalQty;
+            cartCountHeader.innerText = `${totalQty} Item${totalQty === 1 ? '' : 's'}`;
+
+            if (totalQty === 0) {
+                cartGrid.classList.add('hidden');
+                emptyState.classList.remove('hidden');
+                cartBadge.classList.add('hidden');
+            } else {
+                cartGrid.classList.remove('hidden');
+                emptyState.classList.add('hidden');
+                cartBadge.classList.remove('hidden');
+            }
+
+            let shippingFee = subtotal < 250000 ? 15000 : 0;
+            if (subtotal < 250000) {
+                shippingDisplay.innerText = `Rp ${shippingFee.toLocaleString('id-ID')}`;
+            } else {
+                shippingDisplay.innerText = 'GRATIS';
+            }
+
+            let discountAmt = subtotal * (discountPct / 100);
+            let finalTotal = subtotal + shippingFee - discountAmt;
+
+            subtotalDisplay.innerText = `Rp ${subtotal.toLocaleString('id-ID')}`;
+            totalDisplay.innerText = `Rp ${finalTotal.toLocaleString('id-ID')}`;
+        }
+
+        async function changeQty(cartItemId, delta) {
+            const item = cartData.find(i => i.id === cartItemId);
+            if (!item) return;
+
+            const newQty = item.quantity + delta;
+            if (newQty < 1) return;
+
+            try {
+                await updateCartItem(cartItemId, newQty);
+                item.quantity = newQty;
+                renderCart();
+            } catch (e) {
+                alert('Gagal update: ' + e.message);
+            }
+        }
+
+        async function removeItem(cartItemId) {
+            try {
+                await removeCartItem(cartItemId);
+                cartData = cartData.filter(i => i.id !== cartItemId);
+                renderCart();
+            } catch (e) {
+                alert('Gagal hapus: ' + e.message);
+            }
+        }
+
+        function applyPromo() {
+            const code = document.getElementById('promoInput').value.trim().toUpperCase();
+            if (code === 'FOUNDER20') {
+                discountPct = 20;
+                alert('Voucher FOUNDER20 applied! 20% discount.');
+            } else if (code === 'WELCOME10') {
+                discountPct = 10;
+                alert('Voucher WELCOME10 applied! 10% discount.');
+            } else {
+                alert('Invalid code. Try "FOUNDER20" or "WELCOME10".');
+            }
+            renderCart();
+        }
+
+        function proceedToCheckout() {
+            if (!isLoggedIn()) {
+                alert('Please sign in first.');
+                location.href = 'login.html';
+                return;
+            }
+            if (cartData.length === 0) {
+                alert('Your cart is empty.');
+                return;
+            }
+            location.href = 'checkout.html';
+        }
+
+        // Mobile menu
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const closeMobileBtn = document.getElementById('closeMobileBtn');
+        const mobileOverlay = document.getElementById('mobileOverlay');
+        const mobileSidebar = document.getElementById('mobileSidebar');
+
+        function toggleMenu(show) {
+            if (show) {
+                mobileOverlay.classList.remove('hidden');
+                setTimeout(() => mobileOverlay.classList.add('opacity-100'), 10);
+                mobileSidebar.classList.remove('-translate-x-full');
+            } else {
+                mobileOverlay.classList.remove('opacity-100');
+                setTimeout(() => mobileOverlay.classList.add('hidden'), 300);
+                mobileSidebar.classList.add('-translate-x-full');
+            }
+        }
+
+        mobileMenuBtn.addEventListener('click', () => toggleMenu(true));
+        closeMobileBtn.addEventListener('click', () => toggleMenu(false));
+        mobileOverlay.addEventListener('click', () => toggleMenu(false));
+
+        // Load cart on page load
+        loadCart();
+    </script>
+</body>
+</html>

@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Features & Found | Curated Fashion & Style</title>
+    <meta name="description"
+        content="Explore refined silhouettes, elevated essentials, and thoughtfully crafted accessories from independent ateliers — designed for the discerning modern wardrobe." />
+    <!-- Tailwind CSS with Forms and Container Queries -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <!-- Google Fonts & Material Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        rel="stylesheet" />
+
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "canvas": "#FAF9F5",
+                        "surface": "#F3F2EC",
+                        "surface-high": "#EBEAE3",
+                        "charcoal": "#1E1E1C",
+                        "pebble": "#7B7973",
+                        "linen": "#E4E2D9",
+                        "sage": "#8D9387",
+                        "clay": "#C8C2B8",
+                    },
+                    fontFamily: { sans: ["Manrope", "sans-serif"] },
+                    animation: {
+                        'fade-in': 'fadeIn 0.6s ease-out forwards',
+                        'slide-in': 'slideIn 0.4s ease-out forwards',
+                    },
+                    keyframes: {
+                        fadeIn: { '0%': { opacity: '0', transform: 'translateY(10px)' }, '100%': { opacity: '1', transform: 'translateY(0)' } },
+                        slideIn: { '0%': { transform: 'translateX(-100%)' }, '100%': { transform: 'translateX(0)' } }
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="global.css" />
+    <script src="auth.js"></script>
+</head>
+
+<body class="bg-canvas text-charcoal font-sans antialiased selection:bg-surface-high selection:text-charcoal">
+
+    <!-- Sticky Header -->
+    <header
+        class="w-full sticky top-0 z-50 backdrop-blur-md bg-canvas/80 border-b border-linen transition-all duration-300"
+        id="mainHeader">
+        <nav class="max-w-[1280px] mx-auto px-6 md:px-12 flex justify-between items-center h-20">
+            <div class="flex items-center gap-4">
+                <button class="md:hidden p-1 text-charcoal hover:text-pebble transition-colors" id="mobileMenuBtn"
+                    aria-label="Open menu">
+                    <span class="material-symbols-outlined text-2xl">menu</span>
+                </button>
+                <a href="index.html"
+                    class="font-light text-xl md:text-2xl tracking-tight text-charcoal hover:opacity-85 transition-opacity">
+                    Features <span class="font-normal text-pebble">&</span> Found
+                </a>
+            </div>
+
+            <ul class="hidden md:flex gap-8 items-center text-sm font-medium tracking-wide uppercase text-pebble">
+                <li><a href="index.html" class="text-charcoal border-b border-charcoal pb-1 transition-all">Home</a>
+                </li>
+                <li><a href="shop.html" class="hover:text-charcoal transition-colors">Shop</a></li>
+            </ul>
+
+            <div class="flex items-center gap-4">
+                <a href="login.html"
+                    class="hidden sm:inline-flex text-sm font-medium uppercase text-pebble hover:text-charcoal transition-colors">Sign
+                    In</a>
+                <a href="cart.html" class="relative p-1 text-charcoal hover:text-pebble transition-colors"
+                    aria-label="Shopping cart">
+                    <span class="material-symbols-outlined text-2xl">shopping_bag</span>
+                    <span
+                        class="absolute -top-1 -right-1 w-4 h-4 bg-charcoal text-canvas text-[9px] font-bold rounded-full flex items-center justify-center hidden"
+                        id="cartBadge">0</span>
+                </a>
+            </div>
+        </nav>
+
+        <!-- Mobile Drawer Navigation -->
+        <div class="fixed inset-0 bg-charcoal/20 z-40 hidden transition-opacity duration-300" id="mobileOverlay"></div>
+        <aside
+            class="fixed top-0 left-0 bottom-0 w-72 bg-canvas border-r border-linen z-50 transform -translate-x-full transition-transform duration-300 ease-in-out md:hidden flex flex-col"
+            id="mobileSidebar">
+            <div class="flex justify-between items-center p-6 border-b border-linen">
+                <span class="font-light text-lg tracking-tight">Menu</span>
+                <button class="p-1 hover:text-pebble transition-colors" id="closeMobileBtn">
+                    <span class="material-symbols-outlined text-xl">close</span>
+                </button>
+            </div>
+            <nav class="flex-1 p-6 space-y-6">
+                <a href="index.html" class="block text-lg font-medium text-charcoal">Home</a>
+                <a href="shop.html" class="block text-lg text-pebble hover:text-charcoal transition-colors">Shop</a>
+                <a href="login.html" class="block text-lg text-pebble hover:text-charcoal transition-colors">Sign In /
+                    Register</a>
+                <a href="admin_dashboard.html"
+                    class="block text-sm text-sage hover:text-charcoal transition-colors pt-6 border-t border-linen">Admin
+                    Panel</a>
+            </nav>
+            <div class="p-6 border-t border-linen text-xs text-pebble">© 2026 Features & Found.</div>
+        </aside>
+    </header>
+
+    <main class="animate-fade-in">
+
+        <!-- Hero Section -->
+        <section class="relative h-[650px] md:h-[800px] w-full flex items-center overflow-hidden">
+            <img alt="Elegant Fashion Editorial"
+                class="absolute inset-0 w-full h-full object-cover transition-transform duration-10000 hover:scale-105"
+                src="https://i.pinimg.com/1200x/4c/a7/f1/4ca7f12a9040a85070d5fa920991aa12.jpg" />
+            <div class="absolute inset-0 bg-charcoal/25"></div>
+            <div class="relative max-w-[1280px] mx-auto px-6 md:px-12 w-full text-white">
+                <div
+                    class="max-w-2xl bg-charcoal/30 backdrop-blur-md p-8 md:p-10 rounded-lg border border-white/10 shadow-lg">
+                    <span class="text-xs uppercase tracking-widest mb-3 block text-canvas font-semibold">SS26
+                        Collection</span>
+                    <h1 class="text-4xl md:text-5xl lg:text-6xl font-light tracking-tight mb-6 leading-tight">
+                        Dress with <br class="hidden md:inline" /><span
+                            class="font-normal italic text-canvas">Intention</span>
+                    </h1>
+                    <p class="text-sm md:text-base text-canvas/80 mb-8 font-light max-w-lg leading-relaxed">
+                        Explore refined silhouettes, organic fabrics, and timeless accessories from independent ateliers
+                        — crafted for the discerning modern wardrobe.
+                    </p>
+                    <a href="shop.html"
+                        class="inline-block bg-canvas text-charcoal hover:bg-surface-high font-semibold text-xs uppercase tracking-widest px-8 py-4 rounded transition-all duration-300 transform active:scale-95 shadow-md">
+                        Explore the Collection
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- New Arrivals: Bento Grid Layout -->
+        <section class="max-w-[1280px] mx-auto px-6 md:px-12 py-16 md:py-24">
+            <div class="flex justify-between items-end mb-10">
+                <div>
+                    <h2 class="text-2xl md:text-3xl font-light tracking-tight text-charcoal">New <span
+                            class="font-normal italic">Arrivals</span></h2>
+                    <p class="text-sm text-pebble mt-1">The season's most refined new pieces.</p>
+                </div>
+                <a href="shop.html"
+                    class="text-xs uppercase tracking-wider font-semibold border-b border-charcoal pb-1 hover:text-pebble hover:border-pebble transition-all">View
+                    All</a>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Large Feature Card -->
+                <div class="md:col-span-2 relative group rounded-lg overflow-hidden border border-linen h-[200px] md:h-full cursor-pointer"
+                    onclick="location.href='detail.html?id=8'">
+                    <img alt="Silk Evening Set"
+                        class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                        src="https://i.pinimg.com/1200x/34/b7/c0/34b7c03d20fbdd628e141c6834bacd6a.jpg" />
+                    <div class="absolute inset-0 bg-gradient-to-t from-charcoal/65 via-charcoal/10 to-transparent">
+                    </div>
+                    <div class="absolute bottom-0 left-0 p-8 text-white w-full flex justify-between items-end">
+                        <div>
+                            <p class="text-xs uppercase tracking-widest opacity-80 mb-1">Shoulder Bag</p>
+                            <h3 class="text-xl md:text-2xl font-light">The Brown louis Vuitton</h3>
+                        </div>
+                        <span
+                            class="material-symbols-outlined text-2xl text-canvas opacity-0 group-hover:opacity-100 group-hover:translate-x-2 transition-all duration-300">arrow_right_alt</span>
+                    </div>
+                </div>
+
+                <div class="flex flex-col gap-4 md:gap-6">
+                    <!-- Smaller Item 1 -->
+                    <div class="flex-1 relative group rounded-lg overflow-hidden border border-linen h-[180px] cursor-pointer"
+                        onclick="location.href='detail.html?id=9'">
+                        <img alt="Structured Leather Tote"
+                            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                            src="https://i.pinimg.com/1200x/2d/b6/2a/2db62aa07bb2e682d07f95b53c0aa6b8.jpg" />
+                        <div class="absolute inset-0 bg-gradient-to-t from-charcoal/60 to-transparent"></div>
+                        <div class="absolute bottom-0 left-0 p-4 md:p-6 text-white w-full">
+                            <p class="text-xs uppercase tracking-widest opacity-80 mb-1">Knit Top</p>
+                            <h3 class="text-base md:text-lg font-light">Flower Applique Cap Sleeve</h3>
+                        </div>
+                    </div>
+
+                    <!-- Smaller Item 2 -->
+                    <div class="flex-1 relative group rounded-lg overflow-hidden border border-linen h-[180px] cursor-pointer bg-canvas"
+                        onclick="location.href='detail.html?id=10'">
+                        <img alt="Dior Shoulder Bag"
+                            class="w-full h-full object-contain p-4 group-hover:scale-105 transition-transform duration-700"
+                            src="https://i.pinimg.com/1200x/75/95/9a/75959a02a721662ec269f6b4df46892a.jpg" />
+                        <div class="absolute inset-0 bg-gradient-to-t from-charcoal/80 via-charcoal/20 to-transparent">
+                        </div>
+                        <div class="absolute bottom-0 left-0 p-4 md:p-5 text-white w-full">
+                            <p class="text-[10px] uppercase tracking-widest opacity-90 mb-1">Shoulder Bag</p>
+                            <h3 class="text-sm md:text-base font-medium leading-snug">Dior Diorissimo Vintage Flower
+                            </h3>
+                        </div>
+                    </div>
+
+                    <!-- Smaller Item 3 -->
+                    <div class="flex-1 relative group rounded-lg overflow-hidden border border-linen h-[180px] cursor-pointer"
+                        onclick="location.href='detail.html?id=5'">
+                        <img alt="Leather Backpack"
+                            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                            src="https://images.unsplash.com/photo-1622560480654-d96214fdc887?w=500&auto=format&fit=crop&q=60" />
+                        <div class="absolute inset-0 bg-gradient-to-t from-charcoal/60 to-transparent"></div>
+                        <div class="absolute bottom-0 left-0 p-4 md:p-6 text-white w-full">
+                            <p class="text-xs uppercase tracking-widest opacity-80 mb-1">Backpack</p>
+                            <h3 class="text-base md:text-lg font-light">Leather Backpack</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Featured Essentials: Product Cards -->
+        <section class="bg-surface py-16 md:py-24 border-y border-linen">
+            <div class="max-w-[1280px] mx-auto px-6 md:px-12">
+                <div class="text-center mb-16">
+                    <h2 class="text-2xl md:text-3xl font-light tracking-tight text-charcoal">Featured <span
+                            class="font-normal italic">Essentials</span></h2>
+                    <p class="text-sm text-pebble mt-2 max-w-xl mx-auto leading-relaxed">
+                        Wardrobe foundations selected for their timeless silhouette, elevated fabric, and quiet
+                        sophistication.
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <!-- Product 1 -->
+                    <div class="group cursor-pointer bg-canvas p-4 rounded-lg border border-linen hover:shadow-md transition-all duration-300"
+                        onclick="location.href='detail.html?id=11'">
+                        <div class="aspect-square bg-surface rounded overflow-hidden mb-4 relative">
+                            <img alt="Cashmere Ribbed Turtleneck"
+                                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                                src="https://i.pinimg.com/736x/6b/19/dd/6b19dd66a91b9091ecac651262f62a81.jpg" />
+                            <span
+                                class="absolute top-3 right-3 bg-sage text-canvas text-[10px] font-bold tracking-widest px-2.5 py-1 rounded">NEW</span>
+                        </div>
+                        <div class="text-center">
+                            <p class="text-[10px] tracking-widest uppercase text-pebble font-semibold mb-1">Tank Top</p>
+                            <h4
+                                class="text-sm font-medium text-charcoal group-hover:text-pebble transition-colors mb-2">
+                                Tank Top Polkadot</h4>
+                            <p class="text-sm font-semibold text-charcoal">Rp.580.000</p>
+                        </div>
+                    </div>
+
+                    <!-- Product 2 -->
+                    <div class="group cursor-pointer bg-canvas p-4 rounded-lg border border-linen hover:shadow-md transition-all duration-300"
+                        onclick="location.href='detail.html?id=12'">
+                        <div class="aspect-square bg-surface rounded overflow-hidden mb-4">
+                            <img alt="Wide-Leg Silk Trousers"
+                                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                                src="https://i.pinimg.com/736x/ff/0c/50/ff0c502438dd06c2bae7c12439395178.jpg" />
+                        </div>
+                        <div class="text-center">
+                            <p class="text-[10px] tracking-widest uppercase text-pebble font-semibold mb-1">Short Pants
+                            </p>
+                            <h4
+                                class="text-sm font-medium text-charcoal group-hover:text-pebble transition-colors mb-2">
+                                Black Short Pants</h4>
+                            <p class="text-sm font-semibold text-charcoal">Rp.195.000</p>
+                        </div>
+                    </div>
+
+                    <!-- Product 3 -->
+                    <div class="group cursor-pointer bg-canvas p-4 rounded-lg border border-linen hover:shadow-md transition-all duration-300"
+                        onclick="location.href='detail.html?id=13'">
+                        <div class="aspect-square bg-surface rounded overflow-hidden mb-4">
+                            <img alt="Italian Leather Tote"
+                                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                                src="https://i.pinimg.com/1200x/14/50/c4/1450c4370485587662dbd32dd5997173.jpg" />
+                        </div>
+                        <div class="text-center">
+                            <p class="text-[10px] tracking-widest uppercase text-pebble font-semibold mb-1">Shirt</p>
+                            <h4
+                                class="text-sm font-medium text-charcoal group-hover:text-pebble transition-colors mb-2">
+                                Dark Brown Short-sleeved Shirt</h4>
+                            <p class="text-sm font-semibold text-charcoal">Rp.420.000</p>
+                        </div>
+                    </div>
+
+                    <!-- Product 4 -->
+                    <div class="group cursor-pointer bg-canvas p-4 rounded-lg border border-linen hover:shadow-md transition-all duration-300"
+                        onclick="location.href='detail.html?id=14'">
+                        <div class="aspect-square bg-surface rounded overflow-hidden mb-4">
+                            <img alt="Chelsea Ankle Boot"
+                                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                                src="https://i.pinimg.com/736x/02/c4/7d/02c47d09612bcd4814a4ab178edad7a1.jpg" />
+                        </div>
+                        <div class="text-center">
+                            <p class="text-[10px] tracking-widest uppercase text-pebble font-semibold mb-1">Pants</p>
+                            <h4
+                                class="text-sm font-medium text-charcoal group-hover:text-pebble transition-colors mb-2">
+                                Star Print Parachute Pants</h4>
+                            <p class="text-sm font-semibold text-charcoal">Rp.380.000</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- Footer -->
+        <footer class="w-full bg-surface border-t border-linen">
+            <div class="max-w-[1280px] mx-auto px-6 md:px-12 py-12 md:py-16 grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="space-y-4">
+                    <div class="font-light text-xl tracking-tight text-charcoal">
+                        Features <span class="font-normal text-pebble">&</span> Found
+                    </div>
+                    <p class="text-xs text-pebble max-w-xs leading-relaxed">
+                        Get an interesting and satisfying shopping experience by using our website.
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="flex flex-col gap-2.5">
+                        <h4 class="text-xs font-semibold text-charcoal uppercase tracking-widest mb-1">Explore</h4>
+                        <a class="text-xs text-pebble hover:text-charcoal transition-colors" href="shop.html">Shop
+                            Collection</a>
+                        <a class="text-xs text-pebble hover:text-charcoal transition-colors" href="search.html">Search
+                            Items</a>
+                        <a class="text-xs text-pebble hover:text-charcoal transition-colors" href="login.html">My
+                            Account</a>
+                    </div>
+                    <div class="flex flex-col gap-2.5">
+                        <h4 class="text-xs font-semibold text-charcoal uppercase tracking-widest mb-1">Company</h4>
+                        <a class="text-xs text-pebble hover:text-charcoal transition-colors" href="#">Sourcing Ethos</a>
+                        <a class="text-xs text-pebble hover:text-charcoal transition-colors" href="#">Sustainability</a>
+                        <a class="text-xs text-pebble hover:text-charcoal transition-colors" href="#">Contact Us</a>
+                    </div>
+                </div>
+
+                <div class="flex flex-col md:items-end justify-between gap-6">
+                    <div class="flex gap-4">
+                        <a href="#"
+                            class="w-8 h-8 rounded-full border border-linen flex items-center justify-center text-pebble hover:text-charcoal hover:border-charcoal transition-all"
+                            aria-label="Globe">
+                            <span class="material-symbols-outlined text-sm">public</span>
+                        </a>
+                        <a href="#"
+                            class="w-8 h-8 rounded-full border border-linen flex items-center justify-center text-pebble hover:text-charcoal hover:border-charcoal transition-all"
+                            aria-label="Share">
+                            <span class="material-symbols-outlined text-sm">share</span>
+                        </a>
+                        <a href="#"
+                            class="w-8 h-8 rounded-full border border-linen flex items-center justify-center text-pebble hover:text-charcoal hover:border-charcoal transition-all"
+                            aria-label="Library">
+                            <span class="material-symbols-outlined text-sm">local_library</span>
+                        </a>
+                    </div>
+                    <div class="text-right text-[10px] text-pebble">
+                        © 2026 Features & Found. All rights reserved. <br />
+                        <a href="admin_dashboard.html" class="hover:underline text-sage font-medium">Portal Admin</a>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+        <script>
+            window.addEventListener('scroll', () => {
+                const header = document.getElementById('mainHeader');
+                if (window.scrollY > 20) {
+                    header.classList.add('shadow-sm', 'bg-canvas/95');
+                    header.classList.remove('bg-canvas/80');
+                } else {
+                    header.classList.remove('shadow-sm', 'bg-canvas/95');
+                    header.classList.add('bg-canvas/80');
+                }
+            });
+
+            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+            const closeMobileBtn = document.getElementById('closeMobileBtn');
+            const mobileOverlay = document.getElementById('mobileOverlay');
+            const mobileSidebar = document.getElementById('mobileSidebar');
+
+            function toggleMenu(show) {
+                if (show) {
+                    mobileOverlay.classList.remove('hidden');
+                    setTimeout(() => mobileOverlay.classList.add('opacity-100'), 10);
+                    mobileSidebar.classList.remove('-translate-x-full');
+                } else {
+                    mobileOverlay.classList.remove('opacity-100');
+                    setTimeout(() => mobileOverlay.classList.add('hidden'), 300);
+                    mobileSidebar.classList.add('-translate-x-full');
+                }
+            }
+
+            mobileMenuBtn.addEventListener('click', () => toggleMenu(true));
+            closeMobileBtn.addEventListener('click', () => toggleMenu(false));
+            mobileOverlay.addEventListener('click', () => toggleMenu(false));
+        </script>
+</body>
+
+</html>

@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Features & Found | My Profile</title>
+    <!-- Tailwind CSS with Forms and Container Queries -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <!-- Google Fonts & Material Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        rel="stylesheet" />
+
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "canvas": "#FAF9F5",
+                        "surface": "#F3F2EC",
+                        "surface-high": "#EBEAE3",
+                        "charcoal": "#1E1E1C",
+                        "pebble": "#7B7973",
+                        "linen": "#E4E2D9",
+                        "sage": "#8D9387",
+                        "clay": "#C8C2B8",
+                    },
+                    fontFamily: {
+                        sans: ["Manrope", "sans-serif"],
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="global.css" />
+    <script src="auth.js"></script>
+</head>
+
+<body
+    class="bg-canvas text-charcoal font-sans antialiased selection:bg-surface-high selection:text-charcoal animate-fadeIn">
+
+    <!-- Sticky Header -->
+    <header
+        class="w-full sticky top-0 z-50 backdrop-blur-md bg-canvas/80 border-b border-linen transition-all duration-300"
+        id="mainHeader">
+        <nav class="max-w-[1280px] mx-auto px-6 md:px-12 flex justify-between items-center h-20">
+            <!-- Left: Mobile Menu Trigger / Brand -->
+            <div class="flex items-center gap-4">
+                <button class="md:hidden p-1 text-charcoal hover:text-pebble transition-colors" id="mobileMenuBtn"
+                    aria-label="Open menu">
+                    <span class="material-symbols-outlined text-2xl">menu</span>
+                </button>
+                <a href="index.html"
+                    class="font-light text-xl md:text-2xl tracking-tight text-charcoal hover:opacity-85 transition-opacity">
+                    Features <span class="font-normal text-pebble">&</span> Found
+                </a>
+            </div>
+
+            <!-- Middle: Nav Links (Desktop) -->
+            <ul class="hidden md:flex gap-8 items-center text-sm font-medium tracking-wide uppercase text-pebble">
+                <li><a href="index.html" class="hover:text-charcoal transition-colors">Home</a></li>
+                <li><a href="shop.html" class="hover:text-charcoal transition-colors">Shop</a></li>
+            </ul>
+
+            <!-- Right: Actions -->
+            <div class="flex items-center gap-4">
+                <div class="hidden sm:flex items-center gap-2 mr-4 text-xs font-semibold text-charcoal" id="headerUser">
+                    <span class="w-8 h-8 rounded-full bg-surface-high border border-linen flex items-center justify-center font-bold" id="headerAvatar">?</span>
+                    <span id="headerName">Sign In</span>
+                </div>
+                <a href="cart.html" class="relative p-1 text-charcoal hover:text-pebble transition-colors"
+                    aria-label="Shopping cart">
+                    <span class="material-symbols-outlined text-2xl">shopping_bag</span>
+                    <span
+                        class="absolute -top-1 -right-1 w-4 h-4 bg-charcoal text-canvas text-[9px] font-bold rounded-full flex items-center justify-center hidden"
+                        id="cartBadge">0</span>
+                </a>
+            </div>
+        </nav>
+
+        <!-- Mobile Drawer Navigation -->
+        <div class="fixed inset-0 bg-charcoal/20 z-40 hidden transition-opacity duration-300" id="mobileOverlay"></div>
+        <aside
+            class="fixed top-0 left-0 bottom-0 w-72 bg-canvas border-r border-linen z-50 transform -translate-x-full transition-transform duration-300 ease-in-out md:hidden flex flex-col"
+            id="mobileSidebar">
+            <div class="flex justify-between items-center p-6 border-b border-linen">
+                <span class="font-light text-lg tracking-tight">Menu</span>
+                <button class="p-1 hover:text-pebble transition-colors" id="closeMobileBtn">
+                    <span class="material-symbols-outlined text-xl">close</span>
+                </button>
+            </div>
+            <nav class="flex-1 p-6 space-y-6">
+                <a href="index.html" class="block text-lg text-pebble hover:text-charcoal transition-colors">Home</a>
+                <a href="shop.html" class="block text-lg text-pebble hover:text-charcoal transition-colors">Shop</a>
+                <a href="javascript:void(0)" onclick="handleSignOut()" class="block text-lg text-pebble hover:text-charcoal">Sign Out</a>
+            </nav>
+            <div class="p-6 border-t border-linen text-xs text-pebble">
+                © 2026 Features & Found.
+            </div>
+        </aside>
+    </header>
+
+    <main class="max-w-[1280px] mx-auto px-6 md:px-12 py-12">
+        <div class="mb-10">
+            <h1 class="text-3xl font-light tracking-tight text-charcoal">My Account</h1>
+            <p class="text-pebble mt-2 text-sm">Welcome back. Manage your orders, saved items, and personal details.</p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-4 gap-10">
+            
+            <!-- Sidebar Navigation -->
+            <aside class="lg:col-span-1 border-r-0 lg:border-r border-linen pr-6">
+                <nav class="flex flex-col space-y-2">
+                    <button class="w-full text-left px-4 py-3 bg-surface rounded text-sm font-semibold text-charcoal flex items-center justify-between transition-colors">
+                        Profile Overview
+                        <span class="material-symbols-outlined text-lg">person</span>
+                    </button>
+                    <button class="w-full text-left px-4 py-3 hover:bg-surface rounded text-sm font-medium text-pebble hover:text-charcoal flex items-center justify-between transition-colors">
+                        Order History
+                        <span class="material-symbols-outlined text-lg">inventory_2</span>
+                    </button>
+                    <button class="w-full text-left px-4 py-3 hover:bg-surface rounded text-sm font-medium text-pebble hover:text-charcoal flex items-center justify-between transition-colors">
+                        Saved Items
+                        <span class="material-symbols-outlined text-lg">favorite</span>
+                    </button>
+                    <button class="w-full text-left px-4 py-3 hover:bg-surface rounded text-sm font-medium text-pebble hover:text-charcoal flex items-center justify-between transition-colors">
+                        Address Book
+                        <span class="material-symbols-outlined text-lg">home_pin</span>
+                    </button>
+                    <div class="pt-6 mt-6 border-t border-linen">
+                        <a href="javascript:void(0)" onclick="handleSignOut()" class="w-full text-left px-4 py-3 hover:bg-surface rounded text-sm font-medium text-sage hover:text-charcoal flex items-center justify-between transition-colors">
+                            Sign Out
+                            <span class="material-symbols-outlined text-lg">logout</span>
+                        </a>
+                    </div>
+                </nav>
+            </aside>
+
+            <!-- Main Content Area -->
+            <div class="lg:col-span-3 space-y-10">
+                
+                <!-- Personal Info Card -->
+                <div class="bg-surface p-8 rounded-lg border border-linen">
+                    <div class="flex justify-between items-center mb-6 border-b border-linen pb-4">
+                        <h2 class="text-lg font-medium text-charcoal">Personal Information</h2>
+                        <button class="text-xs font-bold uppercase tracking-widest text-pebble hover:text-charcoal transition-colors flex items-center gap-1">
+                            <span class="material-symbols-outlined text-sm">edit</span> Edit
+                        </button>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <p class="text-[10px] font-bold tracking-widest uppercase text-pebble mb-1">Full Name</p>
+                            <p class="text-sm font-medium text-charcoal" id="profileName">-</p>
+                        </div>
+                        <div>
+                            <p class="text-[10px] font-bold tracking-widest uppercase text-pebble mb-1">Email Address</p>
+                            <p class="text-sm font-medium text-charcoal" id="profileEmail">-</p>
+                        </div>
+                        <div>
+                            <p class="text-[10px] font-bold tracking-widest uppercase text-pebble mb-1">Role</p>
+                            <p class="text-sm font-medium text-charcoal" id="profileRole">-</p>
+                        </div>
+                        <div>
+                            <p class="text-[10px] font-bold tracking-widest uppercase text-pebble mb-1">Password</p>
+                            <p class="text-sm font-medium text-charcoal">••••••••</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Orders -->
+                <div class="bg-surface p-8 rounded-lg border border-linen">
+                    <div class="flex justify-between items-center mb-6 border-b border-linen pb-4">
+                        <h2 class="text-lg font-medium text-charcoal">Recent Orders</h2>
+                        <a href="#" class="text-xs font-bold uppercase tracking-widest text-pebble hover:text-charcoal transition-colors flex items-center gap-1">
+                            View All <span class="material-symbols-outlined text-sm">arrow_forward</span>
+                        </a>
+                    </div>
+                    
+                    <div class="space-y-6">
+                        <!-- Order Item 1 -->
+                        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 p-4 border border-linen bg-canvas rounded">
+                            <div class="flex items-center gap-4">
+                                <div class="w-16 h-16 bg-surface-high rounded overflow-hidden">
+                                    <div class="w-full h-full bg-clay/30 flex items-center justify-center">
+                                        <span class="material-symbols-outlined text-pebble">image</span>
+                                    </div>
+                                </div>
+                                <div>
+                                    <p class="text-sm font-semibold text-charcoal">Artisan Clay Vase</p>
+                                    <p class="text-xs text-pebble">Order #FF-8924 • Placed on Jun 2, 2026</p>
+                                    <span class="inline-block mt-1 px-2 py-0.5 bg-surface-high text-charcoal text-[10px] font-bold uppercase tracking-wider rounded">Delivered</span>
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <p class="text-sm font-medium text-charcoal">$145.00</p>
+                                <button class="mt-2 text-xs font-bold uppercase tracking-widest text-pebble hover:text-charcoal underline transition-colors">
+                                    View Details
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Order Item 2 -->
+                        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 p-4 border border-linen bg-canvas rounded">
+                            <div class="flex items-center gap-4">
+                                <div class="w-16 h-16 bg-surface-high rounded overflow-hidden">
+                                    <div class="w-full h-full bg-sage/30 flex items-center justify-center">
+                                        <span class="material-symbols-outlined text-pebble">image</span>
+                                    </div>
+                                </div>
+                                <div>
+                                    <p class="text-sm font-semibold text-charcoal">Handwoven Linen Throw</p>
+                                    <p class="text-xs text-pebble">Order #FF-8810 • Placed on May 15, 2026</p>
+                                    <span class="inline-block mt-1 px-2 py-0.5 bg-canvas border border-linen text-pebble text-[10px] font-bold uppercase tracking-wider rounded">Processing</span>
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <p class="text-sm font-medium text-charcoal">$85.00</p>
+                                <button class="mt-2 text-xs font-bold uppercase tracking-widest text-pebble hover:text-charcoal underline transition-colors">
+                                    View Details
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="w-full bg-surface border-t border-linen">
+        <div class="max-w-[1280px] mx-auto px-6 md:px-12 py-12 md:py-16 grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="space-y-4">
+                <div class="font-light text-xl tracking-tight text-charcoal">
+                    Features <span class="font-normal text-pebble">&</span> Found
+                </div>
+                <p class="text-xs text-pebble max-w-xs leading-relaxed">
+                    Curating timeless, handcrafted artifacts for intentional living. We believe in high-quality
+                    craftsmanship, sustainable sourcing, and the quiet poetry of daily rituals.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-2 gap-4">
+                <div class="flex flex-col gap-2.5">
+                    <h4 class="text-xs font-semibold text-charcoal uppercase tracking-widest mb-1">Explore</h4>
+                    <a class="text-xs text-pebble hover:text-charcoal transition-colors" href="shop.html">Shop Catalog</a>
+                    <a class="text-xs text-pebble hover:text-charcoal transition-colors" href="search.html">Search Items</a>
+                    <a class="text-xs text-pebble hover:text-charcoal transition-colors" href="user_dashboard.html">My Account</a>
+                </div>
+                <div class="flex flex-col gap-2.5">
+                    <h4 class="text-xs font-semibold text-charcoal uppercase tracking-widest mb-1">Company</h4>
+                    <a class="text-xs text-pebble hover:text-charcoal transition-colors" href="#">Sourcing Ethos</a>
+                    <a class="text-xs text-pebble hover:text-charcoal transition-colors" href="#">Sustainability</a>
+                    <a class="text-xs text-pebble hover:text-charcoal transition-colors" href="#">Contact Us</a>
+                </div>
+            </div>
+
+            <div class="flex flex-col md:items-end justify-between gap-6">
+                <div class="flex gap-4">
+                    <a href="#" class="w-8 h-8 rounded-full border border-linen flex items-center justify-center text-pebble hover:text-charcoal hover:border-charcoal transition-all" aria-label="Globe">
+                        <span class="material-symbols-outlined text-sm">public</span>
+                    </a>
+                    <a href="#" class="w-8 h-8 rounded-full border border-linen flex items-center justify-center text-pebble hover:text-charcoal hover:border-charcoal transition-all" aria-label="Share">
+                        <span class="material-symbols-outlined text-sm">share</span>
+                    </a>
+                    <a href="#" class="w-8 h-8 rounded-full border border-linen flex items-center justify-center text-pebble hover:text-charcoal hover:border-charcoal transition-all" aria-label="Library">
+                        <span class="material-symbols-outlined text-sm">local_library</span>
+                    </a>
+                </div>
+                <div class="text-right text-[10px] text-pebble">
+                    © 2026 Features & Found. All rights reserved. <br />
+                    <a href="admin_dashboard.html" class="hover:underline text-sage font-medium">Portal Admin</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+        // Header scroll behavior
+        window.addEventListener('scroll', () => {
+            const header = document.getElementById('mainHeader');
+            if (window.scrollY > 20) {
+                header.classList.add('shadow-sm', 'bg-canvas/95');
+                header.classList.remove('bg-canvas/80');
+            } else {
+                header.classList.remove('shadow-sm', 'bg-canvas/95');
+                header.classList.add('bg-canvas/80');
+            }
+        });
+
+        // Mobile Menu Sidebar
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const closeMobileBtn = document.getElementById('closeMobileBtn');
+        const mobileOverlay = document.getElementById('mobileOverlay');
+        const mobileSidebar = document.getElementById('mobileSidebar');
+
+        function toggleMenu(show) {
+            if (show) {
+                mobileOverlay.classList.remove('hidden');
+                setTimeout(() => mobileOverlay.classList.add('opacity-100'), 10);
+                mobileSidebar.classList.remove('-translate-x-full');
+            } else {
+                mobileOverlay.classList.remove('opacity-100');
+                setTimeout(() => mobileOverlay.classList.add('hidden'), 300);
+                mobileSidebar.classList.add('-translate-x-full');
+            }
+        }
+
+        mobileMenuBtn.addEventListener('click', () => toggleMenu(true));
+        closeMobileBtn.addEventListener('click', () => toggleMenu(false));
+        mobileOverlay.addEventListener('click', () => toggleMenu(false));
+
+        // Load profile from API
+        async function loadProfile() {
+            if (!isLoggedIn()) {
+                location.href = 'login.html';
+                return;
+            }
+            const name = getUserName();
+            const role = getUserRole();
+            const initial = name ? name.charAt(0).toUpperCase() : '?';
+
+            document.getElementById('headerAvatar').textContent = initial;
+            document.getElementById('headerName').textContent = name || 'User';
+            document.getElementById('profileName').textContent = name || '-';
+            document.getElementById('profileRole').textContent = role || '-';
+
+            try {
+                const data = await apiRequest('/user');
+                document.getElementById('profileName').textContent = data.name || name || '-';
+                document.getElementById('profileEmail').textContent = data.email || '-';
+                document.getElementById('profileRole').textContent = data.role || role || '-';
+                document.getElementById('headerAvatar').textContent = (data.name || name || '?').charAt(0).toUpperCase();
+                document.getElementById('headerName').textContent = data.name || name || 'User';
+            } catch (_) {
+                document.getElementById('profileEmail').textContent = '-';
+            }
+        }
+        loadProfile();
+
+        // Sign out
+        async function handleSignOut() {
+            await logout();
+            location.href = 'index.html';
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Features & Found | Structured Wool Overcoat</title>
+    <!-- Tailwind CSS with Forms and Container Queries -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <!-- Google Fonts & Material Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        rel="stylesheet" />
+
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "canvas": "#FAF9F5",
+                        "surface": "#F3F2EC",
+                        "surface-high": "#EBEAE3",
+                        "charcoal": "#1E1E1C",
+                        "pebble": "#7B7973",
+                        "linen": "#E4E2D9",
+                        "sage": "#8D9387",
+                        "clay": "#C8C2B8",
+                    },
+                    fontFamily: {
+                        sans: ["Manrope", "sans-serif"],
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="global.css" />
+    <script src="auth.js"></script>
+</head>
+
+<body class="bg-canvas text-charcoal font-sans antialiased selection:bg-surface-high selection:text-charcoal">
+
+    <!-- Sticky Header -->
+    <header
+        class="w-full sticky top-0 z-50 backdrop-blur-md bg-canvas/80 border-b border-linen transition-all duration-300"
+        id="mainHeader">
+        <nav class="max-w-[1280px] mx-auto px-6 md:px-12 flex justify-between items-center h-20">
+            <!-- Left: Mobile Menu Trigger / Brand -->
+            <div class="flex items-center gap-4">
+                <button class="md:hidden p-1 text-charcoal hover:text-pebble transition-colors" id="mobileMenuBtn"
+                    aria-label="Open menu">
+                    <span class="material-symbols-outlined text-2xl">menu</span>
+                </button>
+                <a href="index.html"
+                    class="font-light text-xl md:text-2xl tracking-tight text-charcoal hover:opacity-85 transition-opacity">
+                    Features <span class="font-normal text-pebble">&</span> Found
+                </a>
+            </div>
+
+            <!-- Middle: Nav Links (Desktop) -->
+            <ul class="hidden md:flex gap-8 items-center text-sm font-medium tracking-wide uppercase text-pebble">
+                <li><a href="index.html" class="hover:text-charcoal transition-colors">Home</a></li>
+                <li><a href="shop.html" class="hover:text-charcoal transition-colors">Shop</a></li>
+            </ul>
+
+            <!-- Right: Actions -->
+            <div class="flex items-center gap-4">
+                <a href="login.html"
+                    class="hidden sm:inline-flex text-sm font-medium uppercase text-pebble hover:text-charcoal transition-colors">Sign
+                    In</a>
+                <a href="cart.html" class="relative p-1 text-charcoal hover:text-pebble transition-colors"
+                    aria-label="Shopping cart">
+                    <span class="material-symbols-outlined text-2xl">shopping_bag</span>
+                    <span
+                        class="absolute -top-1 -right-1 w-4 h-4 bg-charcoal text-canvas text-[9px] font-bold rounded-full flex items-center justify-center hidden"
+                        id="cartBadge">0</span>
+                </a>
+            </div>
+        </nav>
+
+        <!-- Mobile Drawer Navigation -->
+        <div class="fixed inset-0 bg-charcoal/20 z-40 hidden transition-opacity duration-300" id="mobileOverlay"></div>
+        <aside
+            class="fixed top-0 left-0 bottom-0 w-72 bg-canvas border-r border-linen z-50 transform -translate-x-full transition-transform duration-300 ease-in-out md:hidden flex flex-col"
+            id="mobileSidebar">
+            <div class="flex justify-between items-center p-6 border-b border-linen">
+                <span class="font-light text-lg tracking-tight">Menu</span>
+                <button class="p-1 hover:text-pebble transition-colors" id="closeMobileBtn">
+                    <span class="material-symbols-outlined text-xl">close</span>
+                </button>
+            </div>
+            <nav class="flex-1 p-6 space-y-6">
+                <a href="index.html" class="block text-lg text-pebble hover:text-charcoal transition-colors">Home</a>
+                <a href="shop.html" class="block text-lg text-pebble hover:text-charcoal transition-colors">Shop</a>
+                <a href="login.html" class="block text-lg text-pebble hover:text-charcoal transition-colors">Sign In /
+                    Register</a>
+                <a href="admin_dashboard.html"
+                    class="block text-sm text-sage hover:text-charcoal transition-colors pt-6 border-t border-linen">Admin
+                    Panel</a>
+            </nav>
+            <div class="p-6 border-t border-linen text-xs text-pebble">
+                © 2026 Features & Found.
+            </div>
+        </aside>
+    </header>
+
+    <main class="max-w-[1280px] mx-auto px-6 md:px-12 py-8 md:py-16">
+        <!-- Breadcrumbs -->
+        <nav class="flex gap-2 text-xs uppercase tracking-wider text-pebble mb-8">
+            <a href="index.html" class="hover:text-charcoal">Home</a>
+            <span>/</span>
+            <a href="shop.html" class="hover:text-charcoal">Shop</a>
+            <span>/</span>
+            <span class="text-charcoal font-medium" id="breadcrumbName">Cardigan</span>
+        </nav>
+
+        <!-- Product Grid -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+
+            <!-- Left Side: Interactive Gallery -->
+            <div class="space-y-4">
+                <!-- Large Image Container -->
+                <div class="aspect-[4/5] bg-surface rounded-lg overflow-hidden border border-linen relative">
+                    <img id="mainProductImg" alt="Structured Wool Overcoat"
+                        class="w-full h-full object-cover transition-opacity duration-300"
+                        src="https://i.pinimg.com/1200x/8d/08/28/8d0828d51cfc26c57e0cb10974ebb04c.jpg" />
+                    <span
+                        class="absolute top-4 left-4 bg-charcoal text-canvas text-[10px] font-bold tracking-widest px-3 py-1 rounded">NEW
+                        ARRIVAL</span>
+                </div>
+
+            </div>
+
+            <!-- Right Side: Details & Actions -->
+            <div class="space-y-8">
+                <!-- Header Info -->
+                <div class="space-y-3">
+                    <p class="text-xs uppercase tracking-widest text-pebble font-semibold" id="productCategory">Fashion
+                        &amp; Tailoring</p>
+                    <h2 class="text-3xl md:text-4xl font-light tracking-tight text-charcoal" id="productTitle">Cardigan
+                    </h2>
+                    <p class="text-2xl font-semibold text-charcoal" id="productPrice">Rp.285.00</p>
+                </div>
+
+                <!-- Description -->
+                <div class="border-t border-linen pt-6 space-y-4">
+                    <p class="text-sm md:text-base text-pebble font-light leading-relaxed">
+                        Cardigan with thick and soft material, can also be combined with plain white pants and is more
+                        simple and elegant, can also be worn in winter.
+                    </p>
+                </div>
+
+                <!-- Selectors -->
+                <div class="space-y-6 pt-2">
+                    <!-- Color Selector -->
+                    <div>
+                        <span class="text-xs font-semibold uppercase tracking-widest text-charcoal block mb-3">Color:
+                            <span class="font-normal text-pebble italic" id="colorText">Charcoal</span></span>
+                        <div class="flex gap-3">
+                            <button
+                                class="w-8 h-8 rounded-full border border-linen p-0.5 focus:outline-none transition-all border-charcoal ring-2 ring-charcoal/20"
+                                onclick="selectColor('Charcoal', this)">
+                                <span class="block w-full h-full rounded-full bg-[#373A40]"></span>
+                            </button>
+                            <button
+                                class="w-8 h-8 rounded-full border border-linen p-0.5 focus:outline-none transition-all hover:scale-105"
+                                onclick="selectColor('Warm Earth', this)">
+                                <span class="block w-full h-full rounded-full bg-[#7E6356]"></span>
+                            </button>
+                            <button
+                                class="w-8 h-8 rounded-full border border-linen p-0.5 focus:outline-none transition-all hover:scale-105"
+                                onclick="selectColor('Bone White', this)">
+                                <span class="block w-full h-full rounded-full bg-[#FAF9F5] border border-linen"></span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Size Selector -->
+                    <div id="sizeSelectorContainer">
+                        <div class="flex justify-between items-center mb-3">
+                            <span class="text-xs font-semibold uppercase tracking-widest text-charcoal">Size</span>
+                            <button class="text-xs text-pebble underline tracking-wider uppercase hover:text-charcoal"
+                                onclick="alert('Size Guide: Standard European Fit')">Size Guide</button>
+                        </div>
+                        <div class="grid grid-cols-4 gap-3" id="sizeOptionsGrid">
+                            <button
+                                class="py-3.5 border border-linen text-sm text-pebble hover:border-charcoal hover:text-charcoal rounded transition-all size-btn"
+                                onclick="selectSize('XS', this)">XS</button>
+                            <button
+                                class="py-3.5 border-2 border-charcoal text-sm text-charcoal font-semibold rounded transition-all size-btn"
+                                onclick="selectSize('S', this)">S</button>
+                            <button
+                                class="py-3.5 border border-linen text-sm text-pebble hover:border-charcoal hover:text-charcoal rounded transition-all size-btn"
+                                onclick="selectSize('M', this)">M</button>
+                            <button
+                                class="py-3.5 border border-linen text-sm text-pebble hover:border-charcoal hover:text-charcoal rounded transition-all size-btn"
+                                onclick="selectSize('L', this)">L</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Add to Bag / Primary Actions -->
+                <div class="space-y-4 pt-4">
+                    <button
+                        class="w-full bg-charcoal text-canvas hover:bg-charcoal/95 py-5 rounded text-xs uppercase tracking-widest font-semibold transition-all duration-300 transform active:scale-[0.98] shadow-md"
+                        onclick="addToCart()">
+                        Add to Shopping Bag
+                    </button>
+
+                    <div
+                        class="flex items-center justify-center gap-8 text-xs font-semibold uppercase tracking-wider text-pebble pt-2">
+                        <button class="flex items-center gap-2 hover:text-charcoal transition-colors">
+                            <span class="material-symbols-outlined text-lg">favorite</span>
+                            Add to Wishlist
+                        </button>
+                        <button class="flex items-center gap-2 hover:text-charcoal transition-colors"
+                            onclick="navigator.clipboard.writeText(window.location.href); alert('Product link copied to clipboard!');">
+                            <span class="material-symbols-outlined text-lg">share</span>
+                            Share Product
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Product Specifications Accordion -->
+                <div class="border-t border-linen pt-6 space-y-4 text-sm text-pebble">
+                    <div class="flex justify-between border-b border-linen/50 pb-2">
+                        <span class="font-medium text-charcoal">Materials</span>
+                        <span id="specMaterials">100% Organic Virgin Wool</span>
+                    </div>
+                    <div class="flex justify-between border-b border-linen/50 pb-2">
+                        <span class="font-medium text-charcoal">Origin</span>
+                        <span id="specOrigin">Sustainably hand-finished in Milan, Italy</span>
+                    </div>
+                    <div class="flex justify-between pb-2">
+                        <span class="font-medium text-charcoal">Care Instructions</span>
+                        <span id="specCare">Dry Clean Only</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="w-full bg-surface border-t border-linen">
+        <div class="max-w-[1280px] mx-auto px-6 md:px-12 py-12 md:py-16 grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="space-y-4">
+                <div class="font-light text-xl tracking-tight text-charcoal">
+                    Features <span class="font-normal text-pebble">&</span> Found
+                </div>
+                <p class="text-xs text-pebble max-w-xs leading-relaxed">
+                    Curating timeless, handcrafted artifacts for intentional living. We believe in high-quality
+                    craftsmanship, sustainable sourcing, and the quiet poetry of daily rituals.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-2 gap-4">
+                <div class="flex flex-col gap-2.5">
+                    <h4 class="text-xs font-semibold text-charcoal uppercase tracking-widest mb-1">Explore</h4>
+                    <a class="text-xs text-pebble hover:text-charcoal transition-colors" href="shop.html">Shop
+                        Catalog</a>
+                    <a class="text-xs text-pebble hover:text-charcoal transition-colors" href="search.html">Search
+                        Items</a>
+                    <a class="text-xs text-pebble hover:text-charcoal transition-colors" href="login.html">My
+                        Account</a>
+                </div>
+                <div class="flex flex-col gap-2.5">
+                    <h4 class="text-xs font-semibold text-charcoal uppercase tracking-widest mb-1">Company</h4>
+                    <a class="text-xs text-pebble hover:text-charcoal transition-colors" href="#">Sourcing Ethos</a>
+                    <a class="text-xs text-pebble hover:text-charcoal transition-colors" href="#">Sustainability</a>
+                    <a class="text-xs text-pebble hover:text-charcoal transition-colors" href="#">Contact Us</a>
+                </div>
+            </div>
+
+            <div class="flex flex-col md:items-end justify-between gap-6">
+                <div class="flex gap-4">
+                    <a href="#"
+                        class="w-8 h-8 rounded-full border border-linen flex items-center justify-center text-pebble hover:text-charcoal hover:border-charcoal transition-all"
+                        aria-label="Globe">
+                        <span class="material-symbols-outlined text-sm">public</span>
+                    </a>
+                    <a href="#"
+                        class="w-8 h-8 rounded-full border border-linen flex items-center justify-center text-pebble hover:text-charcoal hover:border-charcoal transition-all"
+                        aria-label="Share">
+                        <span class="material-symbols-outlined text-sm">share</span>
+                    </a>
+                    <a href="#"
+                        class="w-8 h-8 rounded-full border border-linen flex items-center justify-center text-pebble hover:text-charcoal hover:border-charcoal transition-all"
+                        aria-label="Library">
+                        <span class="material-symbols-outlined text-sm">local_library</span>
+                    </a>
+                </div>
+                <div class="text-right text-[10px] text-pebble">
+                    © 2026 Features & Found. All rights reserved. <br />
+                    <a href="admin_dashboard.html" class="hover:underline text-sage font-medium">Portal Admin</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+        // --- Product Database (loaded from API) ---
+        let dbProducts = [];
+
+        // Load Product Data
+        document.addEventListener('DOMContentLoaded', async () => {
+            try {
+                const response = await fetch('http://localhost:8000/api/products');
+                if (response.ok) {
+                    dbProducts = await response.json();
+                }
+            } catch (e) {
+                console.warn('API unavailable', e);
+            }
+
+            const urlParams = new URLSearchParams(window.location.search);
+            const productId = urlParams.get('id');
+            if (productId) {
+                const product = dbProducts.find(p => p.id == productId);
+                if (product) {
+                    document.getElementById('breadcrumbName').innerText = product.name;
+                    document.getElementById('productCategory').innerText = product.category;
+                    document.getElementById('productTitle').innerText = product.name;
+                    document.getElementById('productPrice').innerText = "Rp." + product.price.toLocaleString('id-ID');
+                    document.getElementById('mainProductImg').src = product.img;
+                    document.getElementById('mainProductImg').alt = product.name;
+
+                    const descEl = document.querySelector('.border-t.border-linen.pt-6.space-y-4 p');
+                    if (descEl) descEl.innerText = product.desc;
+
+                    // Update specs dynamically
+                    if (product.materials) document.getElementById('specMaterials').innerText = product.materials;
+                    if (product.origin) document.getElementById('specOrigin').innerText = product.origin;
+                    if (product.care) document.getElementById('specCare').innerText = product.care;
+
+                    document.title = "Features & Found | " + product.name;
+
+                    const sizeContainer = document.getElementById('sizeSelectorContainer');
+                    const sizeGrid = document.getElementById('sizeOptionsGrid');
+
+                    if (product.category === 'Bags') {
+                        sizeContainer.style.display = 'none';
+                    } else if (product.category === 'Shoes') {
+                        sizeGrid.innerHTML = `
+                            <button class="py-3.5 border border-linen text-sm text-pebble hover:border-charcoal hover:text-charcoal rounded transition-all size-btn" onclick="selectSize('39', this)">39</button>
+                            <button class="py-3.5 border-2 border-charcoal text-sm text-charcoal font-semibold rounded transition-all size-btn" onclick="selectSize('40', this)">40</button>
+                            <button class="py-3.5 border border-linen text-sm text-pebble hover:border-charcoal hover:text-charcoal rounded transition-all size-btn" onclick="selectSize('41', this)">41</button>
+                            <button class="py-3.5 border border-linen text-sm text-pebble hover:border-charcoal hover:text-charcoal rounded transition-all size-btn" onclick="selectSize('42', this)">42</button>
+                        `;
+                    }
+                }
+            }
+        });
+
+        // Header scroll behavior
+        window.addEventListener('scroll', () => {
+            const header = document.getElementById('mainHeader');
+            if (window.scrollY > 20) {
+                header.classList.add('shadow-sm', 'bg-canvas/95');
+                header.classList.remove('bg-canvas/80');
+            } else {
+                header.classList.remove('shadow-sm', 'bg-canvas/95');
+                header.classList.add('bg-canvas/80');
+            }
+        });
+
+        // Image Gallery Swapper
+        const imagesList = [
+            "https://images.unsplash.com/photo-1548126032-079a0fb0099d?w=800&q=80&fit=crop",
+            "https://images.unsplash.com/photo-1539109136881-3be0616acf4b?w=800&q=80&fit=crop",
+            "https://images.unsplash.com/photo-1469334031218-e382a71b716b?w=800&q=80&fit=crop"
+        ];
+
+        const mainImg = document.getElementById('mainProductImg');
+        const thumbnails = document.querySelectorAll('.thumbnail-btn');
+
+        function swapImage(index, btnElement) {
+            // Fade out
+            mainImg.classList.add('opacity-0');
+            setTimeout(() => {
+                mainImg.src = imagesList[index];
+                mainImg.classList.remove('opacity-0');
+            }, 150);
+
+            // Active thumbnail border
+            thumbnails.forEach(thumb => {
+                thumb.classList.remove('border-charcoal', 'border-2');
+                thumb.classList.add('border-linen', 'opacity-70');
+            });
+            btnElement.classList.add('border-charcoal', 'border-2');
+            btnElement.classList.remove('border-linen', 'opacity-70');
+        }
+
+        // Color Picker Interaction
+        const colorText = document.getElementById('colorText');
+        function selectColor(colorName, btnElement) {
+            colorText.innerText = colorName;
+            const colorButtons = btnElement.parentElement.querySelectorAll('button');
+            colorButtons.forEach(btn => {
+                btn.classList.remove('border-charcoal', 'ring-2', 'ring-charcoal/20');
+                btn.classList.add('hover:scale-105');
+            });
+            btnElement.classList.add('border-charcoal', 'ring-2', 'ring-charcoal/20');
+            btnElement.classList.remove('hover:scale-105');
+        }
+
+        // Size Button Picker Interaction
+        function selectSize(sizeVal, btnElement) {
+            const sizeButtons = btnElement.parentElement.querySelectorAll('.size-btn');
+            sizeButtons.forEach(btn => {
+                btn.classList.remove('border-2', 'border-charcoal', 'text-charcoal', 'font-semibold');
+                btn.classList.add('border-linen', 'text-pebble');
+            });
+            btnElement.classList.add('border-2', 'border-charcoal', 'text-charcoal', 'font-semibold');
+            btnElement.classList.remove('border-linen', 'text-pebble');
+        }
+
+        // Add to Bag via API
+        async function addToCart() {
+            if (!isLoggedIn()) {
+                alert('Please sign in first.');
+                location.href = 'login.html';
+                return;
+            }
+            const urlParams = new URLSearchParams(window.location.search);
+            const productId = parseInt(urlParams.get('id'));
+            if (!productId) {
+                alert('Product not found.');
+                return;
+            }
+            const selectedColor = document.getElementById('colorText').innerText || 'Charcoal';
+            const selectedSize = document.querySelector('.size-btn.border-2')?.innerText || 'S';
+            try {
+                await addToCartApi(productId, selectedColor, selectedSize, 1);
+                alert('Product added to cart!');
+                updateCartBadge();
+            } catch (e) {
+                alert('Failed to add: ' + e.message);
+            }
+        }
+
+        // Mobile Menu Trigger
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const closeMobileBtn = document.getElementById('closeMobileBtn');
+        const mobileOverlay = document.getElementById('mobileOverlay');
+        const mobileSidebar = document.getElementById('mobileSidebar');
+
+        function toggleMenu(show) {
+            if (show) {
+                mobileOverlay.classList.remove('hidden');
+                setTimeout(() => mobileOverlay.classList.add('opacity-100'), 10);
+                mobileSidebar.classList.remove('-translate-x-full');
+            } else {
+                mobileOverlay.classList.remove('opacity-100');
+                setTimeout(() => mobileOverlay.classList.add('hidden'), 300);
+                mobileSidebar.classList.add('-translate-x-full');
+            }
+        }
+
+        mobileMenuBtn.addEventListener('click', () => toggleMenu(true));
+        closeMobileBtn.addEventListener('click', () => toggleMenu(false));
+        mobileOverlay.addEventListener('click', () => toggleMenu(false));
+    </script>
+</body>
+
+</html>

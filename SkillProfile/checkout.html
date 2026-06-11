@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Features & Found | Checkout</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "canvas": "#FAF9F5",
+                        "surface": "#F3F2EC",
+                        "surface-high": "#EBEAE3",
+                        "charcoal": "#1E1E1C",
+                        "pebble": "#7B7973",
+                        "linen": "#E4E2D9",
+                        "sage": "#8D9387",
+                        "clay": "#C8C2B8",
+                    },
+                    fontFamily: { sans: ["Manrope", "sans-serif"] },
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="global.css" />
+    <script src="auth.js"></script>
+</head>
+
+<body class="bg-canvas text-charcoal font-sans antialiased selection:bg-surface-high selection:text-charcoal animate-fadeIn">
+
+    <!-- Header -->
+    <header class="w-full sticky top-0 z-50 backdrop-blur-md bg-canvas/80 border-b border-linen" id="mainHeader">
+        <nav class="max-w-[1280px] mx-auto px-6 md:px-12 flex justify-between items-center h-20">
+            <div class="flex items-center gap-4">
+                <a href="index.html" class="font-light text-xl md:text-2xl tracking-tight text-charcoal hover:opacity-85 transition-opacity">
+                    Features <span class="font-normal text-pebble">&</span> Found
+                </a>
+            </div>
+            <ul class="hidden md:flex gap-8 items-center text-sm font-medium tracking-wide uppercase text-pebble">
+                <li><a href="index.html" class="hover:text-charcoal transition-colors">Home</a></li>
+                <li><a href="shop.html" class="hover:text-charcoal transition-colors">Shop</a></li>
+            </ul>
+            <div class="flex items-center gap-4">
+                <a href="login.html" class="hidden sm:inline-flex text-sm font-medium uppercase text-pebble hover:text-charcoal transition-colors">Sign In</a>
+                <a href="cart.html" class="relative p-1 text-charcoal hover:text-pebble transition-colors" aria-label="Shopping cart">
+                    <span class="material-symbols-outlined text-2xl">shopping_bag</span>
+                    <span class="absolute -top-1 -right-1 w-4 h-4 bg-charcoal text-canvas text-[9px] font-bold rounded-full flex items-center justify-center hidden" id="cartBadge">0</span>
+                </a>
+            </div>
+        </nav>
+    </header>
+
+    <main class="max-w-[1280px] mx-auto px-6 md:px-12 py-12 md:py-16 flex-grow">
+        <div class="mb-10">
+            <h1 class="text-3xl font-light tracking-tight text-charcoal">Checkout</h1>
+            <p class="text-pebble mt-2 text-sm">Complete your purchase.</p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-12 items-start">
+            <!-- Left: Form -->
+            <div class="lg:col-span-2 space-y-8">
+                <!-- Address -->
+                <div class="bg-surface p-6 md:p-8 rounded-lg border border-linen">
+                    <h2 class="text-lg font-bold uppercase tracking-widest text-charcoal mb-6">Alamat Pengiriman</h2>
+                    <div class="space-y-4">
+                        <div class="space-y-1.5">
+                            <label class="text-[10px] font-bold tracking-widest uppercase text-pebble block">Alamat Lengkap</label>
+                            <textarea id="addressInput" rows="3" class="w-full bg-canvas border border-linen rounded px-4 py-3 text-sm focus:outline-none focus:border-charcoal focus:ring-0 placeholder:text-pebble/30" placeholder="Jl. Contoh No. 123, Kota"></textarea>
+                        </div>
+                        <div class="space-y-1.5">
+                            <label class="text-[10px] font-bold tracking-widest uppercase text-pebble block">Nomor Telepon</label>
+                            <input id="phoneInput" type="tel" class="w-full bg-canvas border border-linen rounded px-4 py-3 text-sm focus:outline-none focus:border-charcoal focus:ring-0 placeholder:text-pebble/30" placeholder="08123456789" />
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Payment Method -->
+                <div class="bg-surface p-6 md:p-8 rounded-lg border border-linen">
+                    <h2 class="text-lg font-bold uppercase tracking-widest text-charcoal mb-6">Metode Pembayaran</h2>
+                    <div class="space-y-3" id="paymentMethods">
+                        <label class="flex items-center gap-4 p-4 bg-canvas border-2 border-charcoal rounded-lg cursor-pointer" data-value="cod">
+                            <input type="radio" name="payment" value="cod" checked class="accent-charcoal" />
+                            <span class="material-symbols-outlined text-sage">money</span>
+                            <span class="text-sm font-medium text-charcoal">Bayar di Tempat (COD)</span>
+                        </label>
+                        <label class="flex items-center gap-4 p-4 bg-canvas border border-linen rounded-lg cursor-pointer hover:border-pebble transition-colors" data-value="transfer">
+                            <input type="radio" name="payment" value="transfer" class="accent-charcoal" />
+                            <span class="material-symbols-outlined text-sage">account_balance</span>
+                            <span class="text-sm font-medium text-charcoal">Transfer Bank</span>
+                        </label>
+                        <label class="flex items-center gap-4 p-4 bg-canvas border border-linen rounded-lg cursor-pointer hover:border-pebble transition-colors" data-value="ewallet">
+                            <input type="radio" name="payment" value="ewallet" class="accent-charcoal" />
+                            <span class="material-symbols-outlined text-sage">phone_android</span>
+                            <span class="text-sm font-medium text-charcoal">E-Wallet (GoPay/OVO)</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right: Order Summary -->
+            <aside>
+                <div class="bg-surface p-6 md:p-8 rounded-lg border border-linen space-y-6 sticky top-28">
+                    <h2 class="text-lg font-bold uppercase tracking-widest text-charcoal">Order Summary</h2>
+                    <div class="divide-y divide-linen" id="checkoutItems"></div>
+                    <div class="space-y-4 text-sm font-light pt-2">
+                        <div class="flex justify-between">
+                            <span class="text-pebble">Subtotal</span>
+                            <span class="font-semibold text-charcoal" id="subtotalDisplay">Rp 0</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-pebble">Shipping</span>
+                            <span class="font-semibold text-sage" id="shippingDisplay">FREE</span>
+                        </div>
+                        <div class="border-t border-linen pt-4 flex justify-between text-base font-semibold">
+                            <span class="text-charcoal">Total</span>
+                            <span class="text-charcoal" id="totalDisplay">Rp 0</span>
+                        </div>
+                    </div>
+                    <button class="w-full bg-charcoal text-canvas hover:bg-charcoal/95 py-4 rounded text-xs uppercase tracking-widest font-semibold transition-all" onclick="placeOrder()">
+                        Bayar Sekarang
+                    </button>
+                </div>
+            </aside>
+        </div>
+    </main>
+
+    <footer class="w-full bg-surface border-t border-linen">
+        <div class="max-w-[1280px] mx-auto px-6 md:px-12 py-8 text-center text-xs text-pebble">
+            © 2026 Features & Found. All rights reserved.
+        </div>
+    </footer>
+
+    <script>
+        let cartData = [];
+
+        async function loadCheckout() {
+            if (!isLoggedIn()) {
+                location.href = 'login.html';
+                return;
+            }
+            try {
+                cartData = await getCart();
+                renderCheckout();
+            } catch (e) {
+                console.error('Failed to load cart:', e);
+            }
+        }
+
+        function renderCheckout() {
+            const container = document.getElementById('checkoutItems');
+            container.innerHTML = '';
+            let subtotal = 0;
+
+            cartData.forEach(item => {
+                const product = item.product || {};
+                const price = parseFloat(product.price) || 0;
+                const qty = item.quantity;
+                const itemTotal = price * qty;
+                subtotal += itemTotal;
+
+                const div = document.createElement('div');
+                div.className = 'py-4';
+                div.innerHTML = `
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <p class="text-sm font-semibold text-charcoal">${product.name || 'Product'}</p>
+                            <p class="text-xs text-pebble mt-1">${item.color || ''} / ${item.size || ''} × ${qty}</p>
+                        </div>
+                        <span class="text-sm font-medium text-charcoal">Rp ${itemTotal.toLocaleString('id-ID')}</span>
+                    </div>
+                `;
+                container.appendChild(div);
+            });
+
+            let shippingFee = subtotal < 250000 ? 15000 : 0;
+            let finalTotal = subtotal + shippingFee;
+
+            document.getElementById('subtotalDisplay').innerText = `Rp ${subtotal.toLocaleString('id-ID')}`;
+            document.getElementById('shippingDisplay').innerText = shippingFee === 0 ? 'GRATIS' : `Rp ${shippingFee.toLocaleString('id-ID')}`;
+            document.getElementById('totalDisplay').innerText = `Rp ${finalTotal.toLocaleString('id-ID')}`;
+        }
+
+        async function placeOrder() {
+            const address = document.getElementById('addressInput').value.trim();
+            const phone = document.getElementById('phoneInput').value.trim();
+            const payment = document.querySelector('input[name="payment"]:checked')?.value || 'cod';
+
+            if (!address) { alert('Alamat wajib diisi.'); return; }
+            if (!phone) { alert('Nomor telepon wajib diisi.'); return; }
+            if (cartData.length === 0) { alert('Keranjang kosong.'); return; }
+
+            try {
+                const items = cartData.map(item => ({
+                    product_id: item.product_id,
+                    quantity: item.quantity,
+                    color: item.color || '',
+                    size: item.size || '',
+                }));
+
+                await apiRequest('/orders', {
+                    method: 'POST',
+                    body: JSON.stringify({ address, phone, payment_method: payment, items }),
+                });
+
+                await clearCart();
+                alert('Pesanan berhasil!');
+                location.href = 'user_dashboard.html';
+            } catch (e) {
+                alert('Gagal: ' + e.message);
+            }
+        }
+
+        // Payment method UI
+        document.querySelectorAll('#paymentMethods label').forEach(label => {
+            label.addEventListener('click', () => {
+                document.querySelectorAll('#paymentMethods label').forEach(l => {
+                    l.className = 'flex items-center gap-4 p-4 bg-canvas border border-linen rounded-lg cursor-pointer hover:border-pebble transition-colors';
+                });
+                label.className = 'flex items-center gap-4 p-4 bg-canvas border-2 border-charcoal rounded-lg cursor-pointer';
+            });
+        });
+
+        loadCheckout();
+    </script>
+</body>
+
+</html>

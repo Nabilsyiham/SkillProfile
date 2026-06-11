@@ -1,0 +1,33 @@
+/* ==========================================================================
+   Features & Found — Global Stylesheet
+   Soft Neutral Japandi Design System
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   Google Material Symbols Icon Font Settings
+   -------------------------------------------------------------------------- */
+.material-symbols-outlined {
+    font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+}
+
+/* --------------------------------------------------------------------------
+   Base / Body Reset
+   -------------------------------------------------------------------------- */
+body {
+    background-color: #FAF9F5;
+    color: #1E1E1C;
+    scroll-behavior: smooth;
+}
+
+/* --------------------------------------------------------------------------
+   Scrollbar — hide visually while keeping functionality
+   -------------------------------------------------------------------------- */
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+/* --------------------------------------------------------------------------
+   Login Page — Asymmetric Decorative Shape
+   -------------------------------------------------------------------------- */
+.asymmetric-shape {
+    border-radius: 40px 120px 40px 40px;
+}
