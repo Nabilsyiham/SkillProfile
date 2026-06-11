@@ -36,6 +36,7 @@
         }
     </script>
     <link rel="stylesheet" href="global.css" />
+    <script src="auth.js"></script>
 </head>
 
 <body class="bg-canvas text-charcoal font-sans antialiased selection:bg-surface-high selection:text-charcoal">
@@ -76,8 +77,8 @@
                     aria-label="Shopping cart">
                     <span class="material-symbols-outlined text-2xl">shopping_bag</span>
                     <span
-                        class="absolute -top-1 -right-1 w-4 h-4 bg-charcoal text-canvas text-[9px] font-bold rounded-full flex items-center justify-center"
-                        id="cartBadge">3</span>
+                        class="absolute -top-1 -right-1 w-4 h-4 bg-charcoal text-canvas text-[9px] font-bold rounded-full flex items-center justify-center hidden"
+                        id="cartBadge">0</span>
                 </a>
             </div>
         </nav>
@@ -96,8 +97,6 @@
             <nav class="flex-1 p-6 space-y-6">
                 <a href="index.html" class="block text-lg text-pebble hover:text-charcoal transition-colors">Home</a>
                 <a href="shop.html" class="block text-lg font-medium text-charcoal">Shop</a>
-                <a href="user_dashboard.html"
-                    class="block text-lg text-pebble hover:text-charcoal transition-colors">Profile</a>
                 <a href="login.html" class="block text-lg text-pebble hover:text-charcoal transition-colors">Sign In /
                     Register</a>
                 <a href="admin_dashboard.html"
@@ -397,7 +396,7 @@
                     <div class="aspect-[4/5] bg-surface rounded overflow-hidden mb-4 relative" onclick="location.href='detail.html?id=${p.id}'">
                         <img alt="${p.name}" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" src="${p.img}"/>
                     </div>
-                    <button class="absolute top-6 right-6 w-8 h-8 rounded-full bg-canvas/80 backdrop-blur border border-linen flex items-center justify-center text-charcoal hover:bg-charcoal hover:text-canvas transition-colors shadow-sm" onclick="addToBag('${p.name}')" aria-label="Add to cart">
+                    <button class="absolute top-6 right-6 w-8 h-8 rounded-full bg-canvas/80 backdrop-blur border border-linen flex items-center justify-center text-charcoal hover:bg-charcoal hover:text-canvas transition-colors shadow-sm" onclick="addToBag(${p.id})" aria-label="Add to cart">
                         <span class="material-symbols-outlined text-sm font-bold">add_shopping_cart</span>
                     </button>
                     <div onclick="location.href='detail.html?id=${p.id}'">
@@ -481,15 +480,86 @@
             }
         });
 
-        // --- Add to Bag simulation ---
-        let cartCount = 3;
-        const cartBadge = document.getElementById('cartBadge');
-        function addToBag(itemName) {
-            cartCount++;
-            cartBadge.innerText = cartCount;
-            cartBadge.classList.add('scale-125');
-            setTimeout(() => cartBadge.classList.remove('scale-125'), 200);
-            alert(`"${itemName}" has been added to your cart.`);
+        // --- Add to Bag via API ---
+        function addToBag(productId) {
+            if (!isLoggedIn()) {
+                alert('Please sign in first.');
+                location.href = 'login.html';
+                return;
+            }
+            openVariantModal(productId);
+        }
+
+        function openVariantModal(productId) {
+            const modal = document.getElementById('variantModal');
+            modal.dataset.productId = productId;
+            modal.dataset.selectedColor = 'Charcoal';
+            modal.dataset.selectedSize = 'S';
+            renderModalUI();
+            modal.classList.remove('hidden');
+        }
+
+        function closeVariantModal() {
+            document.getElementById('variantModal').classList.add('hidden');
+        }
+
+        function selectModalColor(color, el) {
+            document.getElementById('variantModal').dataset.selectedColor = color;
+            el.parentElement.querySelectorAll('.variant-color-btn').forEach(b => {
+                b.classList.remove('ring-2', 'ring-offset-1');
+                b.classList.add('opacity-50');
+            });
+            el.classList.add('ring-2', 'ring-offset-1');
+            el.classList.remove('opacity-50');
+        }
+
+        function selectModalSize(size, el) {
+            document.getElementById('variantModal').dataset.selectedSize = size;
+            el.parentElement.querySelectorAll('.variant-size-btn').forEach(b => {
+                b.classList.remove('border-charcoal', 'text-charcoal', 'font-semibold');
+                b.classList.add('border-linen', 'text-pebble');
+            });
+            el.classList.remove('border-linen', 'text-pebble');
+            el.classList.add('border-charcoal', 'text-charcoal', 'font-semibold');
+        }
+
+        function renderModalUI() {
+            const modal = document.getElementById('variantModal');
+            const color = modal.dataset.selectedColor;
+            const size = modal.dataset.selectedSize;
+            modal.querySelectorAll('.variant-color-btn').forEach(b => {
+                if (b.dataset.color === color) {
+                    b.classList.add('ring-2', 'ring-offset-1');
+                    b.classList.remove('opacity-50');
+                } else {
+                    b.classList.remove('ring-2', 'ring-offset-1');
+                    b.classList.add('opacity-50');
+                }
+            });
+            modal.querySelectorAll('.variant-size-btn').forEach(b => {
+                if (b.dataset.size === size) {
+                    b.classList.remove('border-linen', 'text-pebble');
+                    b.classList.add('border-charcoal', 'text-charcoal', 'font-semibold');
+                } else {
+                    b.classList.remove('border-charcoal', 'text-charcoal', 'font-semibold');
+                    b.classList.add('border-linen', 'text-pebble');
+                }
+            });
+        }
+
+        async function confirmAddToCart() {
+            const modal = document.getElementById('variantModal');
+            const productId = parseInt(modal.dataset.productId);
+            const color = modal.dataset.selectedColor;
+            const size = modal.dataset.selectedSize;
+            try {
+                await addToCartApi(productId, color, size, 1);
+                alert('Product added to cart!');
+                updateCartBadge();
+                closeVariantModal();
+            } catch (e) {
+                alert('Failed to add: ' + e.message);
+            }
         }
 
         // --- Mobile Menu Drawer ---
@@ -552,6 +622,35 @@
         }
         loadProducts();
     </script>
+
+    <!-- Variant Selection Modal -->
+    <div id="variantModal" class="fixed inset-0 z-50 hidden">
+        <div class="absolute inset-0 bg-black/40" onclick="closeVariantModal()"></div>
+        <div class="absolute bottom-0 left-0 right-0 bg-white rounded-t-2xl p-6 max-w-lg mx-auto shadow-lg">
+            <div class="flex justify-between items-center mb-5">
+                <h3 class="text-lg font-semibold text-charcoal">Pilih Varian</h3>
+                <button onclick="closeVariantModal()" class="text-pebble hover:text-charcoal text-2xl leading-none">&times;</button>
+            </div>
+            <div class="mb-5">
+                <p class="text-sm text-pebble mb-2">Warna</p>
+                <div class="flex gap-3">
+                    <button class="variant-color-btn w-9 h-9 rounded-full bg-[#36454F] ring-2 ring-offset-1 cursor-pointer" data-color="Charcoal" onclick="selectModalColor('Charcoal', this)"></button>
+                    <button class="variant-color-btn w-9 h-9 rounded-full bg-[#8B4513] opacity-50 cursor-pointer" data-color="Warm Earth" onclick="selectModalColor('Warm Earth', this)"></button>
+                    <button class="variant-color-btn w-9 h-9 rounded-full bg-[#F5F5DC] opacity-50 cursor-pointer" data-color="Bone White" onclick="selectModalColor('Bone White', this)"></button>
+                </div>
+            </div>
+            <div class="mb-6">
+                <p class="text-sm text-pebble mb-2">Ukuran</p>
+                <div class="flex gap-2">
+                    <button class="variant-size-btn py-2 px-4 border border-linen text-pebble rounded text-sm" data-size="XS" onclick="selectModalSize('XS', this)">XS</button>
+                    <button class="variant-size-btn py-2 px-4 border border-charcoal text-charcoal font-semibold rounded text-sm" data-size="S" onclick="selectModalSize('S', this)">S</button>
+                    <button class="variant-size-btn py-2 px-4 border border-linen text-pebble rounded text-sm" data-size="M" onclick="selectModalSize('M', this)">M</button>
+                    <button class="variant-size-btn py-2 px-4 border border-linen text-pebble rounded text-sm" data-size="L" onclick="selectModalSize('L', this)">L</button>
+                </div>
+            </div>
+            <button onclick="confirmAddToCart()" class="w-full bg-charcoal text-white py-3 rounded-lg font-semibold hover:bg-charcoal/90 transition">Tambahkan ke Keranjang</button>
+        </div>
+    </div>
 </body>
 
 </html>

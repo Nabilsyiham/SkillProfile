@@ -36,6 +36,7 @@
         }
     </script>
     <link rel="stylesheet" href="global.css" />
+    <script src="auth.js"></script>
 </head>
 
 <body class="bg-canvas text-charcoal font-sans antialiased selection:bg-surface-high selection:text-charcoal">
@@ -61,7 +62,6 @@
             <ul class="hidden md:flex gap-8 items-center text-sm font-medium tracking-wide uppercase text-pebble">
                 <li><a href="index.html" class="hover:text-charcoal transition-colors">Home</a></li>
                 <li><a href="shop.html" class="hover:text-charcoal transition-colors">Shop</a></li>
-                <li><a href="user_dashboard.html" class="hover:text-charcoal transition-colors">Profile</a></li>
             </ul>
 
             <!-- Right: Actions -->
@@ -73,8 +73,8 @@
                     aria-label="Shopping cart">
                     <span class="material-symbols-outlined text-2xl">shopping_bag</span>
                     <span
-                        class="absolute -top-1 -right-1 w-4 h-4 bg-charcoal text-canvas text-[9px] font-bold rounded-full flex items-center justify-center"
-                        id="cartBadge">3</span>
+                        class="absolute -top-1 -right-1 w-4 h-4 bg-charcoal text-canvas text-[9px] font-bold rounded-full flex items-center justify-center hidden"
+                        id="cartBadge">0</span>
                 </a>
             </div>
         </nav>
@@ -93,8 +93,6 @@
             <nav class="flex-1 p-6 space-y-6">
                 <a href="index.html" class="block text-lg text-pebble hover:text-charcoal transition-colors">Home</a>
                 <a href="shop.html" class="block text-lg text-pebble hover:text-charcoal transition-colors">Shop</a>
-                <a href="user_dashboard.html"
-                    class="block text-lg text-pebble hover:text-charcoal transition-colors">Profile</a>
                 <a href="login.html" class="block text-lg text-pebble hover:text-charcoal transition-colors">Sign In /
                     Register</a>
                 <a href="admin_dashboard.html"
@@ -418,15 +416,28 @@
             btnElement.classList.remove('border-linen', 'text-pebble');
         }
 
-        // Add to Bag dynamic simulated response
-        let cartCount = 3;
-        const cartBadge = document.getElementById('cartBadge');
-        function addToCart() {
-            cartCount++;
-            cartBadge.innerText = cartCount;
-            cartBadge.classList.add('scale-125');
-            setTimeout(() => cartBadge.classList.remove('scale-125'), 200);
-            alert('Structured Wool Overcoat has been added to your cart.');
+        // Add to Bag via API
+        async function addToCart() {
+            if (!isLoggedIn()) {
+                alert('Please sign in first.');
+                location.href = 'login.html';
+                return;
+            }
+            const urlParams = new URLSearchParams(window.location.search);
+            const productId = parseInt(urlParams.get('id'));
+            if (!productId) {
+                alert('Product not found.');
+                return;
+            }
+            const selectedColor = document.getElementById('colorText').innerText || 'Charcoal';
+            const selectedSize = document.querySelector('.size-btn.border-2')?.innerText || 'S';
+            try {
+                await addToCartApi(productId, selectedColor, selectedSize, 1);
+                alert('Product added to cart!');
+                updateCartBadge();
+            } catch (e) {
+                alert('Failed to add: ' + e.message);
+            }
         }
 
         // Mobile Menu Trigger

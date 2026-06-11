@@ -33,6 +33,7 @@
         }
     </script>
     <link rel="stylesheet" href="global.css"/>
+    <script src="auth.js"></script>
 </head>
 <body class="bg-canvas text-charcoal font-sans antialiased selection:bg-surface-high selection:text-charcoal">
 
@@ -53,7 +54,6 @@
             <ul class="hidden md:flex gap-8 items-center text-sm font-medium tracking-wide uppercase text-pebble">
                 <li><a href="index.html" class="hover:text-charcoal transition-colors">Home</a></li>
                 <li><a href="shop.html" class="hover:text-charcoal transition-colors">Shop</a></li>
-                <li><a href="user_dashboard.html" class="hover:text-charcoal transition-colors">Profile</a></li>
             </ul>
 
             <!-- Right: Actions -->
@@ -61,7 +61,7 @@
                 <a href="login.html" class="hidden sm:inline-flex text-sm font-medium uppercase text-pebble hover:text-charcoal transition-colors">Sign In</a>
                 <a href="cart.html" class="relative p-1 text-charcoal hover:text-pebble transition-colors" aria-label="Shopping cart">
                     <span class="material-symbols-outlined text-2xl">shopping_bag</span>
-                    <span class="absolute -top-1 -right-1 w-4 h-4 bg-charcoal text-canvas text-[9px] font-bold rounded-full flex items-center justify-center animate-bounce" id="cartBadge">3</span>
+                    <span class="absolute -top-1 -right-1 w-4 h-4 bg-charcoal text-canvas text-[9px] font-bold rounded-full flex items-center justify-center animate-bounce hidden" id="cartBadge">0</span>
                 </a>
             </div>
         </nav>
@@ -78,7 +78,6 @@
             <nav class="flex-1 p-6 space-y-6">
                 <a href="index.html" class="block text-lg text-pebble hover:text-charcoal transition-colors">Home</a>
                 <a href="shop.html" class="block text-lg text-pebble hover:text-charcoal transition-colors">Shop</a>
-                <a href="user_dashboard.html" class="block text-lg text-pebble hover:text-charcoal transition-colors">Profile</a>
                 <a href="login.html" class="block text-lg text-pebble hover:text-charcoal transition-colors">Sign In / Register</a>
                 <a href="admin_dashboard.html" class="block text-sm text-sage hover:text-charcoal transition-colors pt-6 border-t border-linen">Admin Panel</a>
             </nav>
@@ -227,7 +226,6 @@
             }
         });
 
-        // Interactive Math for Shopping Cart
         const cartBadge = document.getElementById('cartBadge');
         const cartCountHeader = document.getElementById('cartCountHeader');
         const subtotalDisplay = document.getElementById('subtotalDisplay');
@@ -235,22 +233,77 @@
         const totalDisplay = document.getElementById('totalDisplay');
         const cartGrid = document.getElementById('cartGrid');
         const emptyState = document.getElementById('emptyCartState');
-        
-        let discountPct = 0; // percentage discount if code applied
+        const cartItemsList = document.getElementById('cartItemsList');
 
-        function calculateTotals() {
-            const items = document.querySelectorAll('.cart-item');
+        let discountPct = 0;
+        let cartData = [];
+
+        async function loadCart() {
+            if (!isLoggedIn()) {
+                cartGrid.classList.add('hidden');
+                emptyState.classList.remove('hidden');
+                emptyState.innerHTML = `
+                    <span class="material-symbols-outlined text-7xl text-linen">shopping_bag</span>
+                    <h2 class="text-2xl font-light text-pebble">Login to view your cart</h2>
+                    <p class="text-sm text-pebble/60 font-light">Please sign in to see your shopping bag.</p>
+                    <a href="login.html" class="inline-block bg-charcoal text-canvas hover:bg-charcoal/90 px-10 py-3.5 rounded text-xs uppercase tracking-widest font-semibold transition-all">Sign In</a>
+                `;
+                cartBadge.classList.add('hidden');
+                return;
+            }
+
+            try {
+                cartData = await getCart();
+                renderCart();
+            } catch (e) {
+                console.error('Failed to load cart:', e);
+            }
+        }
+
+        function renderCart() {
+            cartItemsList.innerHTML = '';
             let subtotal = 0;
             let totalQty = 0;
 
-            items.forEach(item => {
-                const price = parseFloat(item.getAttribute('data-price'));
-                const qty = parseInt(item.querySelector('.item-qty').innerText);
-                subtotal += price * qty;
+            cartData.forEach(item => {
+                const product = item.product || {};
+                const price = parseFloat(product.price) || 0;
+                const qty = item.quantity;
+                const itemTotal = price * qty;
+                subtotal += itemTotal;
                 totalQty += qty;
+
+                const div = document.createElement('div');
+                div.className = 'cart-item flex gap-6 py-6 border-b border-linen';
+                div.setAttribute('data-price', price);
+                div.setAttribute('data-cart-id', item.id);
+                div.innerHTML = `
+                    <div class="w-24 h-32 bg-surface rounded overflow-hidden flex-shrink-0">
+                        <img src="${product.img || ''}" alt="${product.name || ''}" class="w-full h-full object-cover" onerror="this.style.display='none'">
+                    </div>
+                    <div class="flex-grow flex flex-col justify-between">
+                        <div>
+                            <h3 class="text-sm font-semibold text-charcoal">${product.name || 'Product'}</h3>
+                            <p class="text-xs text-pebble mt-1">${item.color || ''} / ${item.size || ''}</p>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center gap-3 border border-linen rounded">
+                                <button class="px-3 py-1 text-pebble hover:text-charcoal" onclick="changeQty(${item.id}, -1)">-</button>
+                                <span class="text-sm font-medium item-qty">${qty}</span>
+                                <button class="px-3 py-1 text-pebble hover:text-charcoal" onclick="changeQty(${item.id}, 1)">+</button>
+                            </div>
+                            <div class="flex items-center gap-4">
+                                <span class="text-sm font-semibold item-price-display">Rp ${itemTotal.toLocaleString('id-ID')}</span>
+                                <button class="text-pebble hover:text-red-500 transition-colors" onclick="removeItem(${item.id})">
+                                    <span class="material-symbols-outlined text-lg">delete</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                cartItemsList.appendChild(div);
             });
 
-            // Update badge & header text
             cartBadge.innerText = totalQty;
             cartCountHeader.innerText = `${totalQty} Item${totalQty === 1 ? '' : 's'}`;
 
@@ -258,84 +311,80 @@
                 cartGrid.classList.add('hidden');
                 emptyState.classList.remove('hidden');
                 cartBadge.classList.add('hidden');
-                return;
             } else {
                 cartGrid.classList.remove('hidden');
                 emptyState.classList.add('hidden');
                 cartBadge.classList.remove('hidden');
             }
 
-            // Shipping rules
-            let shippingFee = 0;
-            if (subtotal < 250) {
-                shippingFee = 15;
-                shippingDisplay.innerText = `$15.00`;
-                shippingDisplay.classList.remove('text-sage');
-                shippingDisplay.classList.add('text-charcoal');
+            let shippingFee = subtotal < 250000 ? 15000 : 0;
+            if (subtotal < 250000) {
+                shippingDisplay.innerText = `Rp ${shippingFee.toLocaleString('id-ID')}`;
             } else {
-                shippingFee = 0;
-                shippingDisplay.innerText = 'FREE';
-                shippingDisplay.classList.remove('text-charcoal');
-                shippingDisplay.classList.add('text-sage');
+                shippingDisplay.innerText = 'GRATIS';
             }
 
-            // Apply discount
             let discountAmt = subtotal * (discountPct / 100);
             let finalTotal = subtotal + shippingFee - discountAmt;
 
-            subtotalDisplay.innerText = `$${subtotal.toFixed(2)}`;
-            totalDisplay.innerText = `$${finalTotal.toFixed(2)}`;
+            subtotalDisplay.innerText = `Rp ${subtotal.toLocaleString('id-ID')}`;
+            totalDisplay.innerText = `Rp ${finalTotal.toLocaleString('id-ID')}`;
         }
 
-        function updateQty(btnElement, delta) {
-            const qtySpan = btnElement.parentElement.querySelector('.item-qty');
-            let currentQty = parseInt(qtySpan.innerText);
-            let newQty = currentQty + delta;
-            
-            if (newQty >= 1) {
-                qtySpan.innerText = newQty;
-                
-                // Visual feedback
-                const itemContainer = btnElement.closest('.cart-item');
-                const price = parseFloat(itemContainer.getAttribute('data-price'));
-                itemContainer.querySelector('.item-price-display').innerText = `$${(price * newQty).toFixed(2)}`;
-                
-                calculateTotals();
+        async function changeQty(cartItemId, delta) {
+            const item = cartData.find(i => i.id === cartItemId);
+            if (!item) return;
+
+            const newQty = item.quantity + delta;
+            if (newQty < 1) return;
+
+            try {
+                await updateCartItem(cartItemId, newQty);
+                item.quantity = newQty;
+                renderCart();
+            } catch (e) {
+                alert('Gagal update: ' + e.message);
             }
         }
 
-        function removeCartItem(btnElement) {
-            const itemContainer = btnElement.closest('.cart-item');
-            
-            // Fade out animation simulation
-            itemContainer.classList.add('opacity-0', 'transition-opacity', 'duration-300');
-            setTimeout(() => {
-                itemContainer.remove();
-                calculateTotals();
-            }, 300);
+        async function removeItem(cartItemId) {
+            try {
+                await removeCartItem(cartItemId);
+                cartData = cartData.filter(i => i.id !== cartItemId);
+                renderCart();
+            } catch (e) {
+                alert('Gagal hapus: ' + e.message);
+            }
         }
 
         function applyPromo() {
             const code = document.getElementById('promoInput').value.trim().toUpperCase();
             if (code === 'FOUNDER20') {
                 discountPct = 20;
-                alert('Voucher Code FOUNDER20 applied! You get 20% discount on order subtotal.');
-                calculateTotals();
+                alert('Voucher FOUNDER20 applied! 20% discount.');
             } else if (code === 'WELCOME10') {
                 discountPct = 10;
-                alert('Voucher Code WELCOME10 applied! You get 10% discount on order subtotal.');
-                calculateTotals();
+                alert('Voucher WELCOME10 applied! 10% discount.');
             } else {
-                alert('Invalid code. Please try "FOUNDER20" or "WELCOME10".');
+                alert('Invalid code. Try "FOUNDER20" or "WELCOME10".');
             }
+            renderCart();
         }
 
         function proceedToCheckout() {
-            alert('Proceeding to secure checkout payment gateway mock. Thank you for shopping!');
-            location.href = 'user_dashboard.html';
+            if (!isLoggedIn()) {
+                alert('Please sign in first.');
+                location.href = 'login.html';
+                return;
+            }
+            if (cartData.length === 0) {
+                alert('Your cart is empty.');
+                return;
+            }
+            location.href = 'checkout.html';
         }
 
-        // Mobile Menu Trigger
+        // Mobile menu
         const mobileMenuBtn = document.getElementById('mobileMenuBtn');
         const closeMobileBtn = document.getElementById('closeMobileBtn');
         const mobileOverlay = document.getElementById('mobileOverlay');
@@ -356,6 +405,9 @@
         mobileMenuBtn.addEventListener('click', () => toggleMenu(true));
         closeMobileBtn.addEventListener('click', () => toggleMenu(false));
         mobileOverlay.addEventListener('click', () => toggleMenu(false));
+
+        // Load cart on page load
+        loadCart();
     </script>
 </body>
 </html>
