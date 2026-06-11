@@ -126,7 +126,7 @@
                         Saved Items
                         <span class="material-symbols-outlined text-lg">favorite</span>
                     </button>
-                    <button class="w-full text-left px-4 py-3 hover:bg-surface rounded text-sm font-medium text-pebble hover:text-charcoal flex items-center justify-between transition-colors">
+                    <button class="w-full text-left px-4 py-3 hover:bg-surface rounded text-sm font-medium text-pebble hover:text-charcoal flex items-center justify-between transition-colors" onclick="location.href='addresses.html'">
                         Address Book
                         <span class="material-symbols-outlined text-lg">home_pin</span>
                     </button>
@@ -174,55 +174,13 @@
                 <div class="bg-surface p-8 rounded-lg border border-linen">
                     <div class="flex justify-between items-center mb-6 border-b border-linen pb-4">
                         <h2 class="text-lg font-medium text-charcoal">Recent Orders</h2>
-                        <a href="#" class="text-xs font-bold uppercase tracking-widest text-pebble hover:text-charcoal transition-colors flex items-center gap-1">
+                        <a href="order_history.html" class="text-xs font-bold uppercase tracking-widest text-pebble hover:text-charcoal transition-colors flex items-center gap-1">
                             View All <span class="material-symbols-outlined text-sm">arrow_forward</span>
                         </a>
                     </div>
                     
-                    <div class="space-y-6">
-                        <!-- Order Item 1 -->
-                        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 p-4 border border-linen bg-canvas rounded">
-                            <div class="flex items-center gap-4">
-                                <div class="w-16 h-16 bg-surface-high rounded overflow-hidden">
-                                    <div class="w-full h-full bg-clay/30 flex items-center justify-center">
-                                        <span class="material-symbols-outlined text-pebble">image</span>
-                                    </div>
-                                </div>
-                                <div>
-                                    <p class="text-sm font-semibold text-charcoal">Artisan Clay Vase</p>
-                                    <p class="text-xs text-pebble">Order #FF-8924 • Placed on Jun 2, 2026</p>
-                                    <span class="inline-block mt-1 px-2 py-0.5 bg-surface-high text-charcoal text-[10px] font-bold uppercase tracking-wider rounded">Delivered</span>
-                                </div>
-                            </div>
-                            <div class="text-right">
-                                <p class="text-sm font-medium text-charcoal">$145.00</p>
-                                <button class="mt-2 text-xs font-bold uppercase tracking-widest text-pebble hover:text-charcoal underline transition-colors">
-                                    View Details
-                                </button>
-                            </div>
-                        </div>
-
-                        <!-- Order Item 2 -->
-                        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 p-4 border border-linen bg-canvas rounded">
-                            <div class="flex items-center gap-4">
-                                <div class="w-16 h-16 bg-surface-high rounded overflow-hidden">
-                                    <div class="w-full h-full bg-sage/30 flex items-center justify-center">
-                                        <span class="material-symbols-outlined text-pebble">image</span>
-                                    </div>
-                                </div>
-                                <div>
-                                    <p class="text-sm font-semibold text-charcoal">Handwoven Linen Throw</p>
-                                    <p class="text-xs text-pebble">Order #FF-8810 • Placed on May 15, 2026</p>
-                                    <span class="inline-block mt-1 px-2 py-0.5 bg-canvas border border-linen text-pebble text-[10px] font-bold uppercase tracking-wider rounded">Processing</span>
-                                </div>
-                            </div>
-                            <div class="text-right">
-                                <p class="text-sm font-medium text-charcoal">$85.00</p>
-                                <button class="mt-2 text-xs font-bold uppercase tracking-widest text-pebble hover:text-charcoal underline transition-colors">
-                                    View Details
-                                </button>
-                            </div>
-                        </div>
+                    <div id="recent-orders" class="space-y-6">
+                        <p class="text-center text-pebble py-4 text-sm">Memuat pesanan...</p>
                     </div>
                 </div>
 
@@ -330,7 +288,7 @@
             document.getElementById('profileRole').textContent = role || '-';
 
             try {
-                const data = await apiRequest('/user');
+                const data = await apiRequest('/user/profile');
                 document.getElementById('profileName').textContent = data.name || name || '-';
                 document.getElementById('profileEmail').textContent = data.email || '-';
                 document.getElementById('profileRole').textContent = data.role || role || '-';
@@ -340,7 +298,43 @@
                 document.getElementById('profileEmail').textContent = '-';
             }
         }
+
+        function getStatusColor(status) {
+            const colors = { pending: 'bg-amber-100 text-amber-800', processing: 'bg-blue-100 text-blue-800', shipped: 'bg-indigo-100 text-indigo-800', delivered: 'bg-green-100 text-green-800', completed: 'bg-green-100 text-green-800', cancelled: 'bg-red-100 text-red-800' };
+            return colors[status] || 'bg-gray-100 text-gray-800';
+        }
+
+        function getStatusText(status) {
+            const texts = { pending: 'Menunggu', processing: 'Diproses', shipped: 'Dikirim', delivered: 'Selesai', completed: 'Selesai', cancelled: 'Dibatalkan' };
+            return texts[status] || status;
+        }
+
+        async function loadRecentOrders() {
+            try {
+                const orders = await apiRequest('/orders');
+                const list = Array.isArray(orders) ? orders : [];
+                const container = document.getElementById('recent-orders');
+                if (list.length === 0) {
+                    container.innerHTML = '<p class="text-pebble text-center py-4 text-sm">Belum ada pesanan</p>';
+                    return;
+                }
+                container.innerHTML = list.slice(0, 3).map(order => `
+                    <div class="flex items-center gap-4 py-4 border-b border-linen last:border-0">
+                        <div class="flex-1 min-w-0">
+                            <p class="font-semibold text-sm">#${order.id}</p>
+                            <p class="text-xs text-pebble">${(order.items || []).length} item &bull; ${new Date(order.created_at).toLocaleDateString('id-ID')}</p>
+                        </div>
+                        <span class="px-2 py-0.5 rounded text-[10px] font-bold ${getStatusColor(order.status)}">${getStatusText(order.status)}</span>
+                        <p class="font-medium text-sm">Rp${Number(order.total_price).toLocaleString('id-ID')}</p>
+                    </div>
+                `).join('');
+            } catch (e) {
+                document.getElementById('recent-orders').innerHTML = '<p class="text-pebble text-center py-4 text-sm">Gagal memuat pesanan</p>';
+            }
+        }
+
         loadProfile();
+        loadRecentOrders();
 
         // Sign out
         async function handleSignOut() {

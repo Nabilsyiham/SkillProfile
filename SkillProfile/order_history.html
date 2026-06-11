@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Features & Found | Riwayat Pesanan</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "canvas": "#FAF9F5",
+                        "surface": "#F3F2EC",
+                        "surface-high": "#EBEAE3",
+                        "charcoal": "#1E1E1C",
+                        "pebble": "#7B7973",
+                        "linen": "#E4E2D9",
+                        "sage": "#8D9387",
+                        "clay": "#C8C2B8",
+                    },
+                    fontFamily: {
+                        sans: ["Manrope", "sans-serif"],
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="global.css" />
+    <script src="auth.js"></script>
+</head>
+
+<body class="bg-canvas text-charcoal font-sans antialiased">
+
+    <!-- Header -->
+    <header class="w-full sticky top-0 z-50 backdrop-blur-md bg-canvas/80 border-b border-linen">
+        <nav class="max-w-[1280px] mx-auto px-6 md:px-12 flex justify-between items-center h-20">
+            <div class="flex items-center gap-4">
+                <a href="index.html" class="font-light text-xl md:text-2xl tracking-tight text-charcoal hover:opacity-85 transition-opacity">
+                    Features <span class="font-normal text-pebble">&</span> Found
+                </a>
+            </div>
+            <ul class="hidden md:flex gap-8 items-center text-sm font-medium tracking-wide uppercase text-pebble">
+                <li><a href="index.html" class="hover:text-charcoal transition-colors">Home</a></li>
+                <li><a href="shop.html" class="hover:text-charcoal transition-colors">Shop</a></li>
+            </ul>
+            <div class="flex items-center gap-4">
+                <div class="hidden sm:flex items-center gap-2 mr-4 text-xs font-semibold text-charcoal" id="headerUser">
+                    <span class="w-8 h-8 rounded-full bg-surface-high border border-linen flex items-center justify-center font-bold" id="headerAvatar">?</span>
+                    <span id="headerName">Sign In</span>
+                </div>
+                <a href="cart.html" class="relative p-1 text-charcoal hover:text-pebble transition-colors">
+                    <span class="material-symbols-outlined text-2xl">shopping_bag</span>
+                    <span class="absolute -top-1 -right-1 w-4 h-4 bg-charcoal text-canvas text-[9px] font-bold rounded-full flex items-center justify-center hidden" id="cartBadge">0</span>
+                </a>
+            </div>
+        </nav>
+    </header>
+
+    <main class="max-w-[800px] mx-auto px-6 py-12">
+        <h1 class="text-2xl font-bold mb-8">Riwayat Pesanan</h1>
+        <div id="orders-list">
+            <p class="text-center text-pebble py-8">Memuat pesanan...</p>
+        </div>
+    </main>
+
+    <script>
+        function getStatusColor(status) {
+            const colors = {
+                pending: 'bg-amber-100 text-amber-800',
+                processing: 'bg-blue-100 text-blue-800',
+                shipped: 'bg-indigo-100 text-indigo-800',
+                delivered: 'bg-green-100 text-green-800',
+                completed: 'bg-green-100 text-green-800',
+                cancelled: 'bg-red-100 text-red-800',
+            };
+            return colors[status] || 'bg-gray-100 text-gray-800';
+        }
+
+        function getStatusText(status) {
+            const texts = {
+                pending: 'Menunggu',
+                processing: 'Diproses',
+                shipped: 'Dikirim',
+                delivered: 'Selesai',
+                completed: 'Selesai',
+                cancelled: 'Dibatalkan',
+            };
+            return texts[status] || status;
+        }
+
+        function formatCurrency(num) {
+            return 'Rp' + Number(num).toLocaleString('id-ID');
+        }
+
+        function formatDate(dateStr) {
+            return new Date(dateStr).toLocaleDateString('id-ID', {
+                day: 'numeric', month: 'long', year: 'numeric'
+            });
+        }
+
+        async function loadOrders() {
+            try {
+                const orders = await apiRequest('/orders');
+                renderOrders(Array.isArray(orders) ? orders : []);
+            } catch (e) {
+                console.error('Failed to load orders:', e);
+                document.getElementById('orders-list').innerHTML = '<p class="text-center text-red-500 py-8">Gagal memuat pesanan</p>';
+            }
+        }
+
+        function renderOrders(orders) {
+            const container = document.getElementById('orders-list');
+            if (orders.length === 0) {
+                container.innerHTML = `
+                    <div class="text-center py-12">
+                        <span class="material-symbols-outlined text-6xl text-linen">receipt_long</span>
+                        <p class="text-pebble mt-4">Belum ada pesanan</p>
+                        <a href="shop.html" class="inline-block mt-4 text-sm font-semibold text-charcoal underline hover:no-underline">Mulai Belanja</a>
+                    </div>`;
+                return;
+            }
+
+            container.innerHTML = orders.map(order => `
+                <div class="bg-white border border-linen rounded-xl p-6 mb-4 hover:shadow-md transition">
+                    <div class="flex justify-between items-start mb-4">
+                        <div>
+                            <p class="font-bold text-lg">#${order.id}</p>
+                            <p class="text-sm text-pebble">${formatDate(order.created_at)}</p>
+                        </div>
+                        <span class="px-3 py-1 rounded-full text-xs font-bold ${getStatusColor(order.status)}">
+                            ${getStatusText(order.status)}
+                        </span>
+                    </div>
+                    ${(order.items || []).map(item => `
+                        <div class="flex items-center gap-4 py-3 border-t border-linen">
+                            <img src="${item.product?.img || ''}" class="w-14 h-14 object-cover rounded-lg bg-surface" onerror="this.style.display='none'">
+                            <div class="flex-1 min-w-0">
+                                <p class="font-medium truncate">${item.product?.name || 'Product'}</p>
+                                <p class="text-sm text-pebble">${item.color || ''} / ${item.size || ''} x${item.quantity}</p>
+                            </div>
+                            <p class="font-medium text-sm whitespace-nowrap">${formatCurrency(item.price * item.quantity)}</p>
+                        </div>
+                    `).join('')}
+                    <div class="border-t border-linen mt-4 pt-4 flex justify-between items-center">
+                        <span class="text-sm text-pebble">Total</span>
+                        <span class="font-bold text-lg">${formatCurrency(order.total_price)}</span>
+                    </div>
+                    ${order.address ? `<p class="text-xs text-pebble mt-2">Dikirim ke: ${order.address}</p>` : ''}
+                </div>
+            `).join('');
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            updateHeaderAuth();
+            updateCartBadge();
+            if (!isLoggedIn()) {
+                window.location.href = 'login.html';
+                return;
+            }
+            loadOrders();
+        });
+    </script>
+</body>
+
+</html>

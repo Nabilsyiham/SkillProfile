@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Features & Found | Alamat Saya</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "canvas": "#FAF9F5",
+                        "surface": "#F3F2EC",
+                        "surface-high": "#EBEAE3",
+                        "charcoal": "#1E1E1C",
+                        "pebble": "#7B7973",
+                        "linen": "#E4E2D9",
+                        "sage": "#8D9387",
+                        "clay": "#C8C2B8",
+                    },
+                    fontFamily: {
+                        sans: ["Manrope", "sans-serif"],
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="global.css" />
+    <script src="auth.js"></script>
+</head>
+
+<body class="bg-canvas text-charcoal font-sans antialiased">
+
+    <!-- Header -->
+    <header class="w-full sticky top-0 z-50 backdrop-blur-md bg-canvas/80 border-b border-linen">
+        <nav class="max-w-[1280px] mx-auto px-6 md:px-12 flex justify-between items-center h-20">
+            <div class="flex items-center gap-4">
+                <a href="index.html" class="font-light text-xl md:text-2xl tracking-tight text-charcoal hover:opacity-85 transition-opacity">
+                    Features <span class="font-normal text-pebble">&</span> Found
+                </a>
+            </div>
+            <ul class="hidden md:flex gap-8 items-center text-sm font-medium tracking-wide uppercase text-pebble">
+                <li><a href="index.html" class="hover:text-charcoal transition-colors">Home</a></li>
+                <li><a href="shop.html" class="hover:text-charcoal transition-colors">Shop</a></li>
+            </ul>
+            <div class="flex items-center gap-4">
+                <div class="hidden sm:flex items-center gap-2 mr-4 text-xs font-semibold text-charcoal" id="headerUser">
+                    <span class="w-8 h-8 rounded-full bg-surface-high border border-linen flex items-center justify-center font-bold" id="headerAvatar">?</span>
+                    <span id="headerName">Sign In</span>
+                </div>
+                <a href="cart.html" class="relative p-1 text-charcoal hover:text-pebble transition-colors">
+                    <span class="material-symbols-outlined text-2xl">shopping_bag</span>
+                    <span class="absolute -top-1 -right-1 w-4 h-4 bg-charcoal text-canvas text-[9px] font-bold rounded-full flex items-center justify-center hidden" id="cartBadge">0</span>
+                </a>
+            </div>
+        </nav>
+    </header>
+
+    <main class="max-w-[800px] mx-auto px-6 py-12">
+        <div class="flex justify-between items-center mb-8">
+            <h1 class="text-2xl font-bold">Alamat Saya</h1>
+            <button onclick="openAddModal()" class="bg-charcoal text-canvas px-4 py-2 rounded-lg text-sm font-semibold hover:opacity-90 transition">
+                + Tambah Alamat
+            </button>
+        </div>
+
+        <div id="address-list" class="space-y-4">
+            <p class="text-center text-pebble py-8">Memuat alamat...</p>
+        </div>
+    </main>
+
+    <!-- Address Modal -->
+    <div id="address-modal" class="hidden fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
+        <div class="bg-canvas rounded-2xl p-6 w-full max-w-lg max-h-[90vh] overflow-y-auto shadow-xl">
+            <div class="flex justify-between items-center mb-6">
+                <h2 id="modal-title" class="text-xl font-bold">Tambah Alamat</h2>
+                <button onclick="closeModal()" class="text-pebble hover:text-charcoal">
+                    <span class="material-symbols-outlined">close</span>
+                </button>
+            </div>
+
+            <form id="address-form" onsubmit="saveAddress(event)" class="space-y-4">
+                <input type="hidden" id="edit-id" value="">
+
+                <button type="button" onclick="detectLocation()" id="location-btn"
+                    class="w-full border-2 border-dashed border-linen rounded-lg py-3 text-sm text-pebble hover:border-sage hover:text-charcoal transition flex items-center justify-center gap-2">
+                    <span class="material-symbols-outlined text-lg">my_location</span>
+                    Izinkan Akses Lokasi
+                </button>
+
+                <div>
+                    <label class="block text-xs font-semibold text-pebble mb-1">Label</label>
+                    <input type="text" id="label" value="Rumah" class="w-full border border-linen rounded-lg px-4 py-3 text-sm focus:outline-none focus:border-sage" />
+                </div>
+
+                <div>
+                    <label class="block text-xs font-semibold text-pebble mb-1">Nama Lengkap Penerima</label>
+                    <input type="text" id="recipient_name" required class="w-full border border-linen rounded-lg px-4 py-3 text-sm focus:outline-none focus:border-sage" />
+                </div>
+
+                <div>
+                    <label class="block text-xs font-semibold text-pebble mb-1">Nomor Telepon</label>
+                    <input type="tel" id="phone" required placeholder="+62" class="w-full border border-linen rounded-lg px-4 py-3 text-sm focus:outline-none focus:border-sage" />
+                </div>
+
+                <div>
+                    <label class="block text-xs font-semibold text-pebble mb-1">Alamat Lengkap</label>
+                    <textarea id="address" rows="2" required class="w-full border border-linen rounded-lg px-4 py-3 text-sm focus:outline-none focus:border-sage" placeholder="Jl. Contoh No. 123, RT/RW"></textarea>
+                </div>
+
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-xs font-semibold text-pebble mb-1">Kota/Kabupaten</label>
+                        <input type="text" id="city" required class="w-full border border-linen rounded-lg px-4 py-3 text-sm focus:outline-none focus:border-sage" />
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-pebble mb-1">Provinsi</label>
+                        <input type="text" id="province" required class="w-full border border-linen rounded-lg px-4 py-3 text-sm focus:outline-none focus:border-sage" />
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-semibold text-pebble mb-1">Kode Pos</label>
+                    <input type="text" id="postal_code" class="w-full border border-linen rounded-lg px-4 py-3 text-sm focus:outline-none focus:border-sage" />
+                </div>
+
+                <label class="flex items-center gap-3 cursor-pointer">
+                    <input type="checkbox" id="is_default" class="w-4 h-4 accent-charcoal">
+                    <span class="text-sm">Tetapkan sebagai alamat default</span>
+                </label>
+
+                <input type="hidden" id="latitude">
+                <input type="hidden" id="longitude">
+
+                <button type="submit" class="w-full bg-charcoal text-canvas py-3 rounded-lg font-semibold hover:opacity-90 transition mt-4">
+                    Simpan Alamat
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        let editingId = null;
+
+        async function loadAddresses() {
+            try {
+                const result = await apiRequest('/addresses');
+                renderAddresses(result.addresses || []);
+            } catch (e) {
+                console.error('Failed to load addresses:', e);
+                document.getElementById('address-list').innerHTML = '<p class="text-center text-red-500 py-8">Gagal memuat alamat</p>';
+            }
+        }
+
+        function renderAddresses(addresses) {
+            const container = document.getElementById('address-list');
+            if (addresses.length === 0) {
+                container.innerHTML = `
+                    <div class="text-center py-12">
+                        <span class="material-symbols-outlined text-6xl text-linen">location_off</span>
+                        <p class="text-pebble mt-4">Belum ada alamat</p>
+                        <p class="text-pebble text-sm">Tekan "+ Tambah Alamat" untuk menambah alamat baru</p>
+                    </div>`;
+                return;
+            }
+
+            container.innerHTML = addresses.map(addr => `
+                <div class="bg-white border ${addr.is_default ? 'border-amber-500 ring-2 ring-amber-100' : 'border-linen'} rounded-xl p-5 transition-all hover:shadow-md">
+                    <div class="flex items-start justify-between">
+                        <div class="flex items-center gap-2 mb-2">
+                            <span class="bg-surface px-3 py-1 rounded-full text-xs font-bold text-charcoal">${addr.label}</span>
+                            ${addr.is_default ? '<span class="bg-green-50 text-green-700 px-3 py-1 rounded-full text-xs font-bold">Default</span>' : ''}
+                        </div>
+                        <div class="flex gap-1">
+                            <button onclick="editAddress(${addr.id})" class="p-2 text-pebble hover:text-charcoal hover:bg-surface rounded-lg transition" title="Edit">
+                                <span class="material-symbols-outlined text-lg">edit</span>
+                            </button>
+                            ${!addr.is_default ? `<button onclick="setDefault(${addr.id})" class="p-2 text-pebble hover:text-amber-600 hover:bg-amber-50 rounded-lg transition" title="Set Default"><span class="material-symbols-outlined text-lg">star</span></button>` : ''}
+                            <button onclick="deleteAddress(${addr.id})" class="p-2 text-pebble hover:text-red-500 hover:bg-red-50 rounded-lg transition" title="Hapus">
+                                <span class="material-symbols-outlined text-lg">delete</span>
+                            </button>
+                        </div>
+                    </div>
+                    <p class="font-bold">${addr.recipient_name}</p>
+                    <p class="text-sm text-pebble">${addr.phone}</p>
+                    <p class="text-sm text-pebble mt-1">${addr.address}, ${addr.city}, ${addr.province}</p>
+                </div>
+            `).join('');
+        }
+
+        function openAddModal() {
+            editingId = null;
+            document.getElementById('modal-title').textContent = 'Tambah Alamat';
+            document.getElementById('address-form').reset();
+            document.getElementById('edit-id').value = '';
+            document.getElementById('latitude').value = '';
+            document.getElementById('longitude').value = '';
+            document.getElementById('address-modal').classList.remove('hidden');
+        }
+
+        function editAddress(id) {
+            apiRequest('/addresses').then(result => {
+                const addr = result.addresses.find(a => a.id === id);
+                if (addr) {
+                    editingId = id;
+                    document.getElementById('modal-title').textContent = 'Edit Alamat';
+                    document.getElementById('edit-id').value = id;
+                    document.getElementById('recipient_name').value = addr.recipient_name;
+                    document.getElementById('phone').value = addr.phone;
+                    document.getElementById('address').value = addr.address;
+                    document.getElementById('city').value = addr.city;
+                    document.getElementById('province').value = addr.province;
+                    document.getElementById('postal_code').value = addr.postal_code || '';
+                    document.getElementById('is_default').checked = addr.is_default;
+                    document.getElementById('latitude').value = addr.latitude || '';
+                    document.getElementById('longitude').value = addr.longitude || '';
+                    document.getElementById('address-modal').classList.remove('hidden');
+                }
+            });
+        }
+
+        function closeModal() {
+            document.getElementById('address-modal').classList.add('hidden');
+        }
+
+        async function saveAddress(e) {
+            e.preventDefault();
+            const data = {
+                label: document.getElementById('recipient_name').value.split(' ')[0] || 'Rumah',
+                recipient_name: document.getElementById('recipient_name').value,
+                phone: document.getElementById('phone').value,
+                address: document.getElementById('address').value,
+                city: document.getElementById('city').value,
+                province: document.getElementById('province').value,
+                postal_code: document.getElementById('postal_code').value,
+                is_default: document.getElementById('is_default').checked,
+                latitude: parseFloat(document.getElementById('latitude').value) || null,
+                longitude: parseFloat(document.getElementById('longitude').value) || null,
+            };
+
+            try {
+                if (editingId) {
+                    await apiRequest(`/addresses/${editingId}`, { method: 'PUT', body: JSON.stringify(data) });
+                } else {
+                    await apiRequest('/addresses', { method: 'POST', body: JSON.stringify(data) });
+                }
+                closeModal();
+                loadAddresses();
+            } catch (e) {
+                alert('Gagal menyimpan alamat: ' + e.message);
+            }
+        }
+
+        async function deleteAddress(id) {
+            if (!confirm('Hapus alamat ini?')) return;
+            try {
+                await apiRequest(`/addresses/${id}`, { method: 'DELETE' });
+                loadAddresses();
+            } catch (e) {
+                alert('Gagal menghapus alamat');
+            }
+        }
+
+        async function setDefault(id) {
+            try {
+                await apiRequest(`/addresses/${id}/default`, { method: 'PUT' });
+                loadAddresses();
+            } catch (e) {
+                alert('Gagal mengatur default');
+            }
+        }
+
+        async function detectLocation() {
+            const btn = document.getElementById('location-btn');
+            btn.innerHTML = '<span class="material-symbols-outlined animate-spin">progress_activity</span> Mendeteksi lokasi...';
+            btn.disabled = true;
+
+            try {
+                const pos = await new Promise((resolve, reject) => {
+                    navigator.geolocation.getCurrentPosition(resolve, reject, { enableHighAccuracy: true });
+                });
+
+                const { latitude, longitude } = pos.coords;
+                const res = await fetch(`https://nominatim.openstreetmap.org/reverse?lat=${latitude}&lon=${longitude}&format=json`);
+                const data = await res.json();
+
+                document.getElementById('address').value = [data.address.road, data.address.neighbourhood].filter(Boolean).join(', ');
+                document.getElementById('city').value = data.address.city || data.address.county || '';
+                document.getElementById('province').value = data.address.state || '';
+                document.getElementById('postal_code').value = data.address.postcode || '';
+                document.getElementById('latitude').value = latitude;
+                document.getElementById('longitude').value = longitude;
+
+                btn.innerHTML = '<span class="material-symbols-outlined">check_circle</span> Lokasi terdeteksi!';
+                setTimeout(() => {
+                    btn.innerHTML = '<span class="material-symbols-outlined">my_location</span> Izinkan Akses Lokasi';
+                    btn.disabled = false;
+                }, 2000);
+            } catch (e) {
+                alert('Gagal mendeteksi lokasi: ' + e.message);
+                btn.innerHTML = '<span class="material-symbols-outlined">my_location</span> Izinkan Akses Lokasi';
+                btn.disabled = false;
+            }
+        }
+
+        // Init
+        document.addEventListener('DOMContentLoaded', () => {
+            updateHeaderAuth();
+            updateCartBadge();
+            if (!isLoggedIn()) {
+                window.location.href = 'login.html';
+                return;
+            }
+            loadAddresses();
+        });
+    </script>
+</body>
+
+</html>

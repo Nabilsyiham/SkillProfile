@@ -65,19 +65,18 @@
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-12 items-start">
             <!-- Left: Form -->
             <div class="lg:col-span-2 space-y-8">
-                <!-- Address -->
+                <!-- Address Selection -->
                 <div class="bg-surface p-6 md:p-8 rounded-lg border border-linen">
                     <h2 class="text-lg font-bold uppercase tracking-widest text-charcoal mb-6">Alamat Pengiriman</h2>
-                    <div class="space-y-4">
-                        <div class="space-y-1.5">
-                            <label class="text-[10px] font-bold tracking-widest uppercase text-pebble block">Alamat Lengkap</label>
-                            <textarea id="addressInput" rows="3" class="w-full bg-canvas border border-linen rounded px-4 py-3 text-sm focus:outline-none focus:border-charcoal focus:ring-0 placeholder:text-pebble/30" placeholder="Jl. Contoh No. 123, Kota"></textarea>
-                        </div>
-                        <div class="space-y-1.5">
-                            <label class="text-[10px] font-bold tracking-widest uppercase text-pebble block">Nomor Telepon</label>
-                            <input id="phoneInput" type="tel" class="w-full bg-canvas border border-linen rounded px-4 py-3 text-sm focus:outline-none focus:border-charcoal focus:ring-0 placeholder:text-pebble/30" placeholder="08123456789" />
-                        </div>
+                    <div id="selected-address">
+                        <p class="text-pebble text-sm">Memuat alamat...</p>
                     </div>
+                    <button onclick="openAddressModal()" class="mt-3 text-xs font-bold uppercase tracking-widest text-sage hover:text-charcoal underline transition-colors">
+                        Ganti Alamat
+                    </button>
+                    <a href="addresses.html" class="mt-3 ml-4 text-xs font-bold uppercase tracking-widest text-pebble hover:text-charcoal transition-colors">
+                        + Tambah Alamat Baru
+                    </a>
                 </div>
 
                 <!-- Payment Method -->
@@ -138,6 +137,8 @@
 
     <script>
         let cartData = [];
+        let selectedAddress = null;
+        let userAddresses = [];
 
         async function loadCheckout() {
             if (!isLoggedIn()) {
@@ -147,9 +148,61 @@
             try {
                 cartData = await getCart();
                 renderCheckout();
+                await loadAddresses();
             } catch (e) {
-                console.error('Failed to load cart:', e);
+                console.error('Failed to load checkout:', e);
             }
+        }
+
+        async function loadAddresses() {
+            try {
+                const result = await apiRequest('/addresses');
+                userAddresses = result.addresses || [];
+                const defaultAddr = userAddresses.find(a => a.is_default) || userAddresses[0];
+                if (defaultAddr) {
+                    selectAddress(defaultAddr);
+                } else {
+                    document.getElementById('selected-address').innerHTML = '<p class="text-pebble text-sm italic">Belum ada alamat. Tambah alamat terlebih dahulu.</p>';
+                }
+            } catch (e) {
+                console.error('Failed to load addresses:', e);
+            }
+        }
+
+        function selectAddress(addr) {
+            selectedAddress = addr;
+            document.getElementById('selected-address').innerHTML = `
+                <div class="bg-amber-50 border-2 border-amber-500 rounded-lg p-4">
+                    <div class="flex items-center gap-2 mb-2">
+                        <span class="bg-amber-100 text-amber-700 px-2 py-0.5 rounded text-xs font-bold">${addr.label}</span>
+                        ${addr.is_default ? '<span class="bg-green-100 text-green-700 px-2 py-0.5 rounded text-xs font-bold">Default</span>' : ''}
+                    </div>
+                    <p class="font-bold text-sm">${addr.recipient_name}</p>
+                    <p class="text-xs text-pebble">${addr.phone}</p>
+                    <p class="text-xs text-pebble mt-1">${addr.address}, ${addr.city}, ${addr.province}</p>
+                </div>
+            `;
+        }
+
+        function openAddressModal() {
+            const list = document.getElementById('address-modal-list');
+            list.innerHTML = userAddresses.map(addr => `
+                <div class="border border-linen rounded-lg p-4 mb-3 cursor-pointer hover:border-amber-500 transition-colors ${selectedAddress?.id === addr.id ? 'border-amber-500 bg-amber-50' : ''}"
+                     onclick="selectAddress(${JSON.stringify(addr).replace(/"/g, '&quot;')}); closeAddressModal();">
+                    <div class="flex items-center gap-2 mb-1">
+                        <span class="bg-surface px-2 py-0.5 rounded text-xs font-bold">${addr.label}</span>
+                        ${addr.is_default ? '<span class="bg-green-100 text-green-700 px-2 py-0.5 rounded text-xs font-bold">Default</span>' : ''}
+                    </div>
+                    <p class="font-bold text-sm">${addr.recipient_name}</p>
+                    <p class="text-xs text-pebble">${addr.phone}</p>
+                    <p class="text-xs text-pebble mt-1">${addr.address}, ${addr.city}, ${addr.province}</p>
+                </div>
+            `).join('');
+            document.getElementById('address-modal').classList.remove('hidden');
+        }
+
+        function closeAddressModal() {
+            document.getElementById('address-modal').classList.add('hidden');
         }
 
         function renderCheckout() {
@@ -187,13 +240,10 @@
         }
 
         async function placeOrder() {
-            const address = document.getElementById('addressInput').value.trim();
-            const phone = document.getElementById('phoneInput').value.trim();
-            const payment = document.querySelector('input[name="payment"]:checked')?.value || 'cod';
-
-            if (!address) { alert('Alamat wajib diisi.'); return; }
-            if (!phone) { alert('Nomor telepon wajib diisi.'); return; }
+            if (!selectedAddress) { alert('Pilih alamat pengiriman terlebih dahulu.'); return; }
             if (cartData.length === 0) { alert('Keranjang kosong.'); return; }
+
+            const payment = document.querySelector('input[name="payment"]:checked')?.value || 'cod';
 
             try {
                 const items = cartData.map(item => ({
@@ -205,7 +255,12 @@
 
                 await apiRequest('/orders', {
                     method: 'POST',
-                    body: JSON.stringify({ address, phone, payment_method: payment, items }),
+                    body: JSON.stringify({
+                        address_id: selectedAddress.id,
+                        phone: selectedAddress.phone,
+                        payment_method: payment,
+                        items,
+                    }),
                 });
 
                 await clearCart();
@@ -228,6 +283,20 @@
 
         loadCheckout();
     </script>
+
+    <!-- Address Modal -->
+    <div id="address-modal" class="hidden fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
+        <div class="bg-canvas rounded-2xl p-6 w-full max-w-md max-h-[80vh] overflow-y-auto shadow-xl">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-lg font-bold">Pilih Alamat</h3>
+                <button onclick="closeAddressModal()" class="text-pebble hover:text-charcoal">
+                    <span class="material-symbols-outlined">close</span>
+                </button>
+            </div>
+            <div id="address-modal-list"></div>
+            <a href="addresses.html" class="block text-center mt-4 text-sm font-semibold text-sage hover:text-charcoal underline">+ Tambah Alamat Baru</a>
+        </div>
+    </div>
 </body>
 
 </html>
