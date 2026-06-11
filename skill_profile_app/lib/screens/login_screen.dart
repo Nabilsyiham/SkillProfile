@@ -50,9 +50,6 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final screenWidth = MediaQuery.of(context).size.width;
-    final isDesktop = screenWidth > 800;
-
     ref.listen<AuthState>(authProvider, (prev, next) {
       if (next.user != null && prev?.user == null) {
         Navigator.pushReplacementNamed(context, '/home');
@@ -66,120 +63,24 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
 
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-      body: isDesktop ? _buildDesktopLayout() : _buildMobileLayout(),
-    );
-  }
-
-  Widget _buildDesktopLayout() {
-    return Row(
-      children: [
-        // Left: Editorial Image
-        Expanded(
-          flex: 5,
-          child: Container(
-            decoration: BoxDecoration(
-              color: Theme.of(context).colorScheme.surface,
-              borderRadius: BorderRadius.only(
-                topRight: Radius.circular(24),
-                bottomRight: Radius.circular(24),
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              // Back Button
+              Align(
+                alignment: Alignment.centerLeft,
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 8, top: 8),
+                  child: IconButton(
+                    icon: const Icon(Icons.arrow_back),
+                    onPressed: () => Navigator.pop(context),
+                  ),
+                ),
               ),
-            ),
-            child: Stack(
-              children: [
-                Positioned.fill(
-                  child: ClipRRect(
-                    borderRadius: const BorderRadius.only(
-                      topRight: Radius.circular(24),
-                      bottomRight: Radius.circular(24),
-                    ),
-                    child: Image.network(
-                      'https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=800&q=80&fit=crop',
-                      fit: BoxFit.cover,
-                      errorBuilder: (context, error, stackTrace) => Container(
-                        color: Theme.of(context).colorScheme.surface,
-                        child: Center(
-                          child: Icon(Icons.image, size: 80, color: Theme.of(context).colorScheme.secondary),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-                Positioned(
-                  top: 24,
-                  left: 24,
-                  child: Text(
-                    'Artisanal home decor',
-                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                      color: Theme.of(context).colorScheme.primary,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                ),
-              ],
-            ),
+              _buildFormSection(),
+            ],
           ),
-        ),
-        // Right: Form
-        Expanded(
-          flex: 5,
-          child: _buildFormSection(),
-        ),
-      ],
-    );
-  }
-
-  Widget _buildMobileLayout() {
-    return SafeArea(
-      child: SingleChildScrollView(
-        child: Column(
-          children: [
-            // Editorial Image
-            Container(
-              height: 200,
-              width: double.infinity,
-              decoration: BoxDecoration(
-                color: Theme.of(context).colorScheme.surface,
-                borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(24),
-                  bottomRight: Radius.circular(24),
-                ),
-              ),
-              child: Stack(
-                children: [
-                  Positioned.fill(
-                    child: ClipRRect(
-                      borderRadius: const BorderRadius.only(
-                        bottomLeft: Radius.circular(24),
-                        bottomRight: Radius.circular(24),
-                      ),
-                      child: Image.network(
-                        'https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=800&q=80&fit=crop',
-                        fit: BoxFit.cover,
-                        errorBuilder: (context, error, stackTrace) => Container(
-                          color: Theme.of(context).colorScheme.surface,
-                        child: Center(
-                          child: Icon(Icons.image, size: 60, color: Theme.of(context).colorScheme.secondary),
-                        ),
-                        ),
-                      ),
-                    ),
-                  ),
-                  Positioned(
-                    top: 16,
-                    left: 16,
-                    child: Text(
-                      'Artisanal home decor',
-                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                        color: Theme.of(context).colorScheme.primary,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            _buildFormSection(),
-          ],
         ),
       ),
     );
@@ -253,89 +154,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                 ),
                 const SizedBox(height: 24),
 
-                // Form Content
                 if (_isLogin) _buildLoginForm() else _buildRegisterForm(),
-
-                const SizedBox(height: 24),
-
-                // Divider
-                Row(
-                  children: [
-                    Expanded(child: Divider(color: Theme.of(context).colorScheme.surface)),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 16),
-                      child: Text(
-                        'OR CONNECT WITH',
-                        style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                          color: Theme.of(context).colorScheme.secondary,
-                          fontSize: 10,
-                          fontWeight: FontWeight.bold,
-                          letterSpacing: 1.5,
-                        ),
-                      ),
-                    ),
-                    Expanded(child: Divider(color: Theme.of(context).colorScheme.surface)),
-                  ],
-                ),
-                const SizedBox(height: 24),
-
-                // Social Buttons
-                Row(
-                  children: [
-                    Expanded(
-                      child: OutlinedButton.icon(
-                        onPressed: () {},
-                        icon: Icon(Icons.g_mobiledata, color: Theme.of(context).colorScheme.primary),
-                        label: const Text('GOOGLE'),
-                        style: OutlinedButton.styleFrom(
-                          foregroundColor: Theme.of(context).colorScheme.primary,
-                          side: BorderSide(color: Theme.of(context).colorScheme.surface),
-                          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(width: 16),
-                    Expanded(
-                      child: OutlinedButton.icon(
-                        onPressed: () {},
-                        icon: Icon(Icons.apple, color: Theme.of(context).colorScheme.primary),
-                        label: const Text('APPLE'),
-                        style: OutlinedButton.styleFrom(
-                          foregroundColor: Theme.of(context).colorScheme.primary,
-                          side: BorderSide(color: Theme.of(context).colorScheme.surface),
-                          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 32),
-
-                // Footer Links
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text('HELP CENTER', style: Theme.of(context).textTheme.labelSmall?.copyWith(color: Theme.of(context).colorScheme.secondary, fontSize: 10, fontWeight: FontWeight.bold)),
-                    const SizedBox(width: 8),
-                    Text('•', style: TextStyle(color: Theme.of(context).colorScheme.secondary)),
-                    const SizedBox(width: 8),
-                    Text('SOURCING ETHOS', style: Theme.of(context).textTheme.labelSmall?.copyWith(color: Theme.of(context).colorScheme.secondary, fontSize: 10, fontWeight: FontWeight.bold)),
-                    const SizedBox(width: 8),
-                    Text('•', style: TextStyle(color: Theme.of(context).colorScheme.secondary)),
-                    const SizedBox(width: 8),
-                    Text('ARTISAN PARTNERS', style: Theme.of(context).textTheme.labelSmall?.copyWith(color: Theme.of(context).colorScheme.secondary, fontSize: 10, fontWeight: FontWeight.bold)),
-                  ],
-                ),
-                const SizedBox(height: 12),
-                Center(
-                  child: Text(
-                    'Join our community of collectors and creators.',
-                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                      color: Theme.of(context).colorScheme.secondary,
-                      fontStyle: FontStyle.italic,
-                    ),
-                  ),
-                ),
               ],
             ),
           ),
@@ -354,7 +173,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
           controller: _emailController,
           keyboardType: TextInputType.emailAddress,
           decoration: InputDecoration(
-            hintText: 'Fashya@featuresandfound.com',
+            hintText: 'email@example.com',
             hintStyle: TextStyle(color: Theme.of(context).colorScheme.secondary.withValues(alpha: 0.5)),
             filled: true,
             fillColor: Theme.of(context).scaffoldBackgroundColor,
@@ -432,54 +251,21 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Row(
-          children: [
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text('FIRST NAME', style: Theme.of(context).textTheme.labelSmall?.copyWith(color: Theme.of(context).colorScheme.secondary, fontSize: 10, fontWeight: FontWeight.bold, letterSpacing: 1.5)),
-                  const SizedBox(height: 6),
-                  TextFormField(
-                    controller: _nameController,
-                    decoration: InputDecoration(
-                      hintText: 'Jane',
-                      hintStyle: TextStyle(color: Theme.of(context).colorScheme.secondary.withValues(alpha: 0.5)),
-                      filled: true,
-                      fillColor: Theme.of(context).scaffoldBackgroundColor,
-                      contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-                      border: OutlineInputBorder(borderRadius: BorderRadius.circular(4), borderSide: BorderSide(color: Theme.of(context).colorScheme.surface)),
-                      enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(4), borderSide: BorderSide(color: Theme.of(context).colorScheme.surface)),
-                      focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(4), borderSide: BorderSide(color: Theme.of(context).colorScheme.primary)),
-                    ),
-                    validator: (v) => v!.isEmpty ? 'Nama wajib diisi' : null,
-                  ),
-                ],
-              ),
-            ),
-            const SizedBox(width: 16),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text('LAST NAME', style: Theme.of(context).textTheme.labelSmall?.copyWith(color: Theme.of(context).colorScheme.secondary, fontSize: 10, fontWeight: FontWeight.bold, letterSpacing: 1.5)),
-                  const SizedBox(height: 6),
-                  TextFormField(
-                    decoration: InputDecoration(
-                      hintText: 'Doe',
-                      hintStyle: TextStyle(color: Theme.of(context).colorScheme.secondary.withValues(alpha: 0.5)),
-                      filled: true,
-                      fillColor: Theme.of(context).scaffoldBackgroundColor,
-                      contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-                      border: OutlineInputBorder(borderRadius: BorderRadius.circular(4), borderSide: BorderSide(color: Theme.of(context).colorScheme.surface)),
-                      enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(4), borderSide: BorderSide(color: Theme.of(context).colorScheme.surface)),
-                      focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(4), borderSide: BorderSide(color: Theme.of(context).colorScheme.primary)),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
+        Text('NAME', style: Theme.of(context).textTheme.labelSmall?.copyWith(color: Theme.of(context).colorScheme.secondary, fontSize: 10, fontWeight: FontWeight.bold, letterSpacing: 1.5)),
+        const SizedBox(height: 6),
+        TextFormField(
+          controller: _nameController,
+          decoration: InputDecoration(
+            hintText: 'Nama lengkap',
+            hintStyle: TextStyle(color: Theme.of(context).colorScheme.secondary.withValues(alpha: 0.5)),
+            filled: true,
+            fillColor: Theme.of(context).scaffoldBackgroundColor,
+            contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+            border: OutlineInputBorder(borderRadius: BorderRadius.circular(4), borderSide: BorderSide(color: Theme.of(context).colorScheme.surface)),
+            enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(4), borderSide: BorderSide(color: Theme.of(context).colorScheme.surface)),
+            focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(4), borderSide: BorderSide(color: Theme.of(context).colorScheme.primary)),
+          ),
+          validator: (v) => v!.isEmpty ? 'Nama wajib diisi' : null,
         ),
         const SizedBox(height: 16),
         Text('EMAIL ADDRESS', style: Theme.of(context).textTheme.labelSmall?.copyWith(color: Theme.of(context).colorScheme.secondary, fontSize: 10, fontWeight: FontWeight.bold, letterSpacing: 1.5)),
@@ -488,7 +274,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
           controller: _emailController,
           keyboardType: TextInputType.emailAddress,
           decoration: InputDecoration(
-            hintText: 'jane.doe@example.com',
+            hintText: 'email@example.com',
             hintStyle: TextStyle(color: Theme.of(context).colorScheme.secondary.withValues(alpha: 0.5)),
             filled: true,
             fillColor: Theme.of(context).scaffoldBackgroundColor,

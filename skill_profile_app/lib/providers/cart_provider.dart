@@ -66,13 +66,22 @@ class CartNotifier extends StateNotifier<CartState> {
         );
       }).toList();
       state = state.copyWith(items: items);
-    } catch (_) {}
+    } catch (e) {
+      print('loadCart error: $e');
+    }
   }
 
   Future<void> addItem(CartItem item) async {
     final specsParts = item.specs.split(' / ');
-    final color = specsParts.isNotEmpty ? specsParts.last : '';
-    final size = specsParts.length >= 2 ? specsParts[1] : '';
+    String color = '';
+    String size = '';
+    if (specsParts.length >= 3) {
+      size = specsParts[1].trim();
+      color = specsParts[2].trim();
+    } else if (specsParts.length == 2) {
+      color = specsParts[0].trim();
+      size = specsParts[1].trim();
+    }
 
     try {
       final result = await ApiService.post('/cart', body: {
@@ -100,7 +109,9 @@ class CartNotifier extends StateNotifier<CartState> {
           ),
         ]);
       }
-    } catch (_) {}
+    } catch (e) {
+      print('addItem error: $e');
+    }
   }
 
   Future<void> removeItem(String productId) async {
@@ -115,7 +126,9 @@ class CartNotifier extends StateNotifier<CartState> {
       state = state.copyWith(
         items: state.items.where((data) => data.item.productId != productId).toList(),
       );
-    } catch (_) {}
+    } catch (e) {
+      print('removeItem error: $e');
+    }
   }
 
   Future<void> updateQuantity(String productId, int delta) async {
@@ -134,14 +147,18 @@ class CartNotifier extends StateNotifier<CartState> {
         item: itemData.item.copyWith(quantity: newQty),
       );
       state = state.copyWith(items: updatedItems);
-    } catch (_) {}
+    } catch (e) {
+      print('updateQuantity error: $e');
+    }
   }
 
   Future<void> clearCart() async {
     try {
       await ApiService.delete('/cart');
       state = CartState();
-    } catch (_) {}
+    } catch (e) {
+      print('clearCart error: $e');
+    }
   }
 }
 

@@ -1,9 +1,15 @@
 import 'dart:convert';
+import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ApiService {
-  static const String baseUrl = 'http://localhost:8000/api';
+  static String get baseUrl {
+    if (Platform.isAndroid) {
+      return 'http://10.0.2.2:8000/api';
+    }
+    return 'http://localhost:8000/api';
+  }
   static String? _token;
 
   static Future<String?> getToken() async {

@@ -6,6 +6,7 @@ import 'package:skill_profile_app/screens/widgets/product_card.dart';
 import 'package:skill_profile_app/screens/cart_screen.dart';
 import 'package:skill_profile_app/screens/login_screen.dart';
 import 'package:skill_profile_app/providers/auth_provider.dart';
+import 'package:skill_profile_app/providers/cart_provider.dart';
 import 'package:skill_profile_app/utils/responsive_helper.dart';
 
 class ShopScreen extends ConsumerStatefulWidget {
@@ -44,6 +45,18 @@ class _ShopScreenState extends ConsumerState<ShopScreen> {
     'name_asc': 'Name: A-Z',
   };
 
+  Widget _buildCartBadge(BuildContext context, WidgetRef ref) {
+    final totalItems = ref.watch(cartProvider.select((s) => s.totalItems));
+    if (totalItems == 0) {
+      return const Icon(Icons.shopping_bag_outlined);
+    }
+    return Badge(
+      label: Text('$totalItems'),
+      backgroundColor: Theme.of(context).colorScheme.primary,
+      child: const Icon(Icons.shopping_bag_outlined),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final productsAsync = ref.watch(productsProvider);
@@ -59,7 +72,7 @@ class _ShopScreenState extends ConsumerState<ShopScreen> {
         ),
         actions: [
           IconButton(
-            icon: const Icon(Icons.shopping_bag_outlined),
+            icon: _buildCartBadge(context, ref),
             onPressed: () {
               final isLoggedIn = ref.read(authProvider).user != null;
               if (!isLoggedIn) {

@@ -1,14 +1,81 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../providers/admin_provider.dart';
 import '../../services/api_service.dart';
 import '../../screens/login_screen.dart';
 
-class AdminOrdersScreen extends ConsumerWidget {
+class AdminOrdersScreen extends ConsumerStatefulWidget {
   const AdminOrdersScreen({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<AdminOrdersScreen> createState() => _AdminOrdersScreenState();
+}
+
+class _AdminOrdersScreenState extends ConsumerState<AdminOrdersScreen> {
+  Timer? _pollTimer;
+
+  final Map<String, String> _statusLabels = {
+    'pending': 'Menunggu',
+    'processing': 'Diproses',
+    'shipped': 'Dikirim',
+    'delivered': 'Selesai',
+    'cancelled': 'Dibatalkan',
+  };
+
+  @override
+  void initState() {
+    super.initState();
+    _pollTimer = Timer.periodic(const Duration(seconds: 15), (_) {
+      ref.invalidate(adminOrdersProvider);
+    });
+  }
+
+  @override
+  void dispose() {
+    _pollTimer?.cancel();
+    super.dispose();
+  }
+
+  Color _getStatusColor(String status) {
+    switch (status) {
+      case 'completed':
+      case 'delivered':
+        return Colors.green;
+      case 'shipped':
+        return Colors.blue;
+      case 'processing':
+        return Colors.orange;
+      case 'cancelled':
+        return Colors.red;
+      case 'pending':
+      default:
+        return Colors.amber;
+    }
+  }
+
+  Future<void> _updateStatus(dynamic orderId, String newStatus) async {
+    try {
+      await ApiService.put('/admin/orders/$orderId/status', body: {
+        'status': newStatus,
+      });
+      ref.invalidate(adminOrdersProvider);
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Status diperbarui ke ${_statusLabels[newStatus] ?? newStatus}')),
+        );
+      }
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Gagal: $e'), backgroundColor: Colors.red),
+        );
+      }
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final ordersAsync = ref.watch(adminOrdersProvider);
 
     return Scaffold(
@@ -39,11 +106,7 @@ class AdminOrdersScreen extends ConsumerWidget {
             itemCount: orders.length,
             itemBuilder: (context, index) {
               final order = orders[index];
-              final statusColor = order['status'] == 'completed'
-                  ? Colors.green
-                  : order['status'] == 'shipped'
-                      ? Colors.blue
-                      : Colors.orange;
+              final statusColor = _getStatusColor(order['status'] ?? 'pending');
 
               return Card(
                 margin: const EdgeInsets.only(bottom: 12),
@@ -54,7 +117,7 @@ class AdminOrdersScreen extends ConsumerWidget {
                   ),
                   title: Text('Order #${order['id']}'),
                   subtitle: Text(
-                    'Rp ${order['total_price']} • ${order['status']}',
+                    'Rp ${order['total_price']} • ${_statusLabels[order['status']] ?? order['status']}',
                     style: TextStyle(color: statusColor),
                   ),
                   children: [
@@ -66,6 +129,7 @@ class AdminOrdersScreen extends ConsumerWidget {
                           Text('Customer: ${order['user']?['name'] ?? 'N/A'}'),
                           Text('Address: ${order['address']}'),
                           Text('Phone: ${order['phone']}'),
+                          Text('Payment: ${order['payment_method'] ?? 'N/A'}'),
                           const SizedBox(height: 8),
                           const Text('Items:', style: TextStyle(fontWeight: FontWeight.bold)),
                           if (order['items'] != null)
@@ -76,22 +140,21 @@ class AdminOrdersScreen extends ConsumerWidget {
                                 ),
                               ),
                             ),
-                          const SizedBox(height: 8),
+                          const SizedBox(height: 12),
                           Row(
                             children: [
                               const Text('Status: '),
                               DropdownButton<String>(
                                 value: order['status'],
-                                items: ['pending', 'shipped', 'completed']
-                                    .map((s) => DropdownMenuItem(value: s, child: Text(s)))
+                                items: _statusLabels.entries
+                                    .map((e) => DropdownMenuItem(
+                                          value: e.key,
+                                          child: Text(e.value),
+                                        ))
                                     .toList(),
-                                onChanged: (value) async {
+                                onChanged: (value) {
                                   if (value != null) {
-                                    await ApiService.put(
-                                      '/admin/orders/${order['id']}/status',
-                                      body: {'status': value},
-                                    );
-                                    ref.invalidate(adminOrdersProvider);
+                                    _updateStatus(order['id'], value);
                                   }
                                 },
                               ),
